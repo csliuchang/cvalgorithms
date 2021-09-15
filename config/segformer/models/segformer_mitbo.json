@@ -1,0 +1,23 @@
+{
+    "pretrained": "/home/pupa/pretained/mit_b0.pth",
+    "model": {
+        "type": "EncoderDecoder",
+        "backbone": {
+            "type": "MixVisionTransformer"
+        },
+        "decode_head": {
+            "type": "SegformerHead",
+            "in_channels": [64, 128, 256, 512],
+            "in_index": [0, 1, 2, 3],
+            "head_width": 256,
+            "num_classes": 1,
+            "align_corners": false,
+                        "loss": {"type": "OhemCELoss",
+                    "thresh":  0.3,
+                    "n_min": 65536
+            }
+        }
+    },
+    "train_cfg": {},
+    "test_cfg": {"mode": "whole"}
+}

@@ -1,0 +1,52 @@
+{
+    "_base": ["/home/pupa/PycharmProjects/PupaDetector/config/yolof/models/yolof.json",
+              "/home/pupa/PycharmProjects/PupaDetector/config/yolof/models/yolof_yolov5_backbone.json"],
+    "log_level": "INFO",
+    "network_type": "detection",
+    "dataset": {
+            "type":  "DetDatasets",
+            "data_root": "/home/pupa/PycharmProjects/PupaDetector/data/df_corn",
+            "train_pipeline": [{"type": "Resize", "img_scale": [800, 800]},
+                                {"type": "Collect", "keys": ["img", "gt_labels","gt_bboxes", "gt_masks"], "bg_first": true}],
+            "val_pipeline": [{"type": "Resize", "img_scale": [800, 800]},
+                              {"type": "Collect", "keys": ["img", "gt_labels","gt_bboxes", "gt_masks"], "bg_first": true}],
+            "train_file": "labelme_train.txt",
+            "val_file": "labelme_val.txt",
+            "auto_norm": false,
+            "mean": [111.3199462890625, 123.41533660888672, 126.36572265625],
+            "std": [52.47858428955078, 52.73240661621094, 52.4974365234375]
+              },
+    "dataloader":{
+            "samples_per_gpu": 2,
+            "workers_per_gpu": 2
+    },
+    "workflow": [["train", 2], ["val", 1]],
+    "total_epochs": 100,
+    "num_classes": 1,
+    "log_iter": 10,
+    "optimizer": "ADAMW",
+    "learning_rate": 0.001,
+     "weight_decay": 1e-4,
+    "lr_scheduler": {"type": "CosineAnnealingWarmRestarts",
+                     "args": {"T_0": 5}
+                      },
+    "clip_gradients": {
+                    "type": "value",
+                    "enabled": true,
+                    "clip_value": 1.0,
+                    "norm_type": 2.0
+    },
+    "backbone_multiplier": 1.0,
+    "input_channel": 3,
+     "input_width": 800,
+     "input_height": 800,
+     "save_train_metrics_log": true,
+     "save_train_predict_fn": true,
+  "save_val_pred": true,
+        "ge_heat_map": {
+    "enable": false,
+    "mode": "score_cam"
+  },
+  "checkpoint_dir": "/home/pupa/PycharmProjects/PupaDetector/outputs"
+
+}

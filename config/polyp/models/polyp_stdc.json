@@ -1,0 +1,19 @@
+{
+    "_base": "/home/pupa/PycharmProjects/PupaDetector/config/polyp/models/polyp.json",
+    "pretrained": "/home/pupa/pretained/STDCNet813M_73.91.tar",
+    "model": {
+        "backbone": {
+            "type": "STDCNet813",
+            "use_conv_last": true
+        },
+        "decode_head": {
+            "type": "PolypHead",
+            "in_channels": [
+                64,
+                256,
+                512,
+                1024
+            ]
+        }
+    }
+}

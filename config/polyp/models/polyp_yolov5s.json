@@ -1,0 +1,26 @@
+{
+    "_base": "/home/pupa/PycharmProjects/PupaDetector/config/polyp/models/polyp.json",
+    "pretrained": "/home/pupa/pretained/yolov5s_backbone.pth",
+    "model": {
+        "backbone": {
+            "type": "yolov5_backbone",
+            "stage_channels": [64, 128, 256, 512, 1024],
+            "depth_multiple": 0.33,
+            "width_multiple": 0.50,
+            "out_levels": [1, 2, 3, 4, 5],
+            "strides": [2, 2, 2, 2],
+            "norm_cfg": "BN2d",
+            "act_cfg": "SiLU",
+            "num_classes": null
+        },
+                "decode_head": {
+            "type": "PolypHead",
+            "in_channels": [
+                64,
+                128,
+                256,
+                512
+            ]
+        }
+    }
+}

@@ -1,0 +1,69 @@
+{
+    "model": {
+        "type": "CascadeEncoderDecoder",
+        "num_stages": 2,
+        "backbone": {
+            "type": "HRNet",
+            "norm_cfg": {"type": "BN", "requires_grad": true},
+            "norm_eval": false,
+            "extra": {
+            "stage1": {"num_modules": 1,
+                        "num_branches": 1,
+                        "block": "BOTTLENECK",
+                        "num_blocks": [4],
+                        "num_channels": [64]
+            },
+            "stage2": {"num_modules": 1,
+                        "num_branches": 2,
+                        "block": "BASIC",
+                        "num_blocks": [4, 4],
+                        "num_channels": [18, 36]
+            },
+            "stage3": {"num_modules": 4,
+                        "num_branches": 3,
+                        "block": "BASIC",
+                        "num_blocks": [4, 4, 4],
+                        "num_channels": [18, 36, 72]
+            },
+            "stage4": {"num_modules": 3,
+                        "num_branches": 4,
+                        "block": "BASIC",
+                        "num_blocks": [4, 4, 4, 4],
+                        "num_channels": [18, 36, 72, 144]
+            }
+            }},
+        "decode_head": [{
+            "type": "FCNHead",
+            "in_channels": [18, 36, 72, 144],
+            "in_index": [0, 1, 2, 3],
+            "input_transform": "resize_concat",
+            "kernel_size": 1,
+            "head_width": 270,
+            "num_convs": 1,
+            "concat_input": false,
+            "final_drop": -1,
+            "norm_cfg": {"type": "BN", "requires_grad": true},
+            "align_corners": false,
+                        "loss": {"type": "OhemCELoss",
+                    "thresh":  0.3,
+                    "n_min": 65536
+            }},
+          {
+            "type": "OCRHead",
+            "in_channels": [18, 36, 72, 144],
+            "in_index": [0, 1, 2, 3],
+            "input_transform": "resize_concat",
+            "head_width": 512,
+            "ocr_channels": 256,
+            "final_drop": -1,
+            "norm_cfg": {"type": "BN", "requires_grad": true},
+            "align_corners": false,
+            "loss": {"type": "OhemCELoss",
+                    "thresh":  0.7,
+                    "n_min": 65536
+            }}
+        ]},
+    "train_cfg": {},
+    "test_cfg": {"mode": "whole"}
+}
+

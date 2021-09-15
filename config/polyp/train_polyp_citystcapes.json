@@ -1,0 +1,48 @@
+{
+    "_base": ["/home/pupa/PycharmProjects/PupaDetector/config/polyp/models/polyp.json",
+              "/home/pupa/PycharmProjects/PupaDetector/config/polyp/models/polyp_moga.json"],
+    "log_level": "INFO",
+    "network_type": "segmentation",
+    "dataset": {
+            "type":  "CityStcapes",
+            "data_root": "./data/citystcapes",
+            "train_pipeline": [{"type": "Resize", "img_scale": [448, 448]},
+                               {"type": "Collect", "keys": ["img", "masks"], "bg_first": false}],
+            "val_pipeline": [{"type": "Resize", "img_scale": [448, 448]},
+                              {"type": "Collect", "keys": ["img", "masks"], "bg_first": false}],
+            "train_file": "labelme_train.txt",
+            "val_file": "labelme_val.txt",
+            "auto_norm": false,
+            "mean": [66.83241271972656, 76.1273193359375, 64.33003997802734],
+            "std": [35.666778564453125, 37.674537658691406, 35.559261322021484]
+              },
+    "dataloader":{
+            "samples_per_gpu": 8,
+            "workers_per_gpu": 2
+    },
+    "workflow": [["train", 2], ["val", 1]],
+    "total_epochs": 100,
+    "num_classes": 19,
+    "log_iter": 10,
+    "optimizer": "ADAMW",
+    "learning_rate": 0.001,
+     "weight_decay": 1e-4,
+    "lr_scheduler": {"type": "CosineAnnealingWarmRestarts",
+                     "args": {"T_0": 5}
+                      },
+    "clip_gradients": {
+                    "type": "value",
+                    "enabled": true,
+                    "clip_value": 1.0,
+                    "norm_type": 2.0
+    },
+    "backbone_multiplier": 1.0,
+    "input_channel": 3,
+     "input_width": 448,
+     "input_height": 448,
+     "save_train_metrics_log": true,
+     "save_train_predict_fn": true,
+  "save_val_pred": false,
+  "checkpoint_dir": "/home/pupa/PycharmProjects/PupaDetector/outputs"
+
+}

@@ -1,0 +1,19 @@
+{
+    "model": {
+        "type": "EncoderDecoder",
+        "backbone": {
+            "type": "pvt_v2_b2"
+        },
+        "decode_head": {
+            "type": "PolypHead",
+            "in_channels": [64, 128, 256, 512],
+            "head_width": 32,
+            "num_classes": 1,
+            "loss": {"type": "CrossEntropyLoss", "loss_weight": 1.0, "ignore_label": 255},
+            "loss_2": {"type": "CrossEntropyLoss", "loss_weight": 1.0, "ignore_label": 255}
+        }
+    },
+    "train_cfg": {},
+    "test_cfg": {"mode": "whole"}
+}
+

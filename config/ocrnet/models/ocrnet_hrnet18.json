@@ -1,0 +1,10 @@
+{
+    "_base": "/home/pupa/PycharmProjects/PupaDetector/config/ocrnet/models/ocrnet.json",
+    "pretrained": "/home/pupa/.cache/torch/hub/checkpoints/hrnetv2_w18-00eb2006.pth",
+    "model": {
+      "type": "CascadeEncoderDecoder"
+
+    },
+    "train_cfg": {},
+    "test_cfg": {"mode": "whole"}
+}

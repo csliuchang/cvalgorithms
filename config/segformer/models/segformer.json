@@ -1,0 +1,36 @@
+{
+    "model": {
+        "type": "EncoderDecoder",
+        "backbone": {
+            "type": "MixVisionTransformer",
+            "in_channels": 3,
+            "embed_dims": 32,
+            "num_stages": 4,
+            "num_layers": [2, 2, 2, 2],
+            "num_heads": [1, 2, 5, 8],
+            "patch_sizes": [7, 3, 3, 3],
+            "sr_ratios": [8, 4, 2, 1],
+            "out_indices": [0, 1, 2, 3],
+            "mlp_ratio": 4,
+            "qkv_bias": true,
+            "drop_rate": 0.0,
+            "attn_drop_rate": 0.0,
+            "drop_path_rate": 0.1
+},
+        "decode_head": {
+            "type": "SegformerHead",
+            "in_channels": [64, 128, 256, 512],
+            "in_index": [0, 1, 2, 3],
+            "head_width": 256,
+            "num_classes": 1,
+            "align_corners": false,
+                        "loss": {"type": "OhemCELoss",
+                    "thresh":  0.3,
+                    "n_min": 65536
+            }
+        }
+    },
+    "train_cfg": {},
+    "test_cfg": {"mode": "whole"}
+}
+

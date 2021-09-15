@@ -1,0 +1,15 @@
+{    "_base": "/home/pupa/PycharmProjects/PupaDetector/config/obbfcos/models/obbfcos.json",
+    "pretrained": "/home/pupa/pretained/ResNet18_v1b.pth",
+    "model": {
+        "type": "FCOSOBB",
+        "backbone": {
+            "type": "ResNet",
+            "depth": 18,
+            "out_levels": [2, 3, 4, 5],
+            "num_classes": null
+        },
+        "bbox_head": {
+            "type": "OBBFCOSHead"
+        }
+    }
+}

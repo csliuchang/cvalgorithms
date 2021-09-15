@@ -1,0 +1,20 @@
+{
+    "_base": "/home/pupa/PycharmProjects/LightRotateDet/config/rretinanet/models/rretinanet.json",
+    "pretrained": "/home/pupa/deepcv_example/deepcv/resources/init_models/model_zoo/pth/gluoncv/yolov5s_backbone.pth",
+    "model": {
+        "backbone": {
+            "type": "yolov5_backbone",
+            "stage_channels": [64, 128, 256, 512, 1024],
+            "depth_multiple": 0.33,
+            "width_multiple": 0.50,
+            "out_levels": [4],
+            "strides": [2, 2, 2, 1],
+            "norm_cfg": "BN2d",
+            "act_cfg": "SiLU",
+            "num_classes": null
+        },
+        "bbox_head": {
+            "type": "YOLOFeatureHead"
+        }
+    }
+}

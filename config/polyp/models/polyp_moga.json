@@ -1,0 +1,10 @@
+{
+    "_base": "/home/pupa/PycharmProjects/PupaDetector/config/polyp/models/polyp.json",
+    "pretrained": "/home/pupa/pretained/MoGaA.pth.tar",
+    "model": {
+        "backbone": {
+            "type": "MoGaA",
+            "input_size": 448
+        }
+    }
+}

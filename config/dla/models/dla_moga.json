@@ -1,0 +1,26 @@
+{
+    "_base": "./config/dla/models/dla.json",
+    "pretrained": "/home/pupa/pretained/ResNet18_v1b.pth",
+    "model": {
+        "type": "EncoderDecoder",
+        "backbone": {
+            "type": "MoGaA",
+            "num_classes": null
+        },
+        "decode_head": {
+            "type": "DLAHead",
+            "in_channels": [16, 24, 40, 80, 160],
+            "head_width": 64,
+            "down_ratio": 2,
+            "num_classes": 1,
+            "align_corners": true,
+            "act_cfg": {"type": "LeakyReLU", "inplace": true, "negative_slope": 0.01},
+            "loss": {"type": "OhemCELoss",
+                    "thresh":  0.7,
+                    "n_min": 65536
+            }
+        }
+    },
+    "train_cfg": {},
+    "test_cfg": {"mode": "whole"}
+}
