@@ -3,6 +3,8 @@
               "/home/pupa/PycharmProjects/PupaDetector/config/rretinanet/models/rretinanet_yolov5_backbone.json"],
     "log_level": "INFO",
     "network_type": "rotate_detection",
+    "local_rank": 0,
+    "seed": 2,
     "dataset": {
             "type":  "RDetDatasets",
             "data_root": "/home/pupa/PycharmProjects/PupaDetector/data/msratd500",
@@ -40,9 +42,10 @@
     "input_channel": 3,
      "input_width": 800,
      "input_height": 800,
+     "eval_period": 1,
      "save_train_metrics_log": true,
      "save_train_predict_fn": true,
-  "save_val_pred": true,
+     "save_val_pred": true,
         "ge_heat_map": {
     "enable": false,
     "mode": "score_cam"
