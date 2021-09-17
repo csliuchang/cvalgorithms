@@ -2,7 +2,7 @@ from trainer.tools import BaseRunner, TrainerBase
 from models import build_detector, build_segmentor
 from datasets.builder import build_dataloader
 from engine.optimizer import build_optimizer
-from utils import get_root_logger
+from utils import get_root_logger, load_checkpoint, model_info
 import copy
 from datasets import build_dataset
 import time
@@ -10,6 +10,7 @@ import torch.nn as nn
 import os.path as osp
 import trainer.hooks as hooks
 import torch
+import os
 from utils.bar import ProgressBar
 from utils.metrics.rotate_metrics import combine_predicts_gt
 import torch.distributed as dist
@@ -25,7 +26,7 @@ class TrainerContainer(BaseRunner):
         """
         super().__init__()
         timestamp = time.strftime('%Y%m%d_%H%M%S', time.localtime())
-        work_dir = osp.join(cfg.checkpoint_dir, cfg.dataset.type, cfg.model.type, timestamp)
+        self.work_dir = osp.join(cfg.checkpoint_dir, cfg.dataset.type, cfg.model.type, timestamp)
         cfg.dataset.update({"stage": "train"})
         datasets = [build_dataset(cfg.dataset)]
         cfg.dataset.pop("stage")
@@ -37,7 +38,9 @@ class TrainerContainer(BaseRunner):
         else:
             self.train_dataset = datasets, self.val_dataset = None
 
-        self.logger = get_root_logger(log_file=work_dir, log_level='INFO')
+        self.cfg = cfg
+
+        self.logger = get_root_logger(log_file=self.work_dir, log_level='INFO')
         self.network_type = cfg.network_type
         cfg.model.backbone.in_channels = cfg.input_channel
         cfg.model.backbone.input_size = (cfg.input_width, cfg.input_height)
@@ -47,21 +50,22 @@ class TrainerContainer(BaseRunner):
         self.val_dataloader = self.build_val_loader(cfg)
 
         # build model
-        model = ModelBuilder[self.network_type](cfg.model, train_cfg=cfg.train_cfg, test_cfg=cfg.test_cfg)
-        # choose trainer from tools
+        self.model = ModelBuilder[self.network_type](cfg.model, train_cfg=cfg.train_cfg, test_cfg=cfg.test_cfg)
+        self.mode_info_printer()
+        self.resume_or_load()
 
-        model.cuda()
-        model = create_ddp_model(cfg, model)
-        self.model = model
+        self.model.cuda()
+        self.model = self._build_ddp_model(cfg, self.model)
 
         # build_optimizer
-        optimizer = build_optimizer(cfg, model)
+        optimizer = build_optimizer(cfg, self.model)
+        self.scheduler = self._initialize('lr_scheduler', torch.optim.lr_scheduler, optimizer)
         self.start_epoch = 1
         self.max_epoch = cfg.total_epochs
         self.log_iter = cfg.log_iter
-        self._trainer = TrainerBase(model, self.train_dataloader, optimizer, self.logger)
+        self._trainer = TrainerBase(self.model, self.train_dataloader, optimizer, self.logger, self.scheduler)
 
-        self.cfg = cfg
+        self.metric: dict
 
         self.register_hooks(self.build_hooks())
 
@@ -85,8 +89,31 @@ class TrainerContainer(BaseRunner):
 
         ret.append(hooks.EvalHook(cfg, test_and_save_results))
         if dist.get_rank() == 0:
-            ret.append(hooks.WindowLogger())
+            ret.append(hooks.CheckpointContainer())
         return ret
+
+    def resume_or_load(self):
+        """
+        If `resume==True` and `cfg.OUTPUT_DIR` contains the last checkpoint (defined by
+        a `last_checkpoint` file), resume from the file. Resuming means loading all
+        available states (eg. optimizer and scheduler) and update iteration counter
+        from the checkpoint. ``cfg.MODEL.WEIGHTS`` will not be used.
+
+        Otherwise, this is considered as an independent training. The method will load model
+        weights from the file `cfg.MODEL.WEIGHTS` (but will not load other states) and start
+        from iteration 0.
+
+        Args:
+            resume (bool): whether to do resume or not
+        """
+        if os.path.exists(self.cfg.pretrained):
+            load_checkpoint(self.model, self.cfg.pretrained, map_location='cpu', strict=True)
+            self.logger.info('pretrained checkpoint is loaded.')
+
+    def mode_info_printer(self):
+        model_str = model_info(self.model)
+        self.logger.info(model_str)
+        self.logger.info(self.model)
 
     def run_step(self):
         self._trainer.epoch = self.epoch
@@ -141,12 +168,18 @@ class TrainerContainer(BaseRunner):
         print('\t %2f FPS' % (total_frame / total_time))
         return final_collection
 
+    def _initialize(self, name, module, *args, **kwargs):
+        module_name = self.cfg[name]['type']
+        module_args = self.cfg[name]['args']
+        assert all([k not in module_args for k in kwargs]), 'Overwriting kwargs given in config file is not allowed'
+        module_args.update(kwargs)
+        return getattr(module, module_name)(*args, **module_args)
 
-def create_ddp_model(cfg, model):
-    model = nn.parallel.DistributedDataParallel(model,
-                                                device_ids=[cfg.local_rank, ],
-                                                output_device=cfg.local_rank,
-                                                find_unused_parameters=True
-                                                )
-    return model
-
+    @staticmethod
+    def _build_ddp_model(cfg, model):
+        model = nn.parallel.DistributedDataParallel(model,
+                                                    device_ids=[cfg.local_rank, ],
+                                                    output_device=cfg.local_rank,
+                                                    find_unused_parameters=True
+                                                    )
+        return model

@@ -50,6 +50,6 @@
     "enable": false,
     "mode": "score_cam"
   },
-  "checkpoint_dir": "/home/pupa/PycharmProjects/PupaDetector/outputs"
+  "checkpoint_dir": "/home/pupa/PycharmProjects/cvalgorithms/outputs"
 
 }

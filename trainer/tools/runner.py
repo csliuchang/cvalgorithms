@@ -178,12 +178,13 @@ class TrainerBase(BaseRunner):
     """
     A simple trainer for the most common type of task:
     """
-    def __init__(self, model, dataloader, optimizer, logger):
+    def __init__(self, model, dataloader, optimizer, logger, scheduler):
         super().__init__()
         self.logger = logger
         self.model = model
         self._data_loader_iter = dataloader
         self.optimizer = optimizer
+        self.scheduler = scheduler
         self.max_epoch: int
         self.log_iter: int
 
@@ -205,14 +206,14 @@ class TrainerBase(BaseRunner):
                     if isinstance(value, torch.Tensor):
                         _ground_truth[key] = value.cuda()
             # train model
-
+            self.optimizer.zero_grad()
             loss_dict = self.model(_img, ground_truth=_ground_truth, return_metrics=True)
             losses = loss_dict["loss"]
-            self.optimizer.zero_grad()
             losses.backward()
             losses = losses.detach().cpu().numpy()
             all_losses.append(losses)
             self.optimizer.step()
+            self.scheduler.step()
             if self.global_step % self.log_iter == 0:
                 batch_time = time.time() - start
                 self._write_metrics(batch, count, all_losses, batch_time, logger_batch)

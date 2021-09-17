@@ -75,14 +75,14 @@
     },
     "test_cfg": {
         "nms_pre": 100,
-        "score_thr": 0.5,
+        "score_thr": 0.4,
         "max_per_img": 100,
         "nms": {"type": "rnms",
                      "iou_thr": 0.3
                     },
         "merge_cfg": {
              "nms_pre": 100,
-             "score_thr": 0.5,
+             "score_thr": 0.4,
              "nms": {"type": "rnms",
                      "iou_thr": 0.3
                     },

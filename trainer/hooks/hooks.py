@@ -1,5 +1,7 @@
 from trainer.tools.runner import HookBase
 from utils.metrics import SegEval, RotateDetEval
+import os.path as osp
+from utils import save_checkpoint
 
 
 class EvalHook(HookBase):
@@ -29,15 +31,18 @@ class EvalHook(HookBase):
         pass
 
 
-class WindowLogger(HookBase):
+class CheckpointContainer(HookBase):
     def __init__(self):
         self.metrics = {'precision': 0., 'recall': 0., 'mAP': 0., 'train_loss': float('inf'), 'best_model_epoch': 0}
 
     def after_step(self):
+        self.save_dir = osp.join(self.trainer.work_dir, "checkpoints")
         logger = self.trainer.logger
         precision, recall, mAP = self.trainer.metrics
+        net_save_path_best = osp.join(self.save_dir, 'model_best.pth')
         if mAP > self.metrics["mAP"]:
             self.metrics.update({'precision': precision, 'recall': recall, 'mAP': mAP})
+            save_checkpoint(self.trainer.model, net_save_path_best)
         best_str = 'current best, '
         for k, v in self.metrics.items():
             best_str += '{}: {:.4f}, '.format(k, v)
@@ -46,3 +51,4 @@ class WindowLogger(HookBase):
 
     def after_train(self):
         pass
+

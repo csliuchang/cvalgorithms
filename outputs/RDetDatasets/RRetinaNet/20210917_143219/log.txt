@@ -1,0 +1,282 @@
+[09/17 14:32:19] pupadetector INFO: pretrained checkpoint is loaded.
+[09/17 14:32:22] pupadetector INFO: epochs=>[1/100], pers=>[20/294], training step: 10, running loss: 2.026200, time/pers: 145 ms
+[09/17 14:32:24] pupadetector INFO: epochs=>[1/100], pers=>[40/294], training step: 20, running loss: 1.990134, time/pers: 127 ms
+[09/17 14:32:27] pupadetector INFO: epochs=>[1/100], pers=>[60/294], training step: 30, running loss: 1.946390, time/pers: 122 ms
+[09/17 14:32:29] pupadetector INFO: epochs=>[1/100], pers=>[80/294], training step: 40, running loss: 1.898807, time/pers: 121 ms
+[09/17 14:32:31] pupadetector INFO: epochs=>[1/100], pers=>[100/294], training step: 50, running loss: 1.872358, time/pers: 118 ms
+[09/17 14:32:33] pupadetector INFO: epochs=>[1/100], pers=>[120/294], training step: 60, running loss: 1.840332, time/pers: 117 ms
+[09/17 14:32:36] pupadetector INFO: epochs=>[1/100], pers=>[140/294], training step: 70, running loss: 1.828291, time/pers: 116 ms
+[09/17 14:32:38] pupadetector INFO: epochs=>[1/100], pers=>[160/294], training step: 80, running loss: 1.816288, time/pers: 115 ms
+[09/17 14:32:40] pupadetector INFO: epochs=>[1/100], pers=>[180/294], training step: 90, running loss: 1.810317, time/pers: 115 ms
+[09/17 14:32:42] pupadetector INFO: epochs=>[1/100], pers=>[200/294], training step: 100, running loss: 1.805779, time/pers: 115 ms
+[09/17 14:32:44] pupadetector INFO: epochs=>[1/100], pers=>[220/294], training step: 110, running loss: 1.794700, time/pers: 114 ms
+[09/17 14:32:47] pupadetector INFO: epochs=>[1/100], pers=>[240/294], training step: 120, running loss: 1.795344, time/pers: 114 ms
+[09/17 14:32:49] pupadetector INFO: epochs=>[1/100], pers=>[260/294], training step: 130, running loss: 1.790606, time/pers: 114 ms
+[09/17 14:32:51] pupadetector INFO: epochs=>[1/100], pers=>[280/294], training step: 140, running loss: 1.778883, time/pers: 113 ms
+[09/17 14:33:13] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:33:13] pupadetector INFO: --------------------finish 1 epoch training.--------------------
+[09/17 14:33:14] pupadetector INFO: epochs=>[2/100], pers=>[6/294], training step: 150, running loss: 1.684644, time/pers: 171 ms
+[09/17 14:33:17] pupadetector INFO: epochs=>[2/100], pers=>[26/294], training step: 160, running loss: 1.710560, time/pers: 123 ms
+[09/17 14:33:19] pupadetector INFO: epochs=>[2/100], pers=>[46/294], training step: 170, running loss: 1.722355, time/pers: 118 ms
+[09/17 14:33:21] pupadetector INFO: epochs=>[2/100], pers=>[66/294], training step: 180, running loss: 1.696256, time/pers: 116 ms
+[09/17 14:33:23] pupadetector INFO: epochs=>[2/100], pers=>[86/294], training step: 190, running loss: 1.674862, time/pers: 114 ms
+[09/17 14:33:26] pupadetector INFO: epochs=>[2/100], pers=>[106/294], training step: 200, running loss: 1.668872, time/pers: 114 ms
+[09/17 14:33:28] pupadetector INFO: epochs=>[2/100], pers=>[126/294], training step: 210, running loss: 1.668185, time/pers: 114 ms
+[09/17 14:33:30] pupadetector INFO: epochs=>[2/100], pers=>[146/294], training step: 220, running loss: 1.665814, time/pers: 114 ms
+[09/17 14:33:32] pupadetector INFO: epochs=>[2/100], pers=>[166/294], training step: 230, running loss: 1.670365, time/pers: 114 ms
+[09/17 14:33:35] pupadetector INFO: epochs=>[2/100], pers=>[186/294], training step: 240, running loss: 1.678130, time/pers: 113 ms
+[09/17 14:33:37] pupadetector INFO: epochs=>[2/100], pers=>[206/294], training step: 250, running loss: 1.680390, time/pers: 113 ms
+[09/17 14:33:39] pupadetector INFO: epochs=>[2/100], pers=>[226/294], training step: 260, running loss: 1.683732, time/pers: 113 ms
+[09/17 14:33:41] pupadetector INFO: epochs=>[2/100], pers=>[246/294], training step: 270, running loss: 1.682975, time/pers: 113 ms
+[09/17 14:33:44] pupadetector INFO: epochs=>[2/100], pers=>[266/294], training step: 280, running loss: 1.673751, time/pers: 113 ms
+[09/17 14:33:46] pupadetector INFO: epochs=>[2/100], pers=>[286/294], training step: 290, running loss: 1.673111, time/pers: 113 ms
+[09/17 14:33:52] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:33:52] pupadetector INFO: --------------------finish 2 epoch training.--------------------
+[09/17 14:33:54] pupadetector INFO: epochs=>[3/100], pers=>[12/294], training step: 300, running loss: 1.623311, time/pers: 134 ms
+[09/17 14:33:56] pupadetector INFO: epochs=>[3/100], pers=>[32/294], training step: 310, running loss: 1.615656, time/pers: 118 ms
+[09/17 14:33:58] pupadetector INFO: epochs=>[3/100], pers=>[52/294], training step: 320, running loss: 1.683294, time/pers: 114 ms
+[09/17 14:34:01] pupadetector INFO: epochs=>[3/100], pers=>[72/294], training step: 330, running loss: 1.703149, time/pers: 113 ms
+[09/17 14:34:03] pupadetector INFO: epochs=>[3/100], pers=>[92/294], training step: 340, running loss: 1.707360, time/pers: 116 ms
+[09/17 14:34:06] pupadetector INFO: epochs=>[3/100], pers=>[112/294], training step: 350, running loss: 1.700070, time/pers: 120 ms
+[09/17 14:34:09] pupadetector INFO: epochs=>[3/100], pers=>[132/294], training step: 360, running loss: 1.695260, time/pers: 124 ms
+[09/17 14:34:12] pupadetector INFO: epochs=>[3/100], pers=>[152/294], training step: 370, running loss: 1.685456, time/pers: 126 ms
+[09/17 14:34:14] pupadetector INFO: epochs=>[3/100], pers=>[172/294], training step: 380, running loss: 1.680085, time/pers: 124 ms
+[09/17 14:34:16] pupadetector INFO: epochs=>[3/100], pers=>[192/294], training step: 390, running loss: 1.682211, time/pers: 122 ms
+[09/17 14:34:18] pupadetector INFO: epochs=>[3/100], pers=>[212/294], training step: 400, running loss: 1.676271, time/pers: 121 ms
+[09/17 14:34:20] pupadetector INFO: epochs=>[3/100], pers=>[232/294], training step: 410, running loss: 1.684533, time/pers: 120 ms
+[09/17 14:34:23] pupadetector INFO: epochs=>[3/100], pers=>[252/294], training step: 420, running loss: 1.691551, time/pers: 119 ms
+[09/17 14:34:25] pupadetector INFO: epochs=>[3/100], pers=>[272/294], training step: 430, running loss: 1.685006, time/pers: 119 ms
+[09/17 14:34:27] pupadetector INFO: epochs=>[3/100], pers=>[292/294], training step: 440, running loss: 1.681657, time/pers: 118 ms
+[09/17 14:34:33] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:34:33] pupadetector INFO: --------------------finish 3 epoch training.--------------------
+[09/17 14:34:36] pupadetector INFO: epochs=>[4/100], pers=>[18/294], training step: 450, running loss: 1.621395, time/pers: 126 ms
+[09/17 14:34:38] pupadetector INFO: epochs=>[4/100], pers=>[38/294], training step: 460, running loss: 1.609443, time/pers: 125 ms
+[09/17 14:34:41] pupadetector INFO: epochs=>[4/100], pers=>[58/294], training step: 470, running loss: 1.613154, time/pers: 123 ms
+[09/17 14:34:43] pupadetector INFO: epochs=>[4/100], pers=>[78/294], training step: 480, running loss: 1.600040, time/pers: 119 ms
+[09/17 14:34:45] pupadetector INFO: epochs=>[4/100], pers=>[98/294], training step: 490, running loss: 1.595585, time/pers: 117 ms
+[09/17 14:34:47] pupadetector INFO: epochs=>[4/100], pers=>[118/294], training step: 500, running loss: 1.599611, time/pers: 117 ms
+[09/17 14:34:50] pupadetector INFO: epochs=>[4/100], pers=>[138/294], training step: 510, running loss: 1.601593, time/pers: 117 ms
+[09/17 14:34:52] pupadetector INFO: epochs=>[4/100], pers=>[158/294], training step: 520, running loss: 1.603064, time/pers: 116 ms
+[09/17 14:34:54] pupadetector INFO: epochs=>[4/100], pers=>[178/294], training step: 530, running loss: 1.607210, time/pers: 116 ms
+[09/17 14:34:56] pupadetector INFO: epochs=>[4/100], pers=>[198/294], training step: 540, running loss: 1.612310, time/pers: 115 ms
+[09/17 14:34:58] pupadetector INFO: epochs=>[4/100], pers=>[218/294], training step: 550, running loss: 1.614497, time/pers: 115 ms
+[09/17 14:35:01] pupadetector INFO: epochs=>[4/100], pers=>[238/294], training step: 560, running loss: 1.626390, time/pers: 114 ms
+[09/17 14:35:03] pupadetector INFO: epochs=>[4/100], pers=>[258/294], training step: 570, running loss: 1.630049, time/pers: 114 ms
+[09/17 14:35:05] pupadetector INFO: epochs=>[4/100], pers=>[278/294], training step: 580, running loss: 1.623378, time/pers: 114 ms
+[09/17 14:35:13] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:35:13] pupadetector INFO: --------------------finish 4 epoch training.--------------------
+[09/17 14:35:13] pupadetector INFO: epochs=>[5/100], pers=>[4/294], training step: 590, running loss: 1.584061, time/pers: 190 ms
+[09/17 14:35:16] pupadetector INFO: epochs=>[5/100], pers=>[24/294], training step: 600, running loss: 1.586251, time/pers: 122 ms
+[09/17 14:35:18] pupadetector INFO: epochs=>[5/100], pers=>[44/294], training step: 610, running loss: 1.642116, time/pers: 122 ms
+[09/17 14:35:21] pupadetector INFO: epochs=>[5/100], pers=>[64/294], training step: 620, running loss: 1.690210, time/pers: 122 ms
+[09/17 14:35:23] pupadetector INFO: epochs=>[5/100], pers=>[84/294], training step: 630, running loss: 1.702972, time/pers: 122 ms
+[09/17 14:35:26] pupadetector INFO: epochs=>[5/100], pers=>[104/294], training step: 640, running loss: 1.687524, time/pers: 123 ms
+[09/17 14:35:28] pupadetector INFO: epochs=>[5/100], pers=>[124/294], training step: 650, running loss: 1.684310, time/pers: 122 ms
+[09/17 14:35:30] pupadetector INFO: epochs=>[5/100], pers=>[144/294], training step: 660, running loss: 1.676027, time/pers: 120 ms
+[09/17 14:35:32] pupadetector INFO: epochs=>[5/100], pers=>[164/294], training step: 670, running loss: 1.674439, time/pers: 119 ms
+[09/17 14:35:35] pupadetector INFO: epochs=>[5/100], pers=>[184/294], training step: 680, running loss: 1.675804, time/pers: 118 ms
+[09/17 14:35:37] pupadetector INFO: epochs=>[5/100], pers=>[204/294], training step: 690, running loss: 1.670479, time/pers: 117 ms
+[09/17 14:35:39] pupadetector INFO: epochs=>[5/100], pers=>[224/294], training step: 700, running loss: 1.667895, time/pers: 116 ms
+[09/17 14:35:41] pupadetector INFO: epochs=>[5/100], pers=>[244/294], training step: 710, running loss: 1.666280, time/pers: 116 ms
+[09/17 14:35:43] pupadetector INFO: epochs=>[5/100], pers=>[264/294], training step: 720, running loss: 1.661873, time/pers: 116 ms
+[09/17 14:35:46] pupadetector INFO: epochs=>[5/100], pers=>[284/294], training step: 730, running loss: 1.656295, time/pers: 116 ms
+[09/17 14:35:52] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:35:52] pupadetector INFO: --------------------finish 5 epoch training.--------------------
+[09/17 14:35:54] pupadetector INFO: epochs=>[6/100], pers=>[10/294], training step: 740, running loss: 1.595811, time/pers: 144 ms
+[09/17 14:35:56] pupadetector INFO: epochs=>[6/100], pers=>[30/294], training step: 750, running loss: 1.594983, time/pers: 123 ms
+[09/17 14:35:58] pupadetector INFO: epochs=>[6/100], pers=>[50/294], training step: 760, running loss: 1.635133, time/pers: 117 ms
+[09/17 14:36:00] pupadetector INFO: epochs=>[6/100], pers=>[70/294], training step: 770, running loss: 1.647385, time/pers: 116 ms
+[09/17 14:36:03] pupadetector INFO: epochs=>[6/100], pers=>[90/294], training step: 780, running loss: 1.636309, time/pers: 114 ms
+[09/17 14:36:05] pupadetector INFO: epochs=>[6/100], pers=>[110/294], training step: 790, running loss: 1.627376, time/pers: 114 ms
+[09/17 14:36:07] pupadetector INFO: epochs=>[6/100], pers=>[130/294], training step: 800, running loss: 1.626513, time/pers: 114 ms
+[09/17 14:36:10] pupadetector INFO: epochs=>[6/100], pers=>[150/294], training step: 810, running loss: 1.615613, time/pers: 115 ms
+[09/17 14:36:12] pupadetector INFO: epochs=>[6/100], pers=>[170/294], training step: 820, running loss: 1.616517, time/pers: 114 ms
+[09/17 14:36:14] pupadetector INFO: epochs=>[6/100], pers=>[190/294], training step: 830, running loss: 1.629737, time/pers: 115 ms
+[09/17 14:36:17] pupadetector INFO: epochs=>[6/100], pers=>[210/294], training step: 840, running loss: 1.640143, time/pers: 115 ms
+[09/17 14:36:19] pupadetector INFO: epochs=>[6/100], pers=>[230/294], training step: 850, running loss: 1.642734, time/pers: 115 ms
+[09/17 14:36:21] pupadetector INFO: epochs=>[6/100], pers=>[250/294], training step: 860, running loss: 1.646608, time/pers: 114 ms
+[09/17 14:36:23] pupadetector INFO: epochs=>[6/100], pers=>[270/294], training step: 870, running loss: 1.640387, time/pers: 114 ms
+[09/17 14:36:25] pupadetector INFO: epochs=>[6/100], pers=>[290/294], training step: 880, running loss: 1.636958, time/pers: 114 ms
+[09/17 14:36:32] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:36:32] pupadetector INFO: --------------------finish 6 epoch training.--------------------
+[09/17 14:36:34] pupadetector INFO: epochs=>[7/100], pers=>[16/294], training step: 890, running loss: 1.660559, time/pers: 129 ms
+[09/17 14:36:36] pupadetector INFO: epochs=>[7/100], pers=>[36/294], training step: 900, running loss: 1.616387, time/pers: 116 ms
+[09/17 14:36:38] pupadetector INFO: epochs=>[7/100], pers=>[56/294], training step: 910, running loss: 1.605249, time/pers: 114 ms
+[09/17 14:36:40] pupadetector INFO: epochs=>[7/100], pers=>[76/294], training step: 920, running loss: 1.571897, time/pers: 114 ms
+[09/17 14:36:43] pupadetector INFO: epochs=>[7/100], pers=>[96/294], training step: 930, running loss: 1.558740, time/pers: 114 ms
+[09/17 14:36:45] pupadetector INFO: epochs=>[7/100], pers=>[116/294], training step: 940, running loss: 1.556524, time/pers: 114 ms
+[09/17 14:36:47] pupadetector INFO: epochs=>[7/100], pers=>[136/294], training step: 950, running loss: 1.555697, time/pers: 116 ms
+[09/17 14:36:50] pupadetector INFO: epochs=>[7/100], pers=>[156/294], training step: 960, running loss: 1.560389, time/pers: 116 ms
+[09/17 14:36:52] pupadetector INFO: epochs=>[7/100], pers=>[176/294], training step: 970, running loss: 1.562113, time/pers: 116 ms
+[09/17 14:36:54] pupadetector INFO: epochs=>[7/100], pers=>[196/294], training step: 980, running loss: 1.570966, time/pers: 115 ms
+[09/17 14:36:56] pupadetector INFO: epochs=>[7/100], pers=>[216/294], training step: 990, running loss: 1.575892, time/pers: 115 ms
+[09/17 14:36:59] pupadetector INFO: epochs=>[7/100], pers=>[236/294], training step: 1000, running loss: 1.591971, time/pers: 114 ms
+[09/17 14:37:01] pupadetector INFO: epochs=>[7/100], pers=>[256/294], training step: 1010, running loss: 1.600313, time/pers: 114 ms
+[09/17 14:37:03] pupadetector INFO: epochs=>[7/100], pers=>[276/294], training step: 1020, running loss: 1.599387, time/pers: 114 ms
+[09/17 14:37:11] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:37:11] pupadetector INFO: --------------------finish 7 epoch training.--------------------
+[09/17 14:37:12] pupadetector INFO: epochs=>[8/100], pers=>[2/294], training step: 1030, running loss: 1.629081, time/pers: 254 ms
+[09/17 14:37:14] pupadetector INFO: epochs=>[8/100], pers=>[22/294], training step: 1040, running loss: 1.651133, time/pers: 121 ms
+[09/17 14:37:16] pupadetector INFO: epochs=>[8/100], pers=>[42/294], training step: 1050, running loss: 1.640115, time/pers: 120 ms
+[09/17 14:37:19] pupadetector INFO: epochs=>[8/100], pers=>[62/294], training step: 1060, running loss: 1.644054, time/pers: 121 ms
+[09/17 14:37:21] pupadetector INFO: epochs=>[8/100], pers=>[82/294], training step: 1070, running loss: 1.617244, time/pers: 120 ms
+[09/17 14:37:24] pupadetector INFO: epochs=>[8/100], pers=>[102/294], training step: 1080, running loss: 1.597025, time/pers: 119 ms
+[09/17 14:37:26] pupadetector INFO: epochs=>[8/100], pers=>[122/294], training step: 1090, running loss: 1.585772, time/pers: 118 ms
+[09/17 14:37:28] pupadetector INFO: epochs=>[8/100], pers=>[142/294], training step: 1100, running loss: 1.585366, time/pers: 117 ms
+[09/17 14:37:30] pupadetector INFO: epochs=>[8/100], pers=>[162/294], training step: 1110, running loss: 1.582679, time/pers: 117 ms
+[09/17 14:37:33] pupadetector INFO: epochs=>[8/100], pers=>[182/294], training step: 1120, running loss: 1.597419, time/pers: 117 ms
+[09/17 14:37:35] pupadetector INFO: epochs=>[8/100], pers=>[202/294], training step: 1130, running loss: 1.605336, time/pers: 116 ms
+[09/17 14:37:37] pupadetector INFO: epochs=>[8/100], pers=>[222/294], training step: 1140, running loss: 1.617700, time/pers: 116 ms
+[09/17 14:37:40] pupadetector INFO: epochs=>[8/100], pers=>[242/294], training step: 1150, running loss: 1.622455, time/pers: 116 ms
+[09/17 14:37:42] pupadetector INFO: epochs=>[8/100], pers=>[262/294], training step: 1160, running loss: 1.621107, time/pers: 116 ms
+[09/17 14:37:44] pupadetector INFO: epochs=>[8/100], pers=>[282/294], training step: 1170, running loss: 1.617872, time/pers: 116 ms
+[09/17 14:37:57] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:37:57] pupadetector INFO: --------------------finish 8 epoch training.--------------------
+[09/17 14:37:58] pupadetector INFO: epochs=>[9/100], pers=>[8/294], training step: 1180, running loss: 1.577593, time/pers: 150 ms
+[09/17 14:38:00] pupadetector INFO: epochs=>[9/100], pers=>[28/294], training step: 1190, running loss: 1.590439, time/pers: 121 ms
+[09/17 14:38:02] pupadetector INFO: epochs=>[9/100], pers=>[48/294], training step: 1200, running loss: 1.605424, time/pers: 117 ms
+[09/17 14:38:05] pupadetector INFO: epochs=>[9/100], pers=>[68/294], training step: 1210, running loss: 1.593523, time/pers: 117 ms
+[09/17 14:38:07] pupadetector INFO: epochs=>[9/100], pers=>[88/294], training step: 1220, running loss: 1.577887, time/pers: 116 ms
+[09/17 14:38:09] pupadetector INFO: epochs=>[9/100], pers=>[108/294], training step: 1230, running loss: 1.564736, time/pers: 115 ms
+[09/17 14:38:11] pupadetector INFO: epochs=>[9/100], pers=>[128/294], training step: 1240, running loss: 1.561904, time/pers: 115 ms
+[09/17 14:38:14] pupadetector INFO: epochs=>[9/100], pers=>[148/294], training step: 1250, running loss: 1.563515, time/pers: 115 ms
+[09/17 14:38:16] pupadetector INFO: epochs=>[9/100], pers=>[168/294], training step: 1260, running loss: 1.559709, time/pers: 115 ms
+[09/17 14:38:18] pupadetector INFO: epochs=>[9/100], pers=>[188/294], training step: 1270, running loss: 1.563152, time/pers: 114 ms
+[09/17 14:38:20] pupadetector INFO: epochs=>[9/100], pers=>[208/294], training step: 1280, running loss: 1.565869, time/pers: 113 ms
+[09/17 14:38:23] pupadetector INFO: epochs=>[9/100], pers=>[228/294], training step: 1290, running loss: 1.568735, time/pers: 113 ms
+[09/17 14:38:25] pupadetector INFO: epochs=>[9/100], pers=>[248/294], training step: 1300, running loss: 1.569990, time/pers: 113 ms
+[09/17 14:38:27] pupadetector INFO: epochs=>[9/100], pers=>[268/294], training step: 1310, running loss: 1.566166, time/pers: 113 ms
+[09/17 14:38:29] pupadetector INFO: epochs=>[9/100], pers=>[288/294], training step: 1320, running loss: 1.562061, time/pers: 113 ms
+[09/17 14:43:52] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:43:52] pupadetector INFO: --------------------finish 9 epoch training.--------------------
+[09/17 14:43:54] pupadetector INFO: epochs=>[10/100], pers=>[14/294], training step: 1330, running loss: 1.525036, time/pers: 132 ms
+[09/17 14:43:56] pupadetector INFO: epochs=>[10/100], pers=>[34/294], training step: 1340, running loss: 1.559964, time/pers: 118 ms
+[09/17 14:43:58] pupadetector INFO: epochs=>[10/100], pers=>[54/294], training step: 1350, running loss: 1.545324, time/pers: 116 ms
+[09/17 14:44:01] pupadetector INFO: epochs=>[10/100], pers=>[74/294], training step: 1360, running loss: 1.533100, time/pers: 114 ms
+[09/17 14:44:03] pupadetector INFO: epochs=>[10/100], pers=>[94/294], training step: 1370, running loss: 1.523197, time/pers: 112 ms
+[09/17 14:44:05] pupadetector INFO: epochs=>[10/100], pers=>[114/294], training step: 1380, running loss: 1.519581, time/pers: 113 ms
+[09/17 14:44:07] pupadetector INFO: epochs=>[10/100], pers=>[134/294], training step: 1390, running loss: 1.516585, time/pers: 113 ms
+[09/17 14:44:09] pupadetector INFO: epochs=>[10/100], pers=>[154/294], training step: 1400, running loss: 1.521130, time/pers: 112 ms
+[09/17 14:44:12] pupadetector INFO: epochs=>[10/100], pers=>[174/294], training step: 1410, running loss: 1.522746, time/pers: 112 ms
+[09/17 14:44:14] pupadetector INFO: epochs=>[10/100], pers=>[194/294], training step: 1420, running loss: 1.527473, time/pers: 113 ms
+[09/17 14:44:16] pupadetector INFO: epochs=>[10/100], pers=>[214/294], training step: 1430, running loss: 1.527572, time/pers: 113 ms
+[09/17 14:44:19] pupadetector INFO: epochs=>[10/100], pers=>[234/294], training step: 1440, running loss: 1.531629, time/pers: 113 ms
+[09/17 14:44:21] pupadetector INFO: epochs=>[10/100], pers=>[254/294], training step: 1450, running loss: 1.533466, time/pers: 113 ms
+[09/17 14:44:23] pupadetector INFO: epochs=>[10/100], pers=>[274/294], training step: 1460, running loss: 1.528657, time/pers: 113 ms
+[09/17 14:44:25] pupadetector INFO: epochs=>[10/100], pers=>[294/294], training step: 1470, running loss: 1.525368, time/pers: 113 ms
+[09/17 14:44:34] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:44:34] pupadetector INFO: --------------------finish 10 epoch training.--------------------
+[09/17 14:44:37] pupadetector INFO: epochs=>[11/100], pers=>[20/294], training step: 1480, running loss: 1.557576, time/pers: 123 ms
+[09/17 14:44:39] pupadetector INFO: epochs=>[11/100], pers=>[40/294], training step: 1490, running loss: 1.540631, time/pers: 114 ms
+[09/17 14:44:41] pupadetector INFO: epochs=>[11/100], pers=>[60/294], training step: 1500, running loss: 1.531829, time/pers: 112 ms
+[09/17 14:44:43] pupadetector INFO: epochs=>[11/100], pers=>[80/294], training step: 1510, running loss: 1.507087, time/pers: 111 ms
+[09/17 14:44:45] pupadetector INFO: epochs=>[11/100], pers=>[100/294], training step: 1520, running loss: 1.500670, time/pers: 110 ms
+[09/17 14:44:48] pupadetector INFO: epochs=>[11/100], pers=>[120/294], training step: 1530, running loss: 1.494082, time/pers: 110 ms
+[09/17 14:44:50] pupadetector INFO: epochs=>[11/100], pers=>[140/294], training step: 1540, running loss: 1.488437, time/pers: 110 ms
+[09/17 14:44:52] pupadetector INFO: epochs=>[11/100], pers=>[160/294], training step: 1550, running loss: 1.492496, time/pers: 110 ms
+[09/17 14:44:54] pupadetector INFO: epochs=>[11/100], pers=>[180/294], training step: 1560, running loss: 1.497524, time/pers: 110 ms
+[09/17 14:44:56] pupadetector INFO: epochs=>[11/100], pers=>[200/294], training step: 1570, running loss: 1.519333, time/pers: 109 ms
+[09/17 14:44:59] pupadetector INFO: epochs=>[11/100], pers=>[220/294], training step: 1580, running loss: 1.529126, time/pers: 110 ms
+[09/17 14:45:01] pupadetector INFO: epochs=>[11/100], pers=>[240/294], training step: 1590, running loss: 1.535305, time/pers: 111 ms
+[09/17 14:45:03] pupadetector INFO: epochs=>[11/100], pers=>[260/294], training step: 1600, running loss: 1.537289, time/pers: 111 ms
+[09/17 14:45:06] pupadetector INFO: epochs=>[11/100], pers=>[280/294], training step: 1610, running loss: 1.533854, time/pers: 111 ms
+[09/17 14:45:13] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:45:13] pupadetector INFO: --------------------finish 11 epoch training.--------------------
+[09/17 14:45:14] pupadetector INFO: epochs=>[12/100], pers=>[6/294], training step: 1620, running loss: 1.504955, time/pers: 161 ms
+[09/17 14:45:16] pupadetector INFO: epochs=>[12/100], pers=>[26/294], training step: 1630, running loss: 1.517296, time/pers: 125 ms
+[09/17 14:45:18] pupadetector INFO: epochs=>[12/100], pers=>[46/294], training step: 1640, running loss: 1.524273, time/pers: 123 ms
+[09/17 14:45:21] pupadetector INFO: epochs=>[12/100], pers=>[66/294], training step: 1650, running loss: 1.502941, time/pers: 122 ms
+[09/17 14:45:23] pupadetector INFO: epochs=>[12/100], pers=>[86/294], training step: 1660, running loss: 1.484226, time/pers: 121 ms
+[09/17 14:45:25] pupadetector INFO: epochs=>[12/100], pers=>[106/294], training step: 1670, running loss: 1.483171, time/pers: 119 ms
+[09/17 14:45:28] pupadetector INFO: epochs=>[12/100], pers=>[126/294], training step: 1680, running loss: 1.482004, time/pers: 118 ms
+[09/17 14:45:30] pupadetector INFO: epochs=>[12/100], pers=>[146/294], training step: 1690, running loss: 1.475774, time/pers: 116 ms
+[09/17 14:45:32] pupadetector INFO: epochs=>[12/100], pers=>[166/294], training step: 1700, running loss: 1.483932, time/pers: 116 ms
+[09/17 14:45:34] pupadetector INFO: epochs=>[12/100], pers=>[186/294], training step: 1710, running loss: 1.488560, time/pers: 114 ms
+[09/17 14:45:36] pupadetector INFO: epochs=>[12/100], pers=>[206/294], training step: 1720, running loss: 1.491864, time/pers: 114 ms
+[09/17 14:45:38] pupadetector INFO: epochs=>[12/100], pers=>[226/294], training step: 1730, running loss: 1.495152, time/pers: 114 ms
+[09/17 14:45:41] pupadetector INFO: epochs=>[12/100], pers=>[246/294], training step: 1740, running loss: 1.493333, time/pers: 113 ms
+[09/17 14:45:43] pupadetector INFO: epochs=>[12/100], pers=>[266/294], training step: 1750, running loss: 1.490691, time/pers: 113 ms
+[09/17 14:45:45] pupadetector INFO: epochs=>[12/100], pers=>[286/294], training step: 1760, running loss: 1.489229, time/pers: 114 ms
+[09/17 14:45:52] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:45:52] pupadetector INFO: --------------------finish 12 epoch training.--------------------
+[09/17 14:45:53] pupadetector INFO: epochs=>[13/100], pers=>[12/294], training step: 1770, running loss: 1.492026, time/pers: 134 ms
+[09/17 14:45:55] pupadetector INFO: epochs=>[13/100], pers=>[32/294], training step: 1780, running loss: 1.501914, time/pers: 121 ms
+[09/17 14:45:58] pupadetector INFO: epochs=>[13/100], pers=>[52/294], training step: 1790, running loss: 1.486789, time/pers: 117 ms
+[09/17 14:46:00] pupadetector INFO: epochs=>[13/100], pers=>[72/294], training step: 1800, running loss: 1.472837, time/pers: 115 ms
+[09/17 14:46:02] pupadetector INFO: epochs=>[13/100], pers=>[92/294], training step: 1810, running loss: 1.453892, time/pers: 113 ms
+[09/17 14:46:04] pupadetector INFO: epochs=>[13/100], pers=>[112/294], training step: 1820, running loss: 1.454265, time/pers: 112 ms
+[09/17 14:46:06] pupadetector INFO: epochs=>[13/100], pers=>[132/294], training step: 1830, running loss: 1.451329, time/pers: 112 ms
+[09/17 14:46:09] pupadetector INFO: epochs=>[13/100], pers=>[152/294], training step: 1840, running loss: 1.448419, time/pers: 112 ms
+[09/17 14:46:11] pupadetector INFO: epochs=>[13/100], pers=>[172/294], training step: 1850, running loss: 1.451735, time/pers: 112 ms
+[09/17 14:46:13] pupadetector INFO: epochs=>[13/100], pers=>[192/294], training step: 1860, running loss: 1.460296, time/pers: 113 ms
+[09/17 14:46:15] pupadetector INFO: epochs=>[13/100], pers=>[212/294], training step: 1870, running loss: 1.466659, time/pers: 112 ms
+[09/17 14:46:18] pupadetector INFO: epochs=>[13/100], pers=>[232/294], training step: 1880, running loss: 1.471307, time/pers: 113 ms
+[09/17 14:46:20] pupadetector INFO: epochs=>[13/100], pers=>[252/294], training step: 1890, running loss: 1.470067, time/pers: 113 ms
+[09/17 14:46:22] pupadetector INFO: epochs=>[13/100], pers=>[272/294], training step: 1900, running loss: 1.466060, time/pers: 113 ms
+[09/17 14:46:25] pupadetector INFO: epochs=>[13/100], pers=>[292/294], training step: 1910, running loss: 1.466081, time/pers: 112 ms
+[09/17 14:46:30] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:46:30] pupadetector INFO: --------------------finish 13 epoch training.--------------------
+[09/17 14:46:33] pupadetector INFO: epochs=>[14/100], pers=>[18/294], training step: 1920, running loss: 1.538760, time/pers: 126 ms
+[09/17 14:46:35] pupadetector INFO: epochs=>[14/100], pers=>[38/294], training step: 1930, running loss: 1.502785, time/pers: 117 ms
+[09/17 14:46:37] pupadetector INFO: epochs=>[14/100], pers=>[58/294], training step: 1940, running loss: 1.507209, time/pers: 117 ms
+[09/17 14:46:39] pupadetector INFO: epochs=>[14/100], pers=>[78/294], training step: 1950, running loss: 1.479100, time/pers: 117 ms
+[09/17 14:46:42] pupadetector INFO: epochs=>[14/100], pers=>[98/294], training step: 1960, running loss: 1.464194, time/pers: 116 ms
+[09/17 14:46:44] pupadetector INFO: epochs=>[14/100], pers=>[118/294], training step: 1970, running loss: 1.466187, time/pers: 117 ms
+[09/17 14:46:46] pupadetector INFO: epochs=>[14/100], pers=>[138/294], training step: 1980, running loss: 1.457939, time/pers: 117 ms
+[09/17 14:46:49] pupadetector INFO: epochs=>[14/100], pers=>[158/294], training step: 1990, running loss: 1.461105, time/pers: 116 ms
+[09/17 14:46:51] pupadetector INFO: epochs=>[14/100], pers=>[178/294], training step: 2000, running loss: 1.463697, time/pers: 116 ms
+[09/17 14:46:53] pupadetector INFO: epochs=>[14/100], pers=>[198/294], training step: 2010, running loss: 1.471827, time/pers: 115 ms
+[09/17 14:46:55] pupadetector INFO: epochs=>[14/100], pers=>[218/294], training step: 2020, running loss: 1.479845, time/pers: 115 ms
+[09/17 14:46:58] pupadetector INFO: epochs=>[14/100], pers=>[238/294], training step: 2030, running loss: 1.481479, time/pers: 116 ms
+[09/17 14:47:00] pupadetector INFO: epochs=>[14/100], pers=>[258/294], training step: 2040, running loss: 1.478266, time/pers: 116 ms
+[09/17 14:47:03] pupadetector INFO: epochs=>[14/100], pers=>[278/294], training step: 2050, running loss: 1.474067, time/pers: 116 ms
+[09/17 14:49:46] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:49:46] pupadetector INFO: --------------------finish 14 epoch training.--------------------
+[09/17 14:49:47] pupadetector INFO: epochs=>[15/100], pers=>[4/294], training step: 2060, running loss: 1.458522, time/pers: 184 ms
+[09/17 14:49:49] pupadetector INFO: epochs=>[15/100], pers=>[24/294], training step: 2070, running loss: 1.466870, time/pers: 121 ms
+[09/17 14:49:51] pupadetector INFO: epochs=>[15/100], pers=>[44/294], training step: 2080, running loss: 1.467472, time/pers: 115 ms
+[09/17 14:49:53] pupadetector INFO: epochs=>[15/100], pers=>[64/294], training step: 2090, running loss: 1.455052, time/pers: 113 ms
+[09/17 14:49:56] pupadetector INFO: epochs=>[15/100], pers=>[84/294], training step: 2100, running loss: 1.438198, time/pers: 112 ms
+[09/17 14:49:58] pupadetector INFO: epochs=>[15/100], pers=>[104/294], training step: 2110, running loss: 1.430850, time/pers: 111 ms
+[09/17 14:50:00] pupadetector INFO: epochs=>[15/100], pers=>[124/294], training step: 2120, running loss: 1.437851, time/pers: 111 ms
+[09/17 14:50:02] pupadetector INFO: epochs=>[15/100], pers=>[144/294], training step: 2130, running loss: 1.426266, time/pers: 110 ms
+[09/17 14:50:04] pupadetector INFO: epochs=>[15/100], pers=>[164/294], training step: 2140, running loss: 1.434154, time/pers: 111 ms
+[09/17 14:50:07] pupadetector INFO: epochs=>[15/100], pers=>[184/294], training step: 2150, running loss: 1.442715, time/pers: 110 ms
+[09/17 14:50:09] pupadetector INFO: epochs=>[15/100], pers=>[204/294], training step: 2160, running loss: 1.443226, time/pers: 111 ms
+[09/17 14:50:11] pupadetector INFO: epochs=>[15/100], pers=>[224/294], training step: 2170, running loss: 1.447310, time/pers: 111 ms
+[09/17 14:50:13] pupadetector INFO: epochs=>[15/100], pers=>[244/294], training step: 2180, running loss: 1.445794, time/pers: 111 ms
+[09/17 14:50:15] pupadetector INFO: epochs=>[15/100], pers=>[264/294], training step: 2190, running loss: 1.442359, time/pers: 110 ms
+[09/17 14:50:18] pupadetector INFO: epochs=>[15/100], pers=>[284/294], training step: 2200, running loss: 1.440935, time/pers: 110 ms
+[09/17 14:51:47] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:51:47] pupadetector INFO: --------------------finish 15 epoch training.--------------------
+[09/17 14:51:48] pupadetector INFO: epochs=>[16/100], pers=>[10/294], training step: 2210, running loss: 1.420272, time/pers: 143 ms
+[09/17 14:51:50] pupadetector INFO: epochs=>[16/100], pers=>[30/294], training step: 2220, running loss: 1.442936, time/pers: 121 ms
+[09/17 14:51:52] pupadetector INFO: epochs=>[16/100], pers=>[50/294], training step: 2230, running loss: 1.449287, time/pers: 116 ms
+[09/17 14:51:55] pupadetector INFO: epochs=>[16/100], pers=>[70/294], training step: 2240, running loss: 1.436482, time/pers: 115 ms
+[09/17 14:51:57] pupadetector INFO: epochs=>[16/100], pers=>[90/294], training step: 2250, running loss: 1.417486, time/pers: 113 ms
+[09/17 14:51:59] pupadetector INFO: epochs=>[16/100], pers=>[110/294], training step: 2260, running loss: 1.416474, time/pers: 113 ms
+[09/17 14:52:01] pupadetector INFO: epochs=>[16/100], pers=>[130/294], training step: 2270, running loss: 1.413614, time/pers: 113 ms
+[09/17 14:52:04] pupadetector INFO: epochs=>[16/100], pers=>[150/294], training step: 2280, running loss: 1.412997, time/pers: 114 ms
+[09/17 14:52:06] pupadetector INFO: epochs=>[16/100], pers=>[170/294], training step: 2290, running loss: 1.416356, time/pers: 116 ms
+[09/17 14:52:09] pupadetector INFO: epochs=>[16/100], pers=>[190/294], training step: 2300, running loss: 1.426748, time/pers: 115 ms
+[09/17 14:52:11] pupadetector INFO: epochs=>[16/100], pers=>[210/294], training step: 2310, running loss: 1.435540, time/pers: 114 ms
+[09/17 14:52:13] pupadetector INFO: epochs=>[16/100], pers=>[230/294], training step: 2320, running loss: 1.436012, time/pers: 114 ms
+[09/17 14:52:16] pupadetector INFO: epochs=>[16/100], pers=>[250/294], training step: 2330, running loss: 1.435932, time/pers: 115 ms
+[09/17 14:52:18] pupadetector INFO: epochs=>[16/100], pers=>[270/294], training step: 2340, running loss: 1.432049, time/pers: 115 ms
+[09/17 14:52:20] pupadetector INFO: epochs=>[16/100], pers=>[290/294], training step: 2350, running loss: 1.430145, time/pers: 114 ms
+[09/17 14:54:57] pupadetector INFO: current best, precision: 0.0000, recall: 0.0000, mAP: 0.0000, train_loss: inf, best_model_epoch: 0.0000, 
+[09/17 14:54:57] pupadetector INFO: --------------------finish 16 epoch training.--------------------
+[09/17 14:54:59] pupadetector INFO: epochs=>[17/100], pers=>[16/294], training step: 2360, running loss: 1.498629, time/pers: 132 ms
+[09/17 14:55:02] pupadetector INFO: epochs=>[17/100], pers=>[36/294], training step: 2370, running loss: 1.448566, time/pers: 117 ms
+[09/17 14:55:04] pupadetector INFO: epochs=>[17/100], pers=>[56/294], training step: 2380, running loss: 1.430226, time/pers: 115 ms
+[09/17 14:55:06] pupadetector INFO: epochs=>[17/100], pers=>[76/294], training step: 2390, running loss: 1.408429, time/pers: 114 ms
+[09/17 14:55:08] pupadetector INFO: epochs=>[17/100], pers=>[96/294], training step: 2400, running loss: 1.391882, time/pers: 112 ms
+[09/17 14:55:10] pupadetector INFO: epochs=>[17/100], pers=>[116/294], training step: 2410, running loss: 1.393312, time/pers: 112 ms
+[09/17 14:55:13] pupadetector INFO: epochs=>[17/100], pers=>[136/294], training step: 2420, running loss: 1.389858, time/pers: 112 ms
+[09/17 14:55:15] pupadetector INFO: epochs=>[17/100], pers=>[156/294], training step: 2430, running loss: 1.398783, time/pers: 111 ms
+[09/17 14:55:17] pupadetector INFO: epochs=>[17/100], pers=>[176/294], training step: 2440, running loss: 1.402331, time/pers: 111 ms
+[09/17 14:55:19] pupadetector INFO: epochs=>[17/100], pers=>[196/294], training step: 2450, running loss: 1.413604, time/pers: 110 ms
+[09/17 14:55:21] pupadetector INFO: epochs=>[17/100], pers=>[216/294], training step: 2460, running loss: 1.423069, time/pers: 111 ms
+[09/17 14:55:24] pupadetector INFO: epochs=>[17/100], pers=>[236/294], training step: 2470, running loss: 1.427986, time/pers: 111 ms
+[09/17 14:55:26] pupadetector INFO: epochs=>[17/100], pers=>[256/294], training step: 2480, running loss: 1.425693, time/pers: 112 ms
+[09/17 14:55:28] pupadetector INFO: epochs=>[17/100], pers=>[276/294], training step: 2490, running loss: 1.422668, time/pers: 112 ms
