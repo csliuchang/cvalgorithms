@@ -16,7 +16,8 @@ from utils.metrics.rotate_metrics import combine_predicts_gt
 import torch.distributed as dist
 
 ModelBuilder = {"segmentation": build_segmentor,
-                "rotate_detection": build_detector}
+                "rotate_detection": build_detector,
+                "detection": build_detector}
 
 
 class TrainerContainer(BaseRunner):
@@ -51,7 +52,10 @@ class TrainerContainer(BaseRunner):
 
         # build model
         self.model = ModelBuilder[self.network_type](cfg.model, train_cfg=cfg.train_cfg, test_cfg=cfg.test_cfg)
-        self.mode_info_printer()
+        if self .network_type == "detection":
+            pass
+        else:
+            self.mode_info_printer()
         self.resume_or_load()
 
         self.model.cuda()
@@ -64,8 +68,10 @@ class TrainerContainer(BaseRunner):
         self.max_epoch = cfg.total_epochs
         self.log_iter = cfg.log_iter
         self._trainer = TrainerBase(self.model, self.train_dataloader, optimizer, self.logger, self.scheduler)
+        self.save_val_pred = cfg.save_val_pred
 
         self.metric: dict
+        self.results: dict
 
         self.register_hooks(self.build_hooks())
 
@@ -88,6 +94,8 @@ class TrainerContainer(BaseRunner):
             return self._last_eval_results
 
         ret.append(hooks.EvalHook(cfg, test_and_save_results))
+        if self.save_val_pred:
+            ret.append(hooks.VisualPrediction(cfg))
         if dist.get_rank() == 0:
             ret.append(hooks.CheckpointContainer())
         return ret

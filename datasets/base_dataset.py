@@ -67,7 +67,6 @@ class BaseDataset(Dataset):
     def _set_group_flag(self):
         self.flag = np.zeros(len(self), dtype=np.uint8)
 
-
     def prepare_train_img(self, index):
         img_info, filename, ori_image_shape = self.load_image(index)
         ann_info = self.get_ann_info(index)

@@ -1,28 +1,28 @@
 {
-    "_base": ["/home/pupa/PycharmProjects/PupaDetector/config/yolof/models/yolof.json",
-              "/home/pupa/PycharmProjects/PupaDetector/config/yolof/models/yolof_yolov5_backbone.json"],
+    "_base": ["/home/pupa/PycharmProjects/cvalgorithms/config/yolof/models/yolof.json",
+              "/home/pupa/PycharmProjects/cvalgorithms/config/yolof/models/yolof_yolov5_backbone.json"],
     "log_level": "INFO",
     "network_type": "detection",
     "dataset": {
-            "type":  "DetDatasets",
-            "data_root": "/home/pupa/PycharmProjects/PupaDetector/data/df_corn",
-            "train_pipeline": [{"type": "Resize", "img_scale": [800, 800]},
+            "type":  "PairDatasets",
+            "data_root": "/home/pupa/PycharmProjects/cvalgorithms/data/pcb",
+            "train_pipeline": [
                                 {"type": "Collect", "keys": ["img", "gt_labels","gt_bboxes", "gt_masks"], "bg_first": true}],
-            "val_pipeline": [{"type": "Resize", "img_scale": [800, 800]},
+            "val_pipeline": [
                               {"type": "Collect", "keys": ["img", "gt_labels","gt_bboxes", "gt_masks"], "bg_first": true}],
-            "train_file": "labelme_train.txt",
-            "val_file": "labelme_val.txt",
+            "train_file": "txt_train.txt",
+            "val_file": "txt_val.txt",
             "auto_norm": false,
-            "mean": [111.3199462890625, 123.41533660888672, 126.36572265625],
-            "std": [52.47858428955078, 52.73240661621094, 52.4974365234375]
+            "mean": [0.0, 0.0],
+            "std": [1.0, 1.0]
               },
     "dataloader":{
             "samples_per_gpu": 2,
-            "workers_per_gpu": 2
+            "workers_per_gpu": 0
     },
     "workflow": [["train", 2], ["val", 1]],
     "total_epochs": 100,
-    "num_classes": 1,
+    "num_classes": 6,
     "log_iter": 10,
     "optimizer": "ADAMW",
     "learning_rate": 0.001,
@@ -37,7 +37,7 @@
                     "norm_type": 2.0
     },
     "backbone_multiplier": 1.0,
-    "input_channel": 3,
+    "input_channel": 1,
      "input_width": 800,
      "input_height": 800,
      "save_train_metrics_log": true,
@@ -47,6 +47,7 @@
     "enable": false,
     "mode": "score_cam"
   },
-  "checkpoint_dir": "/home/pupa/PycharmProjects/PupaDetector/outputs"
+  "checkpoint_dir": "/home/pupa/PycharmProjects/cvalgorithms/outputs",
+  "eval_period": 1
 
 }

@@ -1,45 +1,69 @@
-# Modified by Chang Liu
-# Contact: liuchang@deepsight.ai
 import torch
-import torch.nn.functional as F
 from torch import nn
-from models.utils import weight_reduce_loss
+from torch.nn import functional as F
 from models.builder import LOSSES
+from ...utils import weight_reduce_loss
 
 
-def _sigmoid_focal_loss(
-        inputs: torch.Tensor,
-        targets: torch.Tensor,
-        alpha: float = -1,
-        gamma: float = 2,
-        reduction: str = "none",
-) -> torch.Tensor:
+def onehot_target_(pred, gt):
     """
-    Loss used in RRetinaNet for dense detection: https://arxiv.org/abs/1708.02002.
-    Args:
-        inputs: A float tensor of arbitrary shape.
-                The predictions for each example.
-        targets: A float tensor with the same shape as inputs. Stores the binary
-                 classification label for each element in inputs
-                (0 for the negative class and 1 for the positive class).
-        alpha: (optional) Weighting factor in range (0,1) to balance
-                positive vs negative examples. Default = -1 (no weighting).
-        gamma: Exponent of the modulating factor (1 - p_t) to
-               balance easy vs hard examples.
-        reduction: 'none' | 'mean' | 'sum'
-                 'none': No reduction will be applied to the output.
-                 'mean': The output will be averaged.
-                 'sum': The output will be summed.
-    Returns:
+    background index = num_cls
+    """
+    pred_shap = pred.shape
+    num_classes = pred_shap[-1] + 1  # add background
+
+    with torch.no_grad():
+        gt_onehot = gt.to(dtype=torch.int64)
+        gt_onehot = F.one_hot(gt_onehot, num_classes=num_classes)[:, :pred_shap[-1]]
+    return gt_onehot.float()
+
+
+def _sigmoid_focal_loss(input,
+                        target,
+                        gamma=2.0,
+                        alpha=0.25,
+                        weight=None,
+                        reduction='mean',
+                        back_ground_id=0,
+                        *args,
+                        **kwargs):
+    """Loss used in RetinaNet for dense detection: https://arxiv.org/abs/1708.02002.
+
+    Parameters
+    ----------
+    input : A float tensor of arbitrary shape
+        The predictions for each example.
+    target : A float tensor with the same shape as input
+        Stores the binary classification label for each element in input
+        (0 for the negative class and 1 for the positive class).
+    gamma : float
+        Exponent of the modulating factor (1 - p_t) to
+        balance easy vs hard examples.
+    alpha : float, optional
+        Weighting factor in range (0,1) to balance
+        positive vs negative examples.
+        -1 means no weighting.
+    reduction : 'none' | 'mean' | 'sum'
+        - 'none': No reduction will be applied to the output.
+        - 'mean': The output will be averaged.
+        - 'sum': The output will be summed.
+
+    Returns
+    -------
+    Tensor
         Loss tensor with the reduction option applied.
     """
-    p = torch.sigmoid(inputs)
-    ce_loss = F.binary_cross_entropy_with_logits(inputs, targets, reduction="none")
-    p_t = p * targets + (1 - p) * (1 - targets)
+    # if back_ground_id == 0:
+    #     target = onehot_target(input, target)
+    # else:
+    target = onehot_target_(input, target)
+    p = torch.sigmoid(input)
+    ce_loss = F.binary_cross_entropy_with_logits(input, target, reduction="none")
+    p_t = p * target + (1 - p) * (1 - target)
     loss = ce_loss * ((1 - p_t) ** gamma)
 
     if alpha >= 0:
-        alpha_t = alpha * targets + (1 - alpha) * (1 - targets)
+        alpha_t = alpha * target + (1 - alpha) * (1 - target)
         loss = alpha_t * loss
 
     if reduction == "mean":
@@ -56,7 +80,8 @@ def sigmoid_focal_loss(pred,
                        gamma=2.0,
                        alpha=0.25,
                        reduction='mean',
-                       avg_factor=None):
+                       avg_factor=None,
+                       back_ground_id=0):
     """A warpper _sigmoid_focal_loss
 
     Parameters
@@ -81,9 +106,7 @@ def sigmoid_focal_loss(pred,
         Average factor that is used to average
         the loss. Defaults to None.
     """
-    loss = _sigmoid_focal_loss(pred, target, alpha, gamma, 'none')
-    # print(f"-----loss is --------------{sum(loss)}--------------------------------")
-
+    loss = _sigmoid_focal_loss(pred, target, gamma, alpha, None, 'none', back_ground_id)
     if weight is not None:
         if weight.shape != loss.shape:
             if weight.size(0) == loss.size(0):
@@ -104,7 +127,9 @@ class FocalLoss(nn.Module):
                  gamma=2.0,
                  alpha=0.25,
                  reduction='mean',
-                 loss_weight=1.0):
+                 loss_weight=1.0,
+                 back_ground_id=0,
+                 **kwargs):
         """`Focal Loss <https://arxiv.org/abs/1708.02002>`_
 
         Parameters
@@ -132,6 +157,7 @@ class FocalLoss(nn.Module):
         self.alpha = alpha
         self.reduction = reduction
         self.loss_weight = loss_weight
+        self.back_ground_id = back_ground_id
 
     def forward(self,
                 pred,
@@ -174,12 +200,10 @@ class FocalLoss(nn.Module):
                 gamma=self.gamma,
                 alpha=self.alpha,
                 reduction=reduction,
-                avg_factor=avg_factor)
+                avg_factor=avg_factor,
+                back_ground_id=self.back_ground_id)
         else:
             raise NotImplementedError
         return loss_cls
 
 
-sigmoid_focal_loss_jit = torch.jit.script(
-    _sigmoid_focal_loss
-)  # type: torch.jit.ScriptModule

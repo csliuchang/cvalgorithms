@@ -1,20 +1,18 @@
 import torch.nn as nn
 import torch
-import numpy as np
+import torch.nn.functional as F
 
-from models.builder import DETECTORS, build_backbone, build_head, build_neck
-from .base import BaseDetector
-from models.utils import points2rdets, rdets2points_tensor
+from ....builder import DETECTORS, build_backbone, build_head, build_neck
+from . import PairBaseDetector
 from specific.bbox.coder.delta_xywha_bbox_coder import delta2bbox
 
-
-__all__ = ["RYOLO"]
+__all__ = ["PairYOLOFeature"]
 
 
 @DETECTORS.register_module()
-class RYOLO(BaseDetector):
+class PairYOLOFeature(PairBaseDetector):
     """
-    Rotate Refinement RetinaNet, a deepcv pytorch code from : https://github.com/Thinklab-SJTU/R3Det_Tensorflow
+    A YOLOF deepcv version implementment
     """
 
     def __init__(self,
@@ -24,15 +22,13 @@ class RYOLO(BaseDetector):
                  train_cfg=None,
                  test_cfg=None,
                  pretrained=None):
-        super(RYOLO, self).__init__()
+        super(PairBaseDetector, self).__init__()
         self.device = None
         self.export = False
-        self.limit_level = 1
-        self.num_refine_stages = bbox_head.pop('num_refine_stages', 2)
         self.backbone = build_backbone(backbone)
         self.input_stride = bbox_head.anchor_generator.strides
 
-        self.fm_size = [backbone.input_size[0]/self.input_stride[i]
+        self.fm_size = [backbone.input_size[0] / self.input_stride[i]
                         for i in range(len(self.input_stride))]
 
         if train_cfg is not None:
@@ -50,20 +46,32 @@ class RYOLO(BaseDetector):
         self.test_cfg = test_cfg
         self.init_weights(pretrained=pretrained)
 
-    def extract_feat(self, inputs):
+    def extract_feat(self, inputs_n, inputs_g):
         """
         comm feature extract
         """
-        features = self.backbone(inputs)
-        if self.neck is not None:
+        features_n = self.backbone(inputs_n)
+        features_g = self.backbone(inputs_g)
+        features = self.fusion_feat(features_n, features_g, reverse=False)
+        if self.with_neck:
             features = self.neck(features)
-        return features[self.limit_level:]
+        return features
+
+    def fusion_feat(self, features_n, features_g, reverse=False):
+        if type(features_n) is list and type(features_g) is list:
+            pass
+        else:
+            features_n, features_g = [features_n], [features_g]
+        features = [torch.tanh(features_g[i]-features_n[i]) for i in range(len(features_n))]
+        if len(features) == 1:
+            features = features[0]
+        return features
 
     def init_weights(self, pretrained=None):
         """
         Pretrained backbone
         """
-        super(RYOLO, self).init_weights(pretrained)
+        super(PairYOLOFeature, self).init_weights(pretrained)
         if hasattr(self.backbone, 'init_weights'):
             self.backbone.init_weights(pretrained)
         self.bbox_head.init_weights()
@@ -74,34 +82,42 @@ class RYOLO(BaseDetector):
         """
         if self.device != inputs.device:
             self.device = inputs.device
+        inputs_n, inputs_g = torch.chunk(inputs, 2, dim=1)
         if return_metrics:
-            metrics = self.forward_train(inputs, **kwargs)
+            metrics = self.forward_train(inputs_n, inputs_g, **kwargs)
             return self._parse_metrics(metrics)
         else:
-            return self.forward_infer(inputs, **kwargs)
+            return self.forward_infer(inputs_n, inputs_g, **kwargs)
 
-    def forward_train(self, inputs, ground_truth, **kwargs):
+    def forward_train(self, inputs_n, inputs_g, ground_truth, **kwargs):
         losses = dict()
-        x = self.extract_feat(inputs)
-
+        x = self.extract_feat(inputs_n, inputs_g)
+        x = [x] if x is not list else x
         # first stage
         outs = self.bbox_head(x)
-        input_base = self.concate_tuple_dict(outs, ground_truth, inputs)
+        input_base = self.concate_tuple_dict(outs, ground_truth, inputs_n)
         loss_base = self.bbox_head.loss(*input_base)
         for name, value in loss_base.items():
             losses['s0.{}'.format(name)] = value
 
+        # bboxes inference
+        bbox_inputs = outs + (inputs_n, self.test_cfg)
+        bbox_cls = self.bbox_head.get_bboxes(*bbox_inputs)
+
         return losses
 
-    def forward_infer(self, inputs, **kwargs):
-        x = self.extract_feat(inputs)
+    def forward_infer(self, inputs_n, inputs_g, **kwargs):
+        x = self.extract_feat(inputs_n, inputs_g)
 
-        img_batch,  image_shape = inputs.shape[0], inputs.shape[-2:]
+        img_batch, image_shape = inputs_n.shape[0], inputs_n.shape[-2:]
+
+        x = [x] if x is not list else x
+
         bbox_cls = []
         outs = self.bbox_head(x)
 
         if not self.export:
-            bbox_inputs = outs + (inputs, self.test_cfg)
+            bbox_inputs = outs + (inputs_n, self.test_cfg)
             bbox_cls = self.bbox_head.get_bboxes(*bbox_inputs)
             return bbox_cls
 
@@ -121,32 +137,28 @@ class RYOLO(BaseDetector):
 
     def inference(self, cls_score_list, bbox_pred_list, anchors_image, image_shape):
         """
-        Generate box params[x1,y1,x2,y2,x3,y3,x4,y4] for eval
+        Generate box params[x1,y1,x2,y2] for eval
         """
         num_levels = len(cls_score_list)
         mlvl_bboxes, mlvl_cls = [], []
         cls_score_list = [cls_score_list[i].detach() for i in range(num_levels)]
         for cls_score, bbox_pred, anchors in zip(cls_score_list, bbox_pred_list, anchors_image):
             cls_score = cls_score.permute(1, 2, 0).reshape(-1, self.num_classes).sigmoid()
-            bbox_pred = bbox_pred.permute(1, 2, 0).reshape(-1, 5)
+            bbox_pred = bbox_pred.permute(1, 2, 0).reshape(-1, 4)
             bboxes = delta2bbox(anchors, bbox_pred, max_shape=image_shape)
             mlvl_bboxes.append(bboxes)
             mlvl_cls.append(cls_score)
         mlvl_bboxes = torch.cat(mlvl_bboxes, dim=0)
         mlvl_cls = torch.cat(mlvl_cls, dim=0)
         mlvl_label = torch.zeros_like(mlvl_cls) + 1
-        return rdets2points_tensor(torch.cat([mlvl_bboxes, mlvl_cls, mlvl_label], dim=1)).reshape(1, -1, 10)
+        return torch.cat([mlvl_bboxes, mlvl_cls, mlvl_label], dim=1)
 
     def concate_tuple_dict(self, outs, ground_truth, inputs):
         """
         concate tuple and dict and output a tuple
         """
         gt_labels = [torch.as_tensor(gt_label, device=self.device) for gt_label in ground_truth['gt_labels']]
-        gt_bboxes = [torch.as_tensor(points2rdets(gt_bbox), dtype=torch.float32, device=self.device) for gt_bbox in ground_truth['gt_bboxes']]
+        gt_bboxes = [torch.as_tensor((gt_bbox), dtype=torch.float32, device=self.device) for gt_bbox in
+                     ground_truth['gt_bboxes']]
         gt_masks = [torch.as_tensor(gt_mask, device=self.device) for gt_mask in ground_truth['gt_masks']]
         return outs + (gt_labels, gt_bboxes, gt_masks, inputs)
-
-
-
-
-

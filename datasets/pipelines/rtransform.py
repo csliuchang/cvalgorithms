@@ -34,7 +34,7 @@ def normalize(img, mean=None, std=None):
 @PIPELINES.register_module()
 class RResize(Resize):
     """
-        Resize images & rotated bbox
+        Resize  images & rotated bbox
         Inherit Resize pipeline class to handle rotated bboxes
     """
 
@@ -143,7 +143,10 @@ class Collect(object):
         results['img'] = img
         if 'bboxes' in results['ann_info']:
             results['gt_bboxes'] = np.array(results['ann_info']['bboxes'], dtype=np.float32)
-            results['gt_masks'] = np.ones(shape=results['image_shape'], dtype=np.uint8) * 0.
+            if 'image_shape' in results:
+                results['gt_masks'] = np.ones(shape=results['image_shape'], dtype=np.uint8) * 0.
+            else:
+                results['gt_masks'] = np.ones(shape=results['ori_image_shape'], dtype=np.uint8) * 0.
             results['gt_labels'] = results['ann_info']['labels']
         elif 'polygons' in results:
             if 'masks' in self.keys:

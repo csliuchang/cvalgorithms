@@ -183,7 +183,7 @@ class YOLOFeatureHead(AnchorHead):
          batch_bbox_weights, batch_pos_predicted_boxes,
          batch_target_boxes) = cls_reg_targets
 
-        flatten_labels = batch_labels.reshape(-1, self.num_classes)
+        flatten_labels = batch_labels.reshape(-1)
         batch_label_weights = batch_label_weights.reshape(-1)
         cls_score = cls_scores[0].permute(0, 2, 3,
                                           1).reshape(-1, self.cls_out_channels)
@@ -296,7 +296,7 @@ class YOLOFeatureHead(AnchorHead):
                 labels[pos_inds] = 1
             else:
                 labels[pos_inds] = gt_labels[
-                                       sampling_result.pos_assigned_gt_inds] + 1
+                                       sampling_result.pos_assigned_gt_inds]
             if self.train_cfg.pos_weight <= 0:
                 label_weights[pos_inds] = 1.0
             else:
@@ -461,6 +461,7 @@ class YOLOFeatureHead(AnchorHead):
         nms_pre = cfg.get('nms_pre', -1) * num_levels
         final_results = padding_results(result_list, nms_pre, 6)
         final_results = torch.stack([final_result for final_result in final_results], dim=0)
+
         return final_results
 
     def loss_refine(self, ):

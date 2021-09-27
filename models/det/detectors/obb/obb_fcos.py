@@ -1,5 +1,5 @@
 from models.builder import DETECTORS
-from .obb_single_stage import OBBSingleStageDetector
+from models.det.detectors.obb.obb_single_stage import OBBSingleStageDetector
 
 
 @DETECTORS.register_module()

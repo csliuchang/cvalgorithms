@@ -7,8 +7,6 @@ from .base_dense_head import BaseDenseHead
 from models.utils import normal_init, multi_apply, images_to_levels
 from specific.bbox import build_assigner, build_sampler, build_bbox_coder
 
-
-
 @HEADS.register_module()
 class AnchorHead(BaseDenseHead):
     """
@@ -47,7 +45,7 @@ class AnchorHead(BaseDenseHead):
         self.cls_out_channels = num_classes
         self.num_anchors = self.anchor_generator.num_base_anchors[0]
         self.background_label = (
-            0 if background_label is None else background_label)
+            num_classes if background_label is None else background_label)
         self.reg_decoded_bbox = reg_decoded_bbox
         self.loss_cls = build_loss(loss_cls)
         self.loss_bbox = build_loss(loss_bbox)

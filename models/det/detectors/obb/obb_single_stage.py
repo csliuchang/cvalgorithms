@@ -2,7 +2,7 @@ import torch
 import numpy as np
 from models.utils import points2rdets, rdets2points_tensor
 from models.builder import DETECTORS, build_backbone, build_head, build_neck
-from .base import BaseDetector
+from models.det.detectors.base import BaseDetector
 
 
 @DETECTORS.register_module()

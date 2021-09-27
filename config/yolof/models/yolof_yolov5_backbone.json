@@ -1,5 +1,5 @@
 {
-    "_base": "/home/pupa/PycharmProjects/LightRotateDet/config/rretinanet/models/rretinanet.json",
+    "_base": "/home/pupa/PycharmProjects/cvalgorithms/config/yolof/models/yolof.json",
     "pretrained": "/home/pupa/deepcv_example/deepcv/resources/init_models/model_zoo/pth/gluoncv/yolov5s_backbone.pth",
     "model": {
         "backbone": {

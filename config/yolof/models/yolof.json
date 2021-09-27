@@ -1,47 +1,52 @@
 {
     "model": {
-        "type": "RRetinaNet",
+        "type": "PairYOLOFeature",
         "backbone": {
-            "type": "yolov5_backbone",
-            "in_channels": 3,
-            "stage_channels": [64, 128, 256, 512, 1024],
-            "depth_multiple": 0.33,
-            "width_multiple": 0.50,
-            "out_levels": [1, 2, 3, 4, 5],
-            "strides": [2, 2, 2, 2],
-            "norm_cfg": "BN2d",
-            "act_cfg": "SiLU",
-            "num_classes": null
+            "out_levels": [
+                4
+            ],
+            "in_channels": 3
         },
         "bbox_head": {
-            "type": "YOLOFHead",
-            "encoder": {
-                "in_channels": 208,
-                "num_channels": 128,
-                "block_mid_channels": 64,
-                "block_dilations": [2, 4, 6, 8],
-                "num_residual_blocks": 4
-                },
-            "decoder": {
-                "in_channels": 128,
-                "num_anchors": 3,
-                "block_mid_channels": 64,
-                "reg_num_convs": 4,
-                "cls_num_convs": 2,
-                "prior_prob": 0.01
-                },
-            "act_type": "ReLU",
-            "norm_type": "BN",
-            "num_classes": 1
+            "type": "YOLOFeatureHead",
+            "in_channels": 256,
+            "block_dilations": [2, 4, 6, 8],
+            "stacked_residual_blocks": 4,
+            "reg_num_convs": 4,
+            "cls_num_convs": 2,
+            "num_classes": 6,
+            "anchor_generator": {
+                "type":"AnchorGenerator",
+                "octave_base_scale": 4,
+                "scales_per_octave": 1,
+                "ratios": [1.0, 0.5, 2.0],
+                "strides": [16]
+            },
+            "bbox_coder": {
+                "type":"DeltaXYWHBBoxCoder",
+                "target_means":[0.0, 0.0, 0.0, 0.0],
+                "target_stds":[1.0, 1.0, 1.0, 1.0]
+            },
+            "loss_cls": {
+                "type":"FocalLoss",
+                "use_sigmoid": true,
+                "gamma": 2.0,
+                "alpha": 0.25,
+                "loss_weight": 1.0
+            },
+            "loss_bbox": {
+                "type": "GIoULoss",
+                "loss_weight": 1.0
+            }
         }
     },
     "train_cfg": {
-        "assigner": {"type":"MaxIoUAssigner",
-                "pos_iou_thr": 0.5,
-                "neg_iou_thr": 0.4,
-                "min_pos_iou": 0,
-                "ignore_iof_thr": -1},
-                "iou_calculator": {"type":"RBboxOverlaps2D"},
+        "assigner": {"type":"UniformAssigner",
+                "pos_ignore_thr": 0.15,
+                "neg_ignore_thr": 0.7,
+                "match_times": 4
+        },
+                "iou_calculator": {"type":"BboxOverlaps2D"},
         "sampler_cfg": {"type":"PseudoSampler",
                         "sampling": false
         },
@@ -49,7 +54,7 @@
         "pos_weight": -1,
         "debug": false,
         "stage_loss_weights": [1.0, 1.0],
-        "num_anchors": 27,
+        "num_anchors": 3,
         "auto_anchors": false
 
     },
@@ -57,17 +62,16 @@
         "nms_pre": 100,
         "score_thr": 0.5,
         "max_per_img": 100,
-        "nms": {"type": "rnms",
+        "nms": {"type": "nms",
                      "iou_thr": 0.3
                     },
         "merge_cfg": {
              "nms_pre": 100,
              "score_thr": 0.5,
-             "nms": {"type": "rnms",
+             "nms": {"type": "nms",
                      "iou_thr": 0.3
                     },
             "max_per_img": 100
             }
     }
 }
-

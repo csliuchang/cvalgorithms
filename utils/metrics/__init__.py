@@ -1,2 +1,2 @@
-from .rotate_metrics import RotateDetEval
+from .rotate_metrics import DetEval
 from .seg_metrics import SegEval
