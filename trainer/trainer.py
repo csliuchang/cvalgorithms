@@ -128,6 +128,7 @@ class TrainerContainer(BaseRunner):
         self._trainer.max_epoch = self.max_epoch
         self._trainer.log_iter = self.log_iter
         self._trainer.run_step()
+        self.train_loss = self._trainer.train_loss
 
     def train(self):
         super().train(self.start_epoch, self.max_epoch)

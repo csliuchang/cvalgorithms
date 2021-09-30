@@ -140,7 +140,7 @@ class DetEval(object):
 
             for pred in preds:
                 # default lable is start 0, so need to reduce 1
-                pred_bbox, score, pred_cls = pred[:4], pred[4], int(pred[5]) - 1
+                pred_bbox, score, pred_cls = pred[:4], pred[4], int(pred[5])
                 pred_bbox = np.array(pred_bbox, dtype=np.float32)
                 tp, fp, max_iou = 0, 0, 0
                 match_gt_idx = -1

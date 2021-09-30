@@ -134,12 +134,11 @@ class Collect(object):
         img_meta = {}
         # trans to tensor
         img = results.pop('img_info')
+        if len(img.shape) == 2:
+            img = img[..., None].repeat(3, -1)
         img = to_tensor(img)
         img = normalize(img, mean=results['mean'], std=results['std'])
-        if len(img.shape) == 2:
-            img = torch.stack([img, img, img], dim=0)
-        else:
-            img = img.permute(2, 0, 1)
+        img = img.permute(2, 0, 1)
         results['img'] = img
         if 'bboxes' in results['ann_info']:
             results['gt_bboxes'] = np.array(results['ann_info']['bboxes'], dtype=np.float32)

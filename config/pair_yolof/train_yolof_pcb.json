@@ -1,6 +1,6 @@
 {
-    "_base": ["/home/pupa/PycharmProjects/cvalgorithms/config/yolof/models/yolof.json",
-              "/home/pupa/PycharmProjects/cvalgorithms/config/yolof/models/yolof_yolov5_backbone.json"],
+    "_base": ["/home/pupa/PycharmProjects/cvalgorithms/config/pair_yolof/models/yolof.json",
+              "/home/pupa/PycharmProjects/cvalgorithms/config/pair_yolof/models/yolof_yolov5_backbone.json"],
     "log_level": "INFO",
     "network_type": "detection",
     "dataset": {
@@ -13,8 +13,8 @@
             "train_file": "txt_train.txt",
             "val_file": "txt_val.txt",
             "auto_norm": false,
-            "mean": [0.0, 0.0],
-            "std": [1.0, 1.0]
+            "mean": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            "std": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
               },
     "dataloader":{
             "samples_per_gpu": 2,
@@ -37,7 +37,7 @@
                     "norm_type": 2.0
     },
     "backbone_multiplier": 1.0,
-    "input_channel": 1,
+    "input_channel": 3,
      "input_width": 800,
      "input_height": 800,
      "save_train_metrics_log": true,

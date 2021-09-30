@@ -101,8 +101,8 @@ class PairYOLOFeature(PairBaseDetector):
             losses['s0.{}'.format(name)] = value
 
         # bboxes inference
-        bbox_inputs = outs + (inputs_n, self.test_cfg)
-        bbox_cls = self.bbox_head.get_bboxes(*bbox_inputs)
+        # bbox_inputs = outs + (inputs_n, self.test_cfg)
+        # bbox_cls = self.bbox_head.get_bboxes(*bbox_inputs)
 
         return losses
 

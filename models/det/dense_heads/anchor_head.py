@@ -7,6 +7,7 @@ from .base_dense_head import BaseDenseHead
 from models.utils import normal_init, multi_apply, images_to_levels
 from specific.bbox import build_assigner, build_sampler, build_bbox_coder
 
+
 @HEADS.register_module()
 class AnchorHead(BaseDenseHead):
     """

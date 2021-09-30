@@ -51,6 +51,7 @@ def points2bbox(points):
     bbox = np.array([rect[0][0], rect[0][1], rect[1][0], rect[1][1]], dtype=np.float32)
     return bbox
 
+
 if __name__ == "__main__":
     data_root = '/home/pupa/PycharmProjects/LightRotateDet/data/msratd500'
-    RDetDatasets(data_root)
+    DetDatasets(data_root)

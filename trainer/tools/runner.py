@@ -217,6 +217,7 @@ class TrainerBase(BaseRunner):
             if self.global_step % self.log_iter == 0:
                 batch_time = time.time() - start
                 self._write_metrics(batch, count, all_losses, batch_time, logger_batch)
+        self.train_loss = sum(all_losses) / len(self._data_loader_iter.dataset)
 
     def _write_metrics(self, batch, count, all_losses, batch_time, logger_batch):
         self.logger.info(

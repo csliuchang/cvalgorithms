@@ -7,17 +7,17 @@ from .builder import DATASETS
 
 
 CLASS = ('open', 'short', 'mousebite', 'spur', 'copper', 'pin-hole')
-COLOR = [(255, 180, 0), (0, 255, 255), (0, 0, 255), (255, 0, 20), (0, 206, 209), (255, 78, 210)]
+COLOR = [(100, 0, 255), (0, 255, 255), (0, 0, 255), (255, 0, 20), (255, 100, 100), (255, 78, 210)]
 
 
 @DATASETS.register_module()
-class PairDatasets(BaseDataset):
+class OneDetDatasets(BaseDataset):
     def __init__(self, *args, **kwargs):
         self.category = CLASS
         self.num_classes = len(self.category)
         self.color = COLOR
         self.cls_map = {c: i for i, c in enumerate(self.category)}
-        super(PairDatasets, self).__init__(*args, **kwargs)
+        super(OneDetDatasets, self).__init__(*args, **kwargs)
 
     def load_image(self, index):
         """
@@ -25,27 +25,13 @@ class PairDatasets(BaseDataset):
         :return: pair images
         """
         img_pre_path = self.data_infos[index]['filename'].split('.')[0].strip('\ufeff')
-        img_pre_path_gn = img_pre_path + '_temp.jpg'
         img_pre_path_fn = img_pre_path + '_test.jpg'
-        img_all_path_gn = os.path.join(self.data_root, img_pre_path_gn)
-        img_info_gn = cv2.imread(img_all_path_gn, cv2.IMREAD_UNCHANGED)
         img_all_path_fn = os.path.join(self.data_root, img_pre_path_fn)
         img_info_fn = cv2.imread(img_all_path_fn, cv2.IMREAD_UNCHANGED)
         if len(img_info_fn.shape) == 3:
-            img_info_fn = img_info_fn[:, :, 0][..., None].repeat(3, -1)
-        if len(img_info_gn.shape) == 3:
-            img_info_gn = img_info_gn[:, :, 0][..., None].repeat(3, -1)
-        if len(img_info_gn.shape) == 2:
-            img_info_gn = img_info_gn[..., None].repeat(3, -1)
-        if len(img_info_fn.shape) == 2:
-            img_info_fn = img_info_fn[..., None].repeat(3, -1)
-        # add gn noise
-        # img_cat = np.zeros((img_info_gn.shape[0], img_info_gn.shape[1] * 2, 3))
-        # img_cat[:img_info_gn.shape[0], :img_info_gn.shape[1], :] = img_info_gn
-        # img_info_gn = cv2.GaussianBlur(img_info_gn, (19, 19), 0)
-        # img_cat[:img_info_gn.shape[0], img_info_gn.shape[1]:, :] = img_info_gn
-        # cv2.imwrite('/home/pupa/PycharmProjects/cvalgorithms/result.png', img_cat)
-        img_info = np.concatenate([img_info_fn, img_info_gn], axis=-1)
+            img_info = img_info_fn[:, :, 0]
+        else:
+            img_info = img_info_fn
         filename = img_pre_path_fn.split('/')[-1]
         ori_image_shape = img_info.shape[:2]
         return img_info, filename, ori_image_shape
@@ -87,4 +73,4 @@ class PairDatasets(BaseDataset):
 
 if __name__ == "__main__":
     data_root = '/home/pupa/PycharmProjects/LightRotateDet/data/msratd500'
-    PairDatasets(data_root)
+    OneDetDatasets(data_root)

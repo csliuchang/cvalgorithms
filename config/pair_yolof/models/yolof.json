@@ -1,6 +1,6 @@
 {
     "model": {
-        "type": "YOLOFeature",
+        "type": "PairYOLOFeature",
         "backbone": {
             "out_levels": [
                 4
@@ -14,7 +14,7 @@
             "stacked_residual_blocks": 4,
             "reg_num_convs": 4,
             "cls_num_convs": 2,
-            "num_classes": 6,
+            "num_classes": 1,
             "anchor_generator": {
                 "type":"AnchorGenerator",
                 "octave_base_scale": 4,

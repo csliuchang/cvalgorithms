@@ -45,7 +45,7 @@ if __name__ == '__main__':
         author_email='@deepsight.com',
         keywords='computer vision, classsification egmentation and detection',
         url='https://git.deepsight.ai/DeepLearningGroup/deepcv',
-        packages=find_packages(exclude=('configs', 'tools', 'demo')),
+        packages=find_packages(exclude=('configs', 'CVTools', 'demo')),
         package_data={'DeepSightAIDet.opts': ['*/*.so']},
         classifiers=[
             'Development Status :: 4 - Beta',

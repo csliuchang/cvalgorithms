@@ -283,7 +283,7 @@ class YOLOFeatureHead(AnchorHead):
                                               gt_bboxes)
         num_valid_anchors = anchors.shape[0]
         labels = anchors.new_full((num_valid_anchors,),
-                                  self.background_label,
+                                  self.num_classes,
                                   dtype=torch.long)
         label_weights = anchors.new_zeros(num_valid_anchors, dtype=torch.float)
 
@@ -293,7 +293,7 @@ class YOLOFeatureHead(AnchorHead):
             if gt_labels is None:
                 # Only rpn gives gt_labels as None
                 # Foreground is the first class since v2.5.0
-                labels[pos_inds] = 1
+                labels[pos_inds] = 0
             else:
                 labels[pos_inds] = gt_labels[
                                        sampling_result.pos_assigned_gt_inds]
@@ -432,7 +432,7 @@ class YOLOFeatureHead(AnchorHead):
                                                 cfg.score_thr, cfg.nms,
                                                 cfg.max_per_img)
 
-        return torch.cat([det_bboxes[None, :, :], det_labels[None, :, None] + 1], dim=2)
+        return torch.cat([det_bboxes[None, :, :], det_labels[None, :, None]], dim=2)
 
     def get_bboxes(self, cls_scores, bbox_preds, img_metas, cfg=None, **kwargs):
         num_levels = len(cls_scores)

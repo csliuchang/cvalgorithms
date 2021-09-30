@@ -3,9 +3,6 @@ import numpy as np
 from ..builder import PIPELINES
 
 
-
-
-
 @PIPELINES.register_module()
 class Resize(object):
     """
@@ -75,3 +72,14 @@ class Rotate(object):
         self._rotate_image(image, M)
         self._rotate_annotation(results, M)
         return results
+
+
+@PIPELINES.register_module()
+class CutPaste(object):
+    def __init__(self):
+        pass
+
+    def __call__(self, *args, **kwargs):
+        pass
+
+

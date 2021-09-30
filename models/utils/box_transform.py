@@ -11,7 +11,6 @@ import cv2
 import numpy as np
 import math
 
-
 pi = math.pi
 
 _DEFAULT_SCALE_CLAMP = math.log(1000.0 / 16)
@@ -22,6 +21,15 @@ def box_cxcywh_to_xyxy(x):
     b = [(x_c - 0.5 * w), (y_c - 0.5 * h),
          (x_c + 0.5 * w), (y_c + 0.5 * h)]
     return torch.stack(b, dim=-1)
+
+
+def cxcywh_xyxy(bbox):
+    x, y, w, h = bbox[0], bbox[1], bbox[2], bbox[3]
+    return np.array([x, y, x + w, y + h], dtype=np.float32)
+
+def xyxy_cxcywh(bbox):
+    x, y, w, h = bbox[0], bbox[1], bbox[2], bbox[3]
+    return np.array([x, y, x + w, y + h], dtype=np.float32)
 
 
 def box_xyxy_to_cxcywh(x):
@@ -74,93 +82,6 @@ def box_iou(boxes1: Tensor, boxes2: Tensor) -> Tensor:
     return iou
 
 
-@torch.jit.script
-class YOLOFBox2BoxTransform(object):
-    """
-    The box-to-box transform defined in R-CNN. The transformation is
-    parameterized by 4 deltas: (dx, dy, dw, dh). The transformation scales
-    the box's width and height by exp(dw), exp(dh) and shifts a box's center
-    by the offset (dx * width, dy * height).
-
-    We add center clamp for the predict boxes.
-    """
-
-    def __init__(self,
-                 weights: Tuple[float, float, float, float],
-                 scale_clamp: float = _DEFAULT_SCALE_CLAMP,
-                 add_ctr_clamp: bool = False,
-                 ctr_clamp: int = 32
-                 ):
-        """
-        Args:
-            weights (4-element tuple): Scaling factors that are applied to the
-                (dx, dy, dw, dh) deltas. In Fast R-CNN, these were originally
-                set such that the deltas have unit variance; now they are
-                treated as hyperparameters of the system.
-            scale_clamp (float): When predicting deltas, the predicted box
-                scaling factors (dw and dh) are clamped such that they are
-                <= scale_clamp.
-            add_ctr_clamp (bool): Whether to add center clamp, when added, the
-                predicted box is clamped is its center is too far away from
-                the original anchor's center.
-            ctr_clamp (int): the maximum pixel shift to clamp.
-
-        """
-        self.weights = weights
-        self.scale_clamp = scale_clamp
-        self.add_ctr_clamp = add_ctr_clamp
-        self.ctr_clamp = ctr_clamp
-
-    def apply_deltas(self, deltas, boxes):
-        """
-        Apply transformation `deltas` (dx, dy, dw, dh) to `boxes`.
-
-        Args:
-            deltas (Tensor): transformation deltas of shape (N, k*4),
-                where k >= 1. deltas[i] represents k potentially different
-                class-specific box transformations for the single box boxes[i].
-            boxes (Tensor): boxes to transform, of shape (N, 4)
-        """
-        deltas = deltas.float()  # ensure fp32 for decoding precision
-        boxes = boxes.to(deltas.dtype)
-
-        widths = boxes[..., 2] - boxes[..., 0]
-        heights = boxes[..., 3] - boxes[..., 1]
-        ctr_x = boxes[..., 0] + 0.5 * widths
-        ctr_y = boxes[..., 1] + 0.5 * heights
-
-        wx, wy, ww, wh = self.weights
-        dx = deltas[..., 0::4] / wx
-        dy = deltas[..., 1::4] / wy
-        dw = deltas[..., 2::4] / ww
-        dh = deltas[..., 3::4] / wh
-
-        # Prevent sending too large value into torch.exp()
-        dx_width = dx * widths[..., None]
-        dy_height = dy * heights[..., None]
-        if self.add_ctr_clamp:
-            dx_width = torch.clamp(dx_width,
-                                   max=self.ctr_clamp,
-                                   min=-self.ctr_clamp)
-            dy_height = torch.clamp(dy_height,
-                                    max=self.ctr_clamp,
-                                    min=-self.ctr_clamp)
-        dw = torch.clamp(dw, max=self.scale_clamp)
-        dh = torch.clamp(dh, max=self.scale_clamp)
-
-        pred_ctr_x = dx_width + ctr_x[..., None]
-        pred_ctr_y = dy_height + ctr_y[..., None]
-        pred_w = torch.exp(dw) * widths[..., None]
-        pred_h = torch.exp(dh) * heights[..., None]
-
-        x1 = pred_ctr_x - 0.5 * pred_w
-        y1 = pred_ctr_y - 0.5 * pred_h
-        x2 = pred_ctr_x + 0.5 * pred_w
-        y2 = pred_ctr_y + 0.5 * pred_h
-        pred_boxes = torch.stack((x1, y1, x2, y2), dim=-1)
-        return pred_boxes.reshape(deltas.shape)
-
-
 def rbox_2_quad(rboxes, mode='xyxya'):
     if len(rboxes.shape) == 1:
         rboxes = rboxes[np.newaxis, :]
@@ -168,7 +89,7 @@ def rbox_2_quad(rboxes, mode='xyxya'):
         return rboxes
     quads = np.zeros((rboxes.shape[0], 8), dtype=np.float32)
     for i, rbox in enumerate(rboxes):
-        if len(rbox!=0):
+        if len(rbox != 0):
             if mode == 'xyxya':
                 w = rbox[2] - rbox[0]
                 h = rbox[3] - rbox[1]
@@ -206,29 +127,29 @@ def xy2wh(boxes):
 def ex_box_jaccard(a, b):
     a = np.asarray(a, np.float32)
     b = np.asarray(b, np.float32)
-    inter_x1 = np.maximum(np.min(a[:,0]), np.min(b[:,0]))
-    inter_x2 = np.minimum(np.max(a[:,0]), np.max(b[:,0]))
-    inter_y1 = np.maximum(np.min(a[:,1]), np.min(b[:,1]))
-    inter_y2 = np.minimum(np.max(a[:,1]), np.max(b[:,1]))
-    if inter_x1>=inter_x2 or inter_y1>=inter_y2:
+    inter_x1 = np.maximum(np.min(a[:, 0]), np.min(b[:, 0]))
+    inter_x2 = np.minimum(np.max(a[:, 0]), np.max(b[:, 0]))
+    inter_y1 = np.maximum(np.min(a[:, 1]), np.min(b[:, 1]))
+    inter_y2 = np.minimum(np.max(a[:, 1]), np.max(b[:, 1]))
+    if inter_x1 >= inter_x2 or inter_y1 >= inter_y2:
         return 0.
-    x1 = np.minimum(np.min(a[:,0]), np.min(b[:,0]))
-    x2 = np.maximum(np.max(a[:,0]), np.max(b[:,0]))
-    y1 = np.minimum(np.min(a[:,1]), np.min(b[:,1]))
-    y2 = np.maximum(np.max(a[:,1]), np.max(b[:,1]))
-    mask_w = np.int(np.ceil(x2-x1))
-    mask_h = np.int(np.ceil(y2-y1))
+    x1 = np.minimum(np.min(a[:, 0]), np.min(b[:, 0]))
+    x2 = np.maximum(np.max(a[:, 0]), np.max(b[:, 0]))
+    y1 = np.minimum(np.min(a[:, 1]), np.min(b[:, 1]))
+    y2 = np.maximum(np.max(a[:, 1]), np.max(b[:, 1]))
+    mask_w = np.int(np.ceil(x2 - x1))
+    mask_h = np.int(np.ceil(y2 - y1))
     mask_a = np.zeros(shape=(mask_h, mask_w), dtype=np.uint8)
     mask_b = np.zeros(shape=(mask_h, mask_w), dtype=np.uint8)
-    a[:,0] -= x1
-    a[:,1] -= y1
-    b[:,0] -= x1
-    b[:,1] -= y1
+    a[:, 0] -= x1
+    a[:, 1] -= y1
+    b[:, 0] -= x1
+    b[:, 1] -= y1
     mask_a = cv2.fillPoly(mask_a, pts=np.asarray([a], 'int32'), color=1)
     mask_b = cv2.fillPoly(mask_b, pts=np.asarray([b], 'int32'), color=1)
     inter = np.logical_and(mask_a, mask_b).sum()
     union = np.logical_or(mask_a, mask_b).sum()
-    iou = float(inter)/(float(union)+1e-12)
+    iou = float(inter) / (float(union) + 1e-12)
     # cv2.imshow('img1', np.uint8(mask_a*255))
     # cv2.imshow('img2', np.uint8(mask_b*255))
     # k = cv2.waitKey(0)
@@ -239,31 +160,31 @@ def ex_box_jaccard(a, b):
 
 
 def reorder_pts(tt, rr, bb, ll):
-    pts = np.asarray([tt,rr,bb,ll],np.float32)
-    l_ind = np.argmin(pts[:,0])
-    r_ind = np.argmax(pts[:,0])
-    t_ind = np.argmin(pts[:,1])
-    b_ind = np.argmax(pts[:,1])
-    tt_new = pts[t_ind,:]
-    rr_new = pts[r_ind,:]
-    bb_new = pts[b_ind,:]
-    ll_new = pts[l_ind,:]
-    return tt_new,rr_new,bb_new,ll_new
+    pts = np.asarray([tt, rr, bb, ll], np.float32)
+    l_ind = np.argmin(pts[:, 0])
+    r_ind = np.argmax(pts[:, 0])
+    t_ind = np.argmin(pts[:, 1])
+    b_ind = np.argmax(pts[:, 1])
+    tt_new = pts[t_ind, :]
+    rr_new = pts[r_ind, :]
+    bb_new = pts[b_ind, :]
+    ll_new = pts[l_ind, :]
+    return tt_new, rr_new, bb_new, ll_new
 
 
 def cal_bbox_wh(pts_4):
-    x1 = np.min(pts_4[:,0])
-    x2 = np.max(pts_4[:,0])
-    y1 = np.min(pts_4[:,1])
-    y2 = np.max(pts_4[:,1])
-    return x2-x1, y2-y1
+    x1 = np.min(pts_4[:, 0])
+    x2 = np.max(pts_4[:, 0])
+    y1 = np.min(pts_4[:, 1])
+    y2 = np.max(pts_4[:, 1])
+    return x2 - x1, y2 - y1
 
 
 def cal_bbox_pts(pts_4):
-    x1 = np.min(pts_4[:,0])
-    x2 = np.max(pts_4[:,0])
-    y1 = np.min(pts_4[:,1])
-    y2 = np.max(pts_4[:,1])
+    x1 = np.min(pts_4[:, 0])
+    x2 = np.max(pts_4[:, 0])
+    y1 = np.min(pts_4[:, 1])
+    y2 = np.max(pts_4[:, 1])
     bl = [x1, y2]
     tl = [x1, y1]
     tr = [x2, y1]
@@ -542,14 +463,14 @@ def bbox_overlaps(bboxes1, bboxes2, mode='iou', is_aligned=False, eps=1e-6):
 
     if rows * cols == 0:
         if is_aligned:
-            return bboxes1.new(batch_shape + (rows, ))
+            return bboxes1.new(batch_shape + (rows,))
         else:
             return bboxes1.new(batch_shape + (rows, cols))
 
     area1 = (bboxes1[..., 2] - bboxes1[..., 0]) * (
-        bboxes1[..., 3] - bboxes1[..., 1])
+            bboxes1[..., 3] - bboxes1[..., 1])
     area2 = (bboxes2[..., 2] - bboxes2[..., 0]) * (
-        bboxes2[..., 3] - bboxes2[..., 1])
+            bboxes2[..., 3] - bboxes2[..., 1])
 
     if is_aligned:
         lt = torch.max(bboxes1[..., :2], bboxes2[..., :2])  # [B, rows, 2]
@@ -597,7 +518,7 @@ def bbox_overlaps(bboxes1, bboxes2, mode='iou', is_aligned=False, eps=1e-6):
     return gious
 
 
-def regular_theta(theta, mode='180', start=-pi/2):
+def regular_theta(theta, mode='180', start=-pi / 2):
     assert mode in ['360', '180']
     cycle = 2 * pi if mode == '360' else pi
 
@@ -609,7 +530,7 @@ def regular_theta(theta, mode='180', start=-pi/2):
 def mintheta_obb(obboxes):
     x, y, w, h, theta = obboxes.unbind(dim=-1)
     theta1 = regular_theta(theta)
-    theta2 = regular_theta(theta + pi/2)
+    theta2 = regular_theta(theta + pi / 2)
     abs_theta1 = torch.abs(theta1)
     abs_theta2 = torch.abs(theta2)
 
@@ -641,6 +562,6 @@ def regular_obb(obboxes):
     x, y, w, h, theta = obboxes.unbind(dim=-1)
     w_regular = torch.where(w > h, w, h)
     h_regular = torch.where(w > h, h, w)
-    theta_regular = torch.where(w > h, theta, theta+pi/2)
+    theta_regular = torch.where(w > h, theta, theta + pi / 2)
     theta_regular = regular_theta(theta_regular)
     return torch.stack([x, y, w_regular, h_regular, theta_regular], dim=-1)
