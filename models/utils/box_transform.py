@@ -25,7 +25,7 @@ def box_cxcywh_to_xyxy(x):
 
 def cxcywh_xyxy(bbox):
     x, y, w, h = bbox[0], bbox[1], bbox[2], bbox[3]
-    return np.array([x, y, x + w, y + h], dtype=np.float32)
+    return np.array([x - w/2, y - h/2, x + w/2, y + h/2], dtype=np.float32)
 
 def xyxy_cxcywh(bbox):
     x, y, w, h = bbox[0], bbox[1], bbox[2], bbox[3]

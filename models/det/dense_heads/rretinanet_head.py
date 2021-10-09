@@ -132,7 +132,7 @@ class RRetinaHead(AnchorHead):
                                                  cfg.score_thr, cfg.nms,
                                                  cfg.max_per_img)
 
-        return torch.cat([det_bboxes[None, :, :], det_labels[None, :, None] + 1], dim=2)
+        return torch.cat([det_bboxes[None, :, :], det_labels[None, :, None]], dim=2)
 
     def get_bboxes(self, cls_scores, bbox_preds, img_metas, cfg=None, **kwargs):
         num_levels = len(cls_scores)
@@ -169,7 +169,7 @@ class RRetinaHead(AnchorHead):
         label_weights = label_weights.reshape(-1)
         # cls loss
         cls_score = cls_score.permute(0, 2, 3, 1).reshape(-1, self.cls_out_channels)
-        labels = labels.reshape(-1, self.num_classes)
+        labels = labels.reshape(-1)
         # print(f'------num total samples is ---------------{num_total_samples}----------------------')
         loss_cls = self.loss_cls(cls_score, labels.float(), label_weights, avg_factor=num_total_samples)
 
@@ -277,7 +277,7 @@ class RRetinaHead(AnchorHead):
             else:
                 # gt labels begin 1
                 labels[pos_inds] = gt_labels[
-                    sampling_result.pos_assigned_gt_inds] + 1
+                    sampling_result.pos_assigned_gt_inds]
             if self.train_cfg.pos_weight <= 0:
                 label_weights[pos_inds] = 1.0
             else:

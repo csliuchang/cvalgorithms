@@ -49,17 +49,27 @@ class VisualPrediction(HookBase):
         dataset_type = getattr(datasets, datasets_type.lower().strip('s'))
         self.color = dataset_type.COLOR
         self.text = dataset_type.CLASS
+        self.network_type = cfg.network_type
 
     def before_step(self):
         pass
 
-    def draw_text_rangle(self, img, label, bbox):
+    def draw_text_rangle(self, img, label, bbox, network_type='detection'):
         pred_color = self.color[int(label)]
         show_text = self.text[int(label)]
-        x1, y1, x2, y2 = int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3])
-        cv2.rectangle(img, (x1, y1), (x2, y2), pred_color, 2)
-        cv2.putText(img, show_text, (x1 - 5, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.3, pred_color, thickness=1,
-                    lineType=cv2.LINE_AA)
+        if network_type == 'detection':
+            x1, y1, x2, y2 = int(bbox[0]), int(bbox[1]), int(bbox[2]), int(bbox[3])
+            cv2.rectangle(img, (x1, y1), (x2, y2), pred_color, 2)
+            cv2.putText(img, show_text, (x1 - 5, y1 - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.3, pred_color, thickness=1,
+                        lineType=cv2.LINE_AA)
+        elif network_type == "rotate_detection":
+            pts = np.array(bbox, np.float32)
+            pts = np.array([pts.reshape((4, 2))], dtype=np.int32)
+            cv2.drawContours(img, pts, 0, color=pred_color, thickness=2)
+            cv2.putText(img, show_text, (int(bbox[0] - 5), int(bbox[1] - 5)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, pred_color, thickness= 1,
+                        lineType=cv2.LINE_AA)
+        else:
+            raise NotImplementedError
 
     def after_step(self):
         self.save_dir = osp.join(self.trainer.work_dir, "predicts")
@@ -67,8 +77,10 @@ class VisualPrediction(HookBase):
         results = self.trainer.results
         for result in results:
             img_file_name = result['img_metas']['filename']
+            cur_image_shape = result['img_metas']['image_shape']
             img_all_path = os.path.join(self.img_root_path, 'images', img_file_name)
             img = cv2.imread(img_all_path, cv2.IMREAD_UNCHANGED)
+            img = cv2.resize(img, cur_image_shape)
             h, w = img.shape[0], img.shape[1]
             if len(img.shape) == 3 and img.shape[-1] == 1:
                 img = img[:, :, 0][..., None].repeat(3, -1)
@@ -80,17 +92,21 @@ class VisualPrediction(HookBase):
             gt_bboxes, gt_labels = result['gt_bboxes'], result['gt_labels']
             for i in range(len(gt_labels)):
                 gt_bbox, gt_label = gt_bboxes[i], gt_labels[i]
-                self.draw_text_rangle(img1, gt_label, gt_bbox)
+                self.draw_text_rangle(img1, gt_label, gt_bbox, self.network_type)
             predicts = result['predictions']
             # filter predicts
             for predict in predicts:
-                bbox = predict[:4]
-                label = int(predict[5])
+                if self.network_type == "detection":
+                    bbox, label = predict[:4], int(predict[5])
+                elif self.network_type == "rotate_detection":
+                    bbox, label = predict[:8], int(predict[9])
+                else:
+                    raise NotImplementedError
                 save_image_file = osp.join(self.save_dir, img_file_name)
                 if label == -1:
                     pass
                 else:
-                    self.draw_text_rangle(img2, label, bbox)
+                    self.draw_text_rangle(img2, label, bbox, self.network_type)
 
             img = np.zeros((h, w*2+20, 3), np.uint8)
             img[0:h, 0:w] = img1
@@ -110,7 +126,7 @@ class CheckpointContainer(HookBase):
         logger = self.trainer.logger
         precision, recall, mAP = self.trainer.metrics
         net_save_path_best = osp.join(self.save_dir, 'model_best.pth')
-        if mAP > self.metrics["mAP"]:
+        if mAP >= self.metrics["mAP"]:
             self.metrics.update({'precision': precision, 'recall': recall, 'mAP': mAP})
             self.metrics.update({'best_model_epoch': self.trainer.epoch})
             self.metrics.update({'train_loss': self.trainer.train_loss})

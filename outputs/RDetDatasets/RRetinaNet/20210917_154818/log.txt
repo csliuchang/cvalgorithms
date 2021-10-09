@@ -1,1 +1,0 @@
-[09/17 15:48:19] pupadetector INFO: Model Summary: 218 layers, 4760072 parameters, 4760072 gradients, 8.1 GFLOPS at image size = 448

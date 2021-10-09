@@ -52,10 +52,7 @@ class TrainerContainer(BaseRunner):
 
         # build model
         self.model = ModelBuilder[self.network_type](cfg.model, train_cfg=cfg.train_cfg, test_cfg=cfg.test_cfg)
-        if self .network_type == "detection":
-            pass
-        else:
-            self.mode_info_printer()
+        self.mode_info_printer()
         self.resume_or_load()
 
         self.model.cuda()

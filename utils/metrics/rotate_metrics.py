@@ -26,19 +26,22 @@ class DetEval(object):
         """
         pass
 
-    def __call__(self, collections):
+    def _iou_function(self, pred_bbox, gt_bbox):
         if self.rotate_eval:
-            return self._rotate_call(collections)
+            return self._get_intersection_over_union(pred_bbox, gt_bbox)
         else:
-            return self._det_call(collections)
+            return self._get_hbb_over_union(pred_bbox, gt_bbox)
 
-    def _rotate_call(self, collections):
+    def __call__(self, collections):
         tp_per_class = [[] for _ in range(self.num_classes)]
         fp_per_class = [[] for _ in range(self.num_classes)]
         gt_counter_class = [0] * self.num_classes
         for collection in collections:
             preds = np.array(collection["predictions"], np.float32)
-            fiter_flags = preds[:, 8] > self.min_score_threshold
+            if self.rotate_eval:
+                fiter_flags = preds[:, 8] > self.min_score_threshold
+            else:
+                fiter_flags = preds[:, 4] > self.min_score_threshold
             preds = preds[fiter_flags.reshape(-1), :]
             gt_bboxes = collection["gt_bboxes"]
             gt_labels = collection["gt_labels"]
@@ -51,106 +54,24 @@ class DetEval(object):
 
             for pred in preds:
                 # default lable is start 0, so need to reduce 1
-                pred_bbox, score, pred_cls = pred[:8], pred[8], int(pred[9]) - 1
-                pred_bbox = np.array(pred_bbox, dtype=np.float32).reshape(4, 2)
-                tp, fp, max_iou = 0, 0, 0
-                match_gt_idx = -1
-                for gt_idx in range(num_of_gt_per_img):
-                    gt_bbox = gt_bboxes[gt_idx].reshape(4, 2)
-                    gt_cls = gt_labels[gt_idx]
-
-                    if pred_cls != gt_cls:
-                        continue
-                    iou = self._get_intersection_over_union(pred_bbox, gt_bbox)
-                    if iou <= max_iou:
-                        continue
-                    max_iou = iou
-                    match_gt_idx = gt_idx
-                    pass
-                if max_iou >= self.min_iou_threshold:
-                    if not already_match[match_gt_idx]:
-                        # tp
-                        already_match[match_gt_idx] = True
-                        tp = 1
-                    else:
-                        # repeat match
-                        fp = 1
+                if self.rotate_eval:
+                    pred_bbox, score, pred_cls = pred[:8], pred[8], int(pred[9])
+                    pred_bbox = np.array(pred_bbox, dtype=np.float32).reshape(4, 2)
                 else:
-                    # fp
-                    fp = 1
-
-                tp_per_class[pred_cls].append(tp)
-                fp_per_class[pred_cls].append(fp)
-
-                pass
-            pass
-
-        ap_sum = 0
-        prec_sum = 0
-        rec_sum = 0
-        for cls_idx in range(self.num_classes):
-            fp = fp_per_class[cls_idx]
-            tp = tp_per_class[cls_idx]
-
-            cumsum = 0
-            for idx, val in enumerate(fp):
-                fp[idx] += cumsum
-                cumsum += val
-            cumsum = 0
-            for idx, val in enumerate(tp):
-                tp[idx] += cumsum
-                cumsum += val
-
-            rec = tp[:]
-            for idx, val in enumerate(tp):
-                rec[idx] = float(tp[idx]) / (gt_counter_class[cls_idx] + 1e-6)
-
-            prec = tp[:]
-            for idx, val in enumerate(tp):
-                prec[idx] = float(tp[idx]) / (fp[idx] + tp[idx] + 1e-6)
-
-            ap, mrec, mprec = self.voc_ap(rec, prec)
-
-            ap_sum += ap
-            prec_sum += prec[-2]
-            rec_sum += rec[-2]
-
-        mAP = ap_sum / self.num_classes
-        prec = prec_sum / self.num_classes
-        rec = rec_sum / self.num_classes
-
-        return prec, rec, mAP
-
-    def _det_call(self, collections):
-        tp_per_class = [[] for _ in range(self.num_classes)]
-        fp_per_class = [[] for _ in range(self.num_classes)]
-        gt_counter_class = [0] * self.num_classes
-        for collection in collections:
-            preds = np.array(collection["predictions"], np.float32)
-            fiter_flags = preds[:, 4] > self.min_score_threshold
-            preds = preds[fiter_flags.reshape(-1), :]
-            gt_bboxes = collection["gt_bboxes"]
-            gt_labels = collection["gt_labels"]
-            num_of_gt_per_img = gt_bboxes.shape[0]
-            for gt_idx in range(num_of_gt_per_img):
-                gt_cls = gt_labels[gt_idx]
-                gt_counter_class[gt_cls] += 1
-
-            already_match = [False] * num_of_gt_per_img
-
-            for pred in preds:
-                # default lable is start 0, so need to reduce 1
-                pred_bbox, score, pred_cls = pred[:4], pred[4], int(pred[5])
-                pred_bbox = np.array(pred_bbox, dtype=np.float32)
+                    pred_bbox, score, pred_cls = pred[:4], pred[4], int(pred[5])
+                    pred_bbox = np.array(pred_bbox, dtype=np.float32)
                 tp, fp, max_iou = 0, 0, 0
                 match_gt_idx = -1
                 for gt_idx in range(num_of_gt_per_img):
-                    gt_bbox = gt_bboxes[gt_idx]
+                    if self.rotate_eval:
+                        gt_bbox = gt_bboxes[gt_idx].reshape(4, 2)
+                    else:
+                        gt_bbox = gt_bboxes[gt_idx]
                     gt_cls = gt_labels[gt_idx]
 
                     if pred_cls != gt_cls:
                         continue
-                    iou = self._get_hbb_over_union(pred_bbox, gt_bbox)
+                    iou = self._iou_function(pred_bbox, gt_bbox)
                     if iou <= max_iou:
                         continue
                     max_iou = iou

@@ -6,3 +6,4 @@ from .detdataset import DetDatasets
 from .pairdataset import PairDatasets
 from .onedet_dataset import OneDetDatasets
 from .dosdataset import DosDatasets
+from .fpcdataset import FPCDatasets
