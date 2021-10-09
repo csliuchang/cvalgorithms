@@ -1,2 +1,4 @@
 outputs/*
 build/*
+__pycache__
+.idea
