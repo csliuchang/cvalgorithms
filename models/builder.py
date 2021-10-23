@@ -3,6 +3,7 @@ from torch import nn
 
 BACKBONES = Registry('backbone')
 NECKS = Registry('necks')
+SIAMESE_LAYER = Registry('siamese_layer')
 ROI_EXTRACTORS = Registry('roi_extractor')
 SHARED_HEADS = Registry('shared_head')
 HEADS = Registry('head')
@@ -27,6 +28,10 @@ def build_backbone(cfg):
 
 def build_neck(cfg):
     return build(cfg, NECKS)
+
+
+def build_siamese_layer(cfg):
+    return build(cfg, SIAMESE_LAYER)
 
 
 def build_roi_extractor(cfg):

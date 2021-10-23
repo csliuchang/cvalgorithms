@@ -1,6 +1,8 @@
 import copy
 
 import numpy as np
+import torch
+
 import datasets
 from trainer.tools.runner import HookBase
 from utils.metrics import SegEval, DetEval
@@ -75,6 +77,12 @@ class VisualPrediction(HookBase):
         self.save_dir = osp.join(self.trainer.work_dir, "predicts")
         mkdir_or_exist(self.save_dir)
         results = self.trainer.results
+        if self.network_type == 'detection' or self.network_type == 'rotate_detection':
+            self.det_draw(results)
+        elif self.network_type == 'segmentation':
+            self.seg_draw(results)
+
+    def det_draw(self, results):
         for result in results:
             img_file_name = result['img_metas']['filename']
             cur_image_shape = result['img_metas']['image_shape']
@@ -113,24 +121,54 @@ class VisualPrediction(HookBase):
             img[0:h, w+20:2*w+20] = img2
             cv2.imwrite(save_image_file, img)
 
+    def seg_draw(self, results):
+        for result in results:
+            img_file_name = result['img_metas']['filename']
+            cur_image_shape = result['img_metas']['image_shape']
+            img_all_path = os.path.join(self.img_root_path, 'val', 'label', img_file_name)
+            img = cv2.imread(img_all_path, cv2.IMREAD_UNCHANGED)
+            img = cv2.resize(img, cur_image_shape)
+            if len(img.shape) == 2:
+                img = np.expand_dims(img, axis=-1)
+            pred = (result['predicts'] > 1).float()
+            img2 = np.array(pred.reshape(cur_image_shape[0], cur_image_shape[1], -1).cpu().detach()*255, dtype=np.float32)
+            h, w = img.shape[0], img.shape[1]
+            img_placeholder = np.zeros((h, w*2+20, 1), np.uint8)
+            img_placeholder[0:h, 0:w] = img
+            img_placeholder[0:h, w+20:2*w+20] = img2
+            save_image_file = osp.join(self.save_dir, img_file_name)
+            cv2.imwrite(save_image_file, img_placeholder)
+
     def after_train(self):
         pass
 
 
 class CheckpointContainer(HookBase):
-    def __init__(self):
-        self.metrics = {'precision': 0., 'recall': 0., 'mAP': 0., 'train_loss': float('inf'), 'best_model_epoch': 0}
+    def __init__(self, cfg):
+        self.network_type = cfg.network_type
+        if self.network_type == 'detection' or self.network_type == 'rotate_detection':
+            self.metrics = {'precision': 0., 'recall': 0., 'mAP': 0., 'train_loss': float('inf'), 'best_model_epoch': 0}
+        elif self.network_type == 'segmentation':
+            self.metrics = {'miou': 0.}
 
     def after_step(self):
         self.save_dir = osp.join(self.trainer.work_dir, "checkpoints")
         logger = self.trainer.logger
-        precision, recall, mAP = self.trainer.metrics
         net_save_path_best = osp.join(self.save_dir, 'model_best.pth')
-        if mAP >= self.metrics["mAP"]:
-            self.metrics.update({'precision': precision, 'recall': recall, 'mAP': mAP})
-            self.metrics.update({'best_model_epoch': self.trainer.epoch})
-            self.metrics.update({'train_loss': self.trainer.train_loss})
-            save_checkpoint(self.trainer.model, net_save_path_best)
+        if self.network_type == 'detection' or self.network_type == 'rotate_detection':
+            precision, recall, mAP = self.trainer.metrics
+            if mAP >= self.metrics["mAP"]:
+                self.metrics.update({'precision': precision, 'recall': recall, 'mAP': mAP})
+                self.metrics.update({'best_model_epoch': self.trainer.epoch})
+                self.metrics.update({'train_loss': self.trainer.train_loss})
+                save_checkpoint(self.trainer.model, net_save_path_best)
+        elif self.network_type == 'segmentation':
+            miou = self.trainer.metrics
+            if miou >= self.metrics["miou"]:
+                self.metrics.update({'miou': miou})
+                self.metrics.update({'best_model_epoch': self.trainer.epoch})
+                self.metrics.update({'train_loss': self.trainer.train_loss})
+                save_checkpoint(self.trainer.model, net_save_path_best)
         best_str = 'current best, '
         for k, v in self.metrics.items():
             best_str += '{}: {:.4f}, '.format(k, v)

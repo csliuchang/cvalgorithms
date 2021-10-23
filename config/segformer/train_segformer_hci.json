@@ -38,6 +38,7 @@
     "input_channel": 3,
      "input_width": 448,
      "input_height": 448,
+    "eval_period": 1,
      "save_train_metrics_log": true,
      "save_train_predict_fn": true,
   "save_val_pred": true,

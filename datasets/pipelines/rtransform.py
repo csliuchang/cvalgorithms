@@ -136,8 +136,17 @@ class Collect(object):
         img = results.pop('img_info')
         if len(img.shape) == 2:
             img = img[..., None].repeat(3, -1)
+        # img_1, img_2 = img[:, :, :3], img[:, :, 3:]
+        # import cv2
+        # cv2.imwrite('result_n.png', img_1)
+        # cv2.imwrite('result_g.png', img_2)
         img = to_tensor(img)
         img = normalize(img, mean=results['mean'], std=results['std'])
+        # img_norm = img.cpu().numpy()
+        # img_1, img_2 = img_norm[:, :, :3]*255, img_norm[:, :, 3:]*255
+        # import cv2
+        # cv2.imwrite('result_collect_g.png', img_1)
+        # cv2.imwrite('result_g_collect_n.png', img_2)
         img = img.permute(2, 0, 1)
         results['img'] = img
         if 'bboxes' in results['ann_info']:
@@ -150,6 +159,9 @@ class Collect(object):
         elif 'polygons' in results:
             if 'masks' in self.keys:
                 results['masks'] = polyline2masks(results, self.bg_first)
+        elif 'masks' in results:
+            masks = results['masks']
+            results['masks'] = to_tensor(np.array(masks, dtype=np.int64))
         for key in self.meta_keys:
             img_meta[key] = results.get(key, None)
         data['img_metas'] = img_meta

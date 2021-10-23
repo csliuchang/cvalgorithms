@@ -159,3 +159,42 @@ class SelfAttentionBlock(nn.Module):
         if self.out_project is not None:
             context = self.out_project(context)
         return context
+
+
+class BasicAttentionModule(nn.Module):
+    """
+    Basic Attention Module for Siamese Network fusion
+    """
+    def __init__(self, in_chn, stride=8, activation=nn.ReLU):
+        super(BasicAttentionModule, self).__init__()
+        self.in_chn = in_chn
+        self.key_channel = self.in_chn // 8
+        self.act = activation
+        self.stride = stride
+        self.pool = nn.AvgPool2d(self.stride)
+        # q, k, v
+        self.q_conv = nn.Conv2d(in_channels=in_chn, out_channels=in_chn//8, kernel_size=1)
+        self.k_conv = nn.Conv2d(in_channels=in_chn, out_channels=in_chn//8, kernel_size=1)
+        self.v_conv = nn.Conv2d(in_channels=in_chn, out_channels=in_chn, kernel_size=1)
+        self.gamma = nn.Parameter(torch.zeros(1))
+        self.softmax = nn.Softmax(dim=-1)
+
+    def forward(self, features):
+        x = self.pool(features)
+        B, C, W, H = x.size()
+        proj_query = self.q_conv(x).view(B, -1, W * H).permute(0, 2, 1)  # B * (W*H) * N
+        proj_key = self.k_conv(x).view(B, -1, W * H) #
+        proj_value = self.v_conv(x).view(B, -1, W * H)
+        energy = torch.matmul(proj_query, proj_key)
+        energy = (self.key_channel**-.5) * energy
+        attention = self.softmax(energy)
+        out = torch.matmul(proj_value, attention.permute(0, 2, 1))
+        out = out.view(B, C, W, H)
+        out = F.interpolate(out, [W * self.stride, H * self.stride])
+        out = out + features
+        return out
+
+
+
+
+

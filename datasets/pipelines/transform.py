@@ -39,6 +39,11 @@ class Resize(object):
             for polyline in results["ann_info"]["polylines"]:
                 new_polylines.append([[poly[0] * width_ratio, poly[1] * height_ratio] for poly in polyline])
             results['polygons'] = new_polylines
+        elif "masks" in results["ann_info"]:
+            mask = np.array(results["ann_info"]['masks'], dtype=np.uint8)
+            new_mask = cv2.resize(mask, [self.resize_height, self.resize_width], interpolation=cv2.INTER_NEAREST)
+            del(results["ann_info"]['masks'])
+            results["masks"] = new_mask
 
     def __call__(self, results):
         self._resize_img(results)
@@ -48,6 +53,9 @@ class Resize(object):
 
 @PIPELINES.register_module()
 class Rotate(object):
+    """
+    Rotate
+    """
     def __init__(self, angle):
         self.angle = self._get_angle(angle)
 
@@ -66,6 +74,12 @@ class Rotate(object):
             image[:, :, c] = cv2.warpAffine(image[:, :, c], M, (height, width),
                                             flags=cv2.INTER_AREA, borderMode=cv2.BORDER_REFLECT)
 
+    def _rotate_annotation(self, results, M):
+        masks = results["masks"]
+        results["masks"] = cv2.warpAffine(masks, M, (masks.shape[0], masks.shape[1]),
+                                          flags=cv2.INTER_NEAREST, borderMode=cv2.BORDER_REFLECT)
+        return masks
+
     def __call__(self, results, *args, **kwargs):
         image = results["img_info"]
         M = self._get_matrix(image)
@@ -81,5 +95,3 @@ class CutPaste(object):
 
     def __call__(self, *args, **kwargs):
         pass
-
-

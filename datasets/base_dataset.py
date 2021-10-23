@@ -87,7 +87,6 @@ class BaseDataset(Dataset):
         results = dict(img_info=img_info, ann_info=ann_info)
         return results
 
-
     def _rand_another(self, index):
         pool = np.where(self.flag == self.flag[index])[0]
         return np.random.choice(pool)

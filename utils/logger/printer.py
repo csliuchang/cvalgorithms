@@ -14,7 +14,7 @@ def model_info(model, verbose=False, img_size=448):
             print('%5g %40s %9s %12g %20s %10.3g %10.3g' %
                   (i, name, p.requires_grad, p.numel(), list(p.shape), p.mean(), p.std()))
 
-    img = torch.zeros((1, 3, img_size, img_size), device=next(model.parameters()).device)
+    img = torch.zeros((1,  6, img_size, img_size), device=next(model.parameters()).device)
     try:  # input
         flops = profile(deepcopy(model), inputs=(img,), verbose=False)[0] / 1E9 * 2  # stride GFLOPS
     except Exception as err:

@@ -94,7 +94,7 @@ class TrainerContainer(BaseRunner):
         if self.save_val_pred:
             ret.append(hooks.VisualPrediction(cfg))
         if dist.get_rank() == 0:
-            ret.append(hooks.CheckpointContainer())
+            ret.append(hooks.CheckpointContainer(cfg))
         return ret
 
     def resume_or_load(self):

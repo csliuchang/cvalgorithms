@@ -198,6 +198,16 @@ class TrainerBase(BaseRunner):
                 break
             self.global_step += 1
             _img, _ground_truth = data['images_collect']['img'], data['ground_truth']
+            # img show
+            # img = _img.permute(0, 2, 3, 1)
+            # img = img.detach().cpu().numpy().reshape(448, 448, -1)
+            # img_1, img_2 = img[:, :, :3]*255, img[:, :, 3:]*255
+            # ground_truth = _ground_truth['gt_masks'].permute(1, 2, 0).cpu().numpy()
+            # ground_truth = ground_truth.reshape(448, 448, -1)
+            # import cv2
+            # cv2.imwrite('result_n.png', img_1)
+            # cv2.imwrite('result_g.png', img_2)
+            # cv2.imwrite('gt.png', ground_truth)
             _img = _img.cuda()
             batch = _img.shape[0]
             logger_batch += batch
