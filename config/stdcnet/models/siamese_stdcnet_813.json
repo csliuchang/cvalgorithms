@@ -1,0 +1,27 @@
+{
+    "_base": "/home/pupa/PycharmProjects/PupaDetector/config/stdcnet/models/stdcnet.json",
+    "pretrained": "/home/pupa/pretained/STDCNet813M_73.91.tar",
+    "model": {
+        "backbone": {
+            "type": "STDCNet813",
+            "use_conv_last": true
+        },
+        "decode_head": {
+            "type": "STDCHead",
+            "in_channels": 1024,
+            "mid_channels": 512,
+            "conv_out_channels": 128,
+            "sp2_in_channels": 32,
+            "sp4_in_channels": 64,
+            "sp8_in_channels": 256,
+            "sp16_in_channels": 512,
+            "head_width": 64,
+            "num_classes": 1,
+            "loss": {"type": "OhemCELoss",
+                    "thresh":  0.7,
+                    "n_min": 65536
+            },
+            "bound_loss": {"type": "DetailAggregateLoss"}
+        }
+    }
+}
