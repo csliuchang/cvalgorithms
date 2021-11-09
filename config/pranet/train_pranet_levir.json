@@ -1,6 +1,6 @@
 {
-    "_base": ["./config/stanet/models/stanet.json",
-              "./config/stanet/models/stanet_resnet18.json"],
+    "_base": ["./config/pranet/models/pranet.json",
+              "./config/pranet/models/pranet_resnet18.json"],
     "log_level": "INFO",
     "network_type": "segmentation",
     "dataset": {

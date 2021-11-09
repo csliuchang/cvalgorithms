@@ -1,6 +1,6 @@
 {
-    "_base": ["./config/mscnet/models/mscnet.json",
-              "./config/mscnet/models/mscnet_resnet18_cat.json"],
+    "_base": ["./config/pranet/models/pranet.json",
+              "./config/pranet/models/pranet_resnet18_cat.json"],
     "log_level": "INFO",
     "network_type": "segmentation",
     "dataset": {

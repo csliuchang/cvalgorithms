@@ -1,5 +1,5 @@
 {
-    "_base": "./config/mscnet/models/mscnet.json",
+    "_base": "./config/pranet/models/pranet.json",
     "pretrained": "/home/pupa/pretained/ResNet18_v1b.pth",
     "model": {
         "type": "ChangeEncoderDecoder",
@@ -13,13 +13,12 @@
             "type": "PRAHead",
             "in_channels": 64,
             "num_classes": 1,
-            "loss": {"type": "BBContrastiveLoss"}
+            "loss": {"type": "BCEDiceLoss"}
         },
         "siamese_layer": {
-            "type": "PixelDistance",
-            "use_att": {"enable": false,
-                "in_c": 64,
-                "stride": 1}
+            "type": "PixelCat",
+            "in_c": 64,
+            "ou_c": 1
         }
     },
     "train_cfg": {},
