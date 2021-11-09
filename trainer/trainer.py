@@ -151,6 +151,7 @@ class TrainerContainer(BaseRunner):
         final_collection = []
         total_frame = 0.0
         total_time = 0.0
+        self.logger.info('Start to eval in val dataset:')
         prog_bar = ProgressBar(len(self.val_dataloader))
         for i, data in enumerate(self.val_dataloader):
             _img, _ground_truth = data['images_collect']['img'], data['ground_truth']

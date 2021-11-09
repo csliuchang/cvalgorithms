@@ -97,7 +97,7 @@ class SegEval:
             miou = ious.mean()
             return miou.item()
 
-    def compute_mean_iou(self, pred, label, unique_labels=(0, 1)):
+    def compute_mean_iou(self, pred, label, unique_labels=(1,)):
         if unique_labels is None:
             unique_labels = np.unique(label)
             if len(unique_labels) <= 1:

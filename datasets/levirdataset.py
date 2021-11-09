@@ -26,7 +26,7 @@ class LEVIRDataset(BaseDataset):
         img_g_str = osp.join(self.ann_file, self.img_g_path, img_str)
         img_n_str = osp.join(self.ann_file, self.img_n_path, img_str)
         img_g = cv2.imread(img_g_str, cv2.IMREAD_UNCHANGED)
-        img_n = cv2.imread(img_n_str,cv2.IMREAD_UNCHANGED)
+        img_n = cv2.imread(img_n_str, cv2.IMREAD_UNCHANGED)
         img_info = np.concatenate([img_g, img_n], axis=-1)
         ori_image_shape = img_info.shape[:2]
         return img_info, img_str, ori_image_shape
@@ -41,6 +41,7 @@ class LEVIRDataset(BaseDataset):
             mask = cv2.imread(all_label_path, cv2.IMREAD_UNCHANGED)
             data_info['filename'] = img_g_path
             data_info['ann'] = dict()
+            mask[mask == 255] = 1
             data_info['ann']['masks'] = np.array(
                 mask, dtype=np.int64
             )
