@@ -5,9 +5,9 @@
     "network_type": "segmentation",
     "dataset": {
             "type":  "SegDataset",
-            "data_root": "/home/pupa/PycharmProjects/PupaDetector/data/hci_cls1",
+            "data_root": "/home/pupa/PycharmProjects/cvalgorithms/data/balloon",
             "train_pipeline": [{"type": "Resize", "img_scale": [448, 448]},
-                                {"type": "Collect", "keys": ["img", "masks"], "bg_first": true}],
+                               {"type": "Collect", "keys": ["img", "masks"], "bg_first": true}],
             "val_pipeline": [{"type": "Resize", "img_scale": [448, 448]},
                               {"type": "Collect", "keys": ["img", "masks"], "bg_first": true}],
             "train_file": "labelme_train.txt",
@@ -19,10 +19,10 @@
     },
     "workflow": [["train", 2], ["val", 1]],
     "total_epochs": 100,
-    "num_classes": 1,
+    "num_classes": 2,
     "log_iter": 10,
     "optimizer": "ADAMW",
-    "learning_rate": 1e-3,
+    "learning_rate": 5e-5,
      "weight_decay": 1e-4,
     "lr_scheduler": {"type": "CosineAnnealingWarmRestarts",
                      "args": {"T_0": 5}
@@ -40,11 +40,11 @@
      "save_train_metrics_log": true,
      "save_train_predict_fn": true,
      "eval_period": 1,
-  "save_val_pred": false,
+  "save_val_pred": true,
         "ge_heat_map": {
     "enable": false,
     "mode": "score_cam"
   },
-  "checkpoint_dir": "/home/pupa/PycharmProjects/PupaDetector/outputs"
+  "checkpoint_dir": "/home/pupa/PycharmProjects/cvalgorithms/outputs"
 
 }

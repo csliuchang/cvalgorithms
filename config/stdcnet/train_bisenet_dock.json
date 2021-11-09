@@ -1,28 +1,33 @@
 {
-    "_base": ["/home/pupa/PycharmProjects/PupaDetector/config/stdcnet/models/stdcnet.json",
-              "/home/pupa/PycharmProjects/PupaDetector/config/stdcnet/models/stdcnet_resnet18.json"],
+    "_base": ["./config/stdcnet/models/siamese_stdcnet.json",
+              "./config/stdcnet/models/siamese_stdcnet_813.json"],
     "log_level": "INFO",
     "network_type": "segmentation",
     "dataset": {
-            "type":  "SegDataset",
-            "data_root": "/home/pupa/PycharmProjects/PupaDetector/data/hci_cls1",
-            "train_pipeline": [{"type": "Resize", "img_scale": [448, 448]},
-                                {"type": "Collect", "keys": ["img", "masks"], "bg_first": true}],
-            "val_pipeline": [{"type": "Resize", "img_scale": [448, 448]},
+            "type":  "DOCKCDDataset",
+            "img_g_path": "images",
+            "img_n_path": "templates",
+            "data_root": "./data/DOCK-CD",
+            "train_pipeline": [{"type": "Resize", "img_scale": [224, 224]},
+                               {"type": "Collect", "keys": ["img", "masks"], "bg_first": true}],
+            "val_pipeline": [{"type": "Resize", "img_scale": [224, 224]},
                               {"type": "Collect", "keys": ["img", "masks"], "bg_first": true}],
             "train_file": "labelme_train.txt",
-            "val_file": "labelme_val.txt"
+            "val_file": "labelme_val.txt",
+            "auto_norm": false,
+            "mean": [123.68, 116.28, 103.53, 123.68, 116.28, 103.53],
+            "std": [58.39, 57.12, 57.38, 58.39, 57.12, 57.38]
               },
     "dataloader":{
             "samples_per_gpu": 2,
             "workers_per_gpu": 2
     },
     "workflow": [["train", 2], ["val", 1]],
-    "total_epochs": 100,
+    "total_epochs": 200,
     "num_classes": 1,
     "log_iter": 10,
     "optimizer": "ADAMW",
-    "learning_rate": 1e-3,
+    "learning_rate": 0.001,
      "weight_decay": 1e-4,
     "lr_scheduler": {"type": "CosineAnnealingWarmRestarts",
                      "args": {"T_0": 5}
@@ -39,12 +44,12 @@
      "input_height": 448,
      "save_train_metrics_log": true,
      "save_train_predict_fn": true,
-     "eval_period": 1,
-  "save_val_pred": false,
-        "ge_heat_map": {
+  "eval_period": 1,
+  "save_val_pred": true,
+  "ge_heat_map": {
     "enable": false,
     "mode": "score_cam"
   },
-  "checkpoint_dir": "/home/pupa/PycharmProjects/PupaDetector/outputs"
+  "checkpoint_dir": "./outputs"
 
 }

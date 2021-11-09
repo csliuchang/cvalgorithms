@@ -2,7 +2,7 @@
     "_base": "./config/stanet/models/stanet.json",
     "pretrained": "/home/pupa/pretained/ResNet18_v1b.pth",
     "model": {
-        "type": "SiameseEncoderDecoder",
+        "type": "ChangeEncoderDecoder",
         "backbone": {
             "type": "ResNet",
             "depth": 18,
@@ -12,9 +12,14 @@
         "decode_head": {
             "type": "STAHead",
             "in_channels": 64,
-            "stride": 4,
             "num_classes": 1,
             "loss": {"type": "BBContrastiveLoss"}
+        },
+        "siamese_layer": {
+            "type": "PixelDistance",
+            "use_att": {"enable": true,
+                        "in_c": 64,
+                        "stride": 1}
         }
     },
     "train_cfg": {},

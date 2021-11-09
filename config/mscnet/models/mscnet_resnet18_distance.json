@@ -10,7 +10,7 @@
             "num_classes": null
         },
         "decode_head": {
-            "type": "MSCHead",
+            "type": "PRAHead",
             "in_channels": 64,
             "num_classes": 1,
             "loss": {"type": "BBContrastiveLoss"}

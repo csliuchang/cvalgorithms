@@ -8,4 +8,5 @@ from .onedet_dataset import OneDetDatasets
 from .dosdataset import DosDatasets
 from .fpcdataset import FPCDatasets
 from .levirdataset import LEVIRDataset
+from .dockcddataset import DOCKCDDataset
 

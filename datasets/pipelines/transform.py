@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from ..builder import PIPELINES
+from .utils import polyline2masks
 
 
 @PIPELINES.register_module()
@@ -42,7 +43,7 @@ class Resize(object):
         elif "masks" in results["ann_info"]:
             mask = np.array(results["ann_info"]['masks'], dtype=np.uint8)
             new_mask = cv2.resize(mask, [self.resize_height, self.resize_width], interpolation=cv2.INTER_NEAREST)
-            del(results["ann_info"]['masks'])
+            del (results["ann_info"]['masks'])
             results["masks"] = new_mask
 
     def __call__(self, results):
@@ -56,6 +57,7 @@ class Rotate(object):
     """
     Rotate
     """
+
     def __init__(self, angle):
         self.angle = self._get_angle(angle)
 
@@ -75,9 +77,14 @@ class Rotate(object):
                                             flags=cv2.INTER_AREA, borderMode=cv2.BORDER_REFLECT)
 
     def _rotate_annotation(self, results, M):
-        masks = results["masks"]
-        results["masks"] = cv2.warpAffine(masks, M, (masks.shape[0], masks.shape[1]),
-                                          flags=cv2.INTER_NEAREST, borderMode=cv2.BORDER_REFLECT)
+        if 'masks' in results:
+            masks = results["masks"]
+            results["masks"] = cv2.warpAffine(masks, M, (masks.shape[0], masks.shape[1]),
+                                              flags=cv2.INTER_NEAREST, borderMode=cv2.BORDER_REFLECT)
+        else:
+            masks = polyline2masks(results, bg_first=True, tensor=False)
+            results["masks"] = cv2.warpAffine(masks, M, (masks.shape[0], masks.shape[1]),
+                                              flags=cv2.INTER_NEAREST, borderMode=cv2.BORDER_REFLECT)
         return masks
 
     def __call__(self, results, *args, **kwargs):

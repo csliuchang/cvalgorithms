@@ -181,11 +181,13 @@ class FeatureFusionModule(nn.Module):
         self.relu = nn.ReLU(inplace=True)
         self.sigmoid = nn.Sigmoid()
         self.init_weight()
+        self.avg_pool = nn.AdaptiveAvgPool2d(1)
 
     def forward(self, fsp, fcp):
         fcat = torch.cat([fsp, fcp], dim=1)
         feat = self.convblk(fcat)
-        atten = F.avg_pool2d(feat, (56, 56))
+        # atten = F.avg_pool2d(feat, (56, 56))
+        atten = self.avg_pool(feat)
         atten = self.conv1(atten)
         atten = self.relu(atten)
         atten = self.conv2(atten)

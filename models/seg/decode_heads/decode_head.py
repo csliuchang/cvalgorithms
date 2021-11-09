@@ -76,9 +76,7 @@ class BaseDecodeHead(nn.Module, metaclass=ABCMeta):
         self._init_inputs(in_channels, in_index, input_transform)
         self.in_channels = in_channels
         self.head_width = head_width
-        if num_classes == 1:
-            num_classes += 1
-        self.num_classes = num_classes
+        self.num_classes = num_classes + 1
         self.final_drop = final_drop
         self.conv_cfg = conv_cfg
         self.norm_cfg = norm_cfg

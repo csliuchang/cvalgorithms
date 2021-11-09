@@ -48,10 +48,12 @@ class VisualPrediction(HookBase):
     def __init__(self, cfg):
         self.img_root_path = cfg.dataset.data_root
         datasets_type = cfg.dataset.type
-        dataset_type = getattr(datasets, datasets_type.lower().strip('s'))
+        dataset_type = getattr(datasets, datasets_type.lower().strip(''))
         self.color = dataset_type.COLOR
         self.text = dataset_type.CLASS
         self.network_type = cfg.network_type
+        if self.network_type == "segmentation":
+            self.color.insert(0, (0, 0, 0))
 
     def before_step(self):
         pass
@@ -68,7 +70,8 @@ class VisualPrediction(HookBase):
             pts = np.array(bbox, np.float32)
             pts = np.array([pts.reshape((4, 2))], dtype=np.int32)
             cv2.drawContours(img, pts, 0, color=pred_color, thickness=2)
-            cv2.putText(img, show_text, (int(bbox[0] - 5), int(bbox[1] - 5)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, pred_color, thickness= 1,
+            cv2.putText(img, show_text, (int(bbox[0] - 5), int(bbox[1] - 5)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, pred_color,
+                        thickness=1,
                         lineType=cv2.LINE_AA)
         else:
             raise NotImplementedError
@@ -116,26 +119,43 @@ class VisualPrediction(HookBase):
                 else:
                     self.draw_text_rangle(img2, label, bbox, self.network_type)
 
-            img = np.zeros((h, w*2+20, 3), np.uint8)
+            img = np.zeros((h, w * 2 + 20, 3), np.uint8)
             img[0:h, 0:w] = img1
-            img[0:h, w+20:2*w+20] = img2
+            img[0:h, w + 20:2 * w + 20] = img2
             cv2.imwrite(save_image_file, img)
 
     def seg_draw(self, results):
+        """
+        Visualize for change detection and one class Segmentation
+        :param results:
+        :return:
+        """
+        # add background
         for result in results:
             img_file_name = result['img_metas']['filename']
             cur_image_shape = result['img_metas']['image_shape']
-            img_all_path = os.path.join(self.img_root_path, 'val', 'label', img_file_name)
-            img = cv2.imread(img_all_path, cv2.IMREAD_UNCHANGED)
-            img = cv2.resize(img, cur_image_shape)
+            # img_all_path = os.path.join(self.img_root_path, 'val', 'label', img_file_name)
+            # img = cv2.imread(img_all_path, cv2.IMREAD_UNCHANGED)
+            img = result['gt_masks']
+            img = img.cpu().numpy()
             if len(img.shape) == 2:
                 img = np.expand_dims(img, axis=-1)
-            pred = (result['predicts'] > 1).float()
-            img2 = np.array(pred.reshape(cur_image_shape[0], cur_image_shape[1], -1).cpu().detach()*255, dtype=np.float32)
+            if result['predicts'].shape[0] > 1:
+                probs = torch.softmax(result['predicts'], dim=0)
+                predict = torch.argmax(probs, dim=0).cpu().numpy()
+                img2 = np.zeros((predict.shape[0], probs.shape[1], 3), dtype=np.uint8)
+                for label, color in enumerate(self.color):
+                    img2[predict == label, :] = color
+
+            else:
+                # pred = (result['predicts'] > 1).float()
+                pred = (torch.sigmoid(result['predicts']) > 0.5).float()
+                img2 = np.array(pred.reshape(cur_image_shape[0], cur_image_shape[1], -1).cpu().detach() * 255,
+                            dtype=np.float32)
             h, w = img.shape[0], img.shape[1]
-            img_placeholder = np.zeros((h, w*2+20, 1), np.uint8)
-            img_placeholder[0:h, 0:w] = img
-            img_placeholder[0:h, w+20:2*w+20] = img2
+            img_placeholder = np.zeros((h, w * 2 + 20, 3), np.uint8)
+            img_placeholder[0:h, 0:w] = img * 255
+            img_placeholder[0:h, w + 20:2 * w + 20] = img2
             save_image_file = osp.join(self.save_dir, img_file_name)
             cv2.imwrite(save_image_file, img_placeholder)
 

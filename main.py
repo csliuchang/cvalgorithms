@@ -26,6 +26,7 @@ def parse_args():
 
 
 def main():
+    torch.backends.cudnn.benchmark = True
     __dir__ = pathlib.Path(os.path.abspath(__file__))
     sys.path.append(str(__dir__))
     sys.path.append(str(__dir__.parent.parent))
@@ -35,12 +36,14 @@ def main():
         cfg.local_rank = args.local_rank
     if args.seed is not None:
         cfg.seed = args.seed
+    torch.manual_seed(cfg.seed)
+    torch.cuda.manual_seed(cfg.seed)
     rank = int(os.environ['LOCAL_RANK'])
     num_gpus = torch.cuda.device_count()
     torch.cuda.set_device(rank % num_gpus)
     dist.init_process_group(
         backend='nccl',
-        init_method="tcp://127.0.0.1:33274",
+        init_method="tcp://127.0.0.1:12345",
         world_size=torch.cuda.device_count(),
         rank=cfg.local_rank)
     trainer = TrainerContainer(cfg)

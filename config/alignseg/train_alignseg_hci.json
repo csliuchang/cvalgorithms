@@ -1,6 +1,6 @@
 {
-    "_base": ["/home/pupa/PycharmProjects/PupaDetector/config/stdcnet/models/stdcnet.json",
-              "/home/pupa/PycharmProjects/PupaDetector/config/stdcnet/models/stdcnet_resnet18.json"],
+    "_base": ["/home/pupa/PycharmProjects/cvalgorithms/config/alignseg/models/alignseg.json",
+              "/home/pupa/PycharmProjects/cvalgorithms/config/alignseg/models/alignseg_resnet18.json"],
     "log_level": "INFO",
     "network_type": "segmentation",
     "dataset": {

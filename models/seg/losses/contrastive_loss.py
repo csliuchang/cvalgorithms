@@ -14,7 +14,8 @@ class BBContrastiveLoss(nn.Module):
         self.margin = margin
 
     def forward(self, distance, label):
-        label[label == 255] = 1
+        label[label == 1] = -1 # change
+        label[label == 0] = 1
         mask = (label != 255).float()
         distance = distance * mask
         pos_sum = torch.sum((label == 1).float()) + 0.0001

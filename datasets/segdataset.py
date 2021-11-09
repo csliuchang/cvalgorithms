@@ -5,8 +5,8 @@ import os
 import numpy as np
 from .builder import DATASETS
 
-CLASS = ('bad', )
-COLOR = [(204, 78, 210)]
+CLASS = ('person', 'balloon')
+COLOR = [(204, 78, 210), (100, 200, 210)]
 
 
 @DATASETS.register_module()
@@ -17,8 +17,6 @@ class SegDataset(BaseDataset):
         self.color = COLOR
         self.cls_map = {c: i for i, c in enumerate(self.category)}
         super(SegDataset, self).__init__(*args, **kwargs)
-
-
 
     def load_annotations(self, ann_file):
         data_infos = []
@@ -37,7 +35,7 @@ class SegDataset(BaseDataset):
             gt_labels = []
             for shape_data in json_data['shapes']:
                 label_name = shape_data['label']
-                label = self.cls_map[label_name]
+                label = self.cls_map[label_name] + 1
                 if shape_data['shape_type'] == "polygon":
                     pts = shape_data['points']
                 else:

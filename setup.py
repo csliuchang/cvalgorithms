@@ -36,13 +36,12 @@ def make_cuda_ext(name, module, sources, sources_cuda=[]):
         extra_compile_args=extra_compile_args)
 
 
-
 if __name__ == '__main__':
     setup(
-        name='pupadetector',
+        name='cvalgorithms',
         description='DeepSight Detection Toolbox and Benchmark',
         author='deepsightAI',
-        author_email='@deepsight.com',
+        author_email='liuchang@deepsight.com',
         keywords='computer vision, classsification egmentation and detection',
         url='https://git.deepsight.ai/DeepLearningGroup/deepcv',
         packages=find_packages(exclude=('configs', 'tools', 'demo')),

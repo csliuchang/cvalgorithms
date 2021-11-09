@@ -1,27 +1,20 @@
 {
-    "_base": "./config/stdcnet/models/stdcnet.json",
+    "_base": "./config/alignseg/models/alignseg.json",
     "pretrained": "/home/pupa/pretained/ResNet18_v1b.pth",
     "model": {
         "type": "EncoderDecoder",
         "backbone": {
             "type": "ResNet",
             "depth": 18,
-            "out_levels": [1, 2, 3, 4, 5],
+            "out_levels": [2, 3, 4, 5],
             "num_classes": null
         },
         "decode_head": {
             "type": "AlignHead",
-            "in_channels": 512,
-            "mid_channels": 256,
-            "conv_out_channels": 128,
-            "sp2_in_channels": 64,
-            "sp4_in_channels": 64,
-            "sp8_in_channels": 128,
-            "sp16_in_channels": 512,
             "head_width": 64,
-            "num_classes": 1,
-            "loss": {"type": "DiveCELoss"},
-            "bound_loss": {"type": "DetailAggregateLoss"}
+            "in_channels": [512, 256, 128, 64, 64],
+            "num_classes": 2,
+            "loss": {"type": "CriterionOhemDSN"}
         }
     },
     "train_cfg": {},

@@ -8,16 +8,16 @@
             "img_g_path": "A",
             "img_n_path": "B",
             "data_root": "./data/LEVIR-CD",
-            "train_pipeline": [{"type": "Resize", "img_scale": [448, 448]},
+            "train_pipeline": [{"type": "Resize", "img_scale": [224, 224]},
                                {"type": "Rotate", "angle": 7},
                                {"type": "Collect", "keys": ["img", "masks"], "bg_first": false}],
-            "val_pipeline": [{"type": "Resize", "img_scale": [448, 448]},
+            "val_pipeline": [{"type": "Resize", "img_scale": [224, 224]},
                               {"type": "Collect", "keys": ["img", "masks"], "bg_first": false}],
             "train_file": "train",
             "val_file": "val",
             "auto_norm": false,
-            "mean": [73.64788818359375, 86.24000549316406, 88.10884094238281, 73.64788818359375, 86.24000549316406, 88.10884094238281],
-            "std": [33.84272384643555, 35.73030090332031, 36.79371643066406, 33.84272384643555, 35.73030090332031, 36.79371643066406]
+            "mean": [0.485, 0.456, 0.406, 0.485, 0.456, 0.406],
+            "std": [0.229, 0.224, 0.225, 0.229, 0.224, 0.225]
               },
     "dataloader":{
             "samples_per_gpu": 2,
@@ -51,6 +51,6 @@
     "enable": false,
     "mode": "score_cam"
   },
-  "checkpoint_dir": "/home/pupa/PycharmProjects/cvalgorithms/outputs"
+  "checkpoint_dir": "./cvalgorithms/outputs"
 
 }

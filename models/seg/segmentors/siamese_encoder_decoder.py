@@ -1,8 +1,9 @@
 from torch import nn
 import torch
+import torch.nn.functional as F
 from ...utils import add_prefix, resize
 from ... import builder
-from ...builder import SEGMENTORS, build_siamese_layer
+from ...builder import SEGMENTORS
 from .encoder_decoder import EncoderDecoder
 
 
@@ -15,7 +16,9 @@ class SiameseEncoderDecoder(EncoderDecoder):
                  auxiliary_head=None,
                  train_cfg=None,
                  test_cfg=None,
+                 use_operation=None,
                  pretrained=None):
+        self.use_operation = use_operation
         super(SiameseEncoderDecoder, self).__init__(
             backbone=backbone,
             decode_head=decode_head,
@@ -28,9 +31,16 @@ class SiameseEncoderDecoder(EncoderDecoder):
 
     def extract_feat(self, inputs):
         """Use Siamese Network Extract Features"""
-        inputs_g, inputs_n = torch.chunk(inputs, 2, dim=1)
+        inputs_n, inputs_g = torch.chunk(inputs, 2, dim=1)
         features_n, features_g = self.backbone(inputs_n), self.backbone(inputs_g)
-        return [features_n, features_g]
+        if self.use_operation:
+            return [torch .tanh(feature_n-feature_g) for feature_n, feature_g in zip(features_n, features_g)]
+        else:
+            return [features_n, features_g]
+
+
+
+
 
 
 

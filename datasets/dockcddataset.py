@@ -7,7 +7,7 @@ import numpy as np
 from .builder import DATASETS
 
 CLASS = ["vabnorm"]
-COLOR = [(255, 0, 20)]
+COLOR = [(255, 255, 255)]
 
 
 @DATASETS.register_module()
@@ -22,11 +22,11 @@ class DOCKCDDataset(BaseDataset):
         super(DOCKCDDataset, self).__init__(*args, **kwargs)
 
     def load_image(self, index):
-        img_str = self.data_infos[index]['filename']
-        img_g_str = osp.join(self.ann_file, self.img_g_path, img_str)
-        img_n_str = osp.join(self.ann_file, self.img_n_path, img_str)
+        img_str = self.data_infos[index]['filename'].split('images/')[-1]
+        img_g_str = osp.join(self.data_root, self.img_g_path, img_str)
+        img_n_str = osp.join(self.data_root, self.img_n_path, img_str.split('.png')[0] + '_template' + '.png')
         img_g = cv2.imread(img_g_str, cv2.IMREAD_UNCHANGED)
-        img_n = cv2.imread(img_n_str,cv2.IMREAD_UNCHANGED)
+        img_n = cv2.imread(img_n_str, cv2.IMREAD_UNCHANGED)
         img_info = np.concatenate([img_g, img_n], axis=-1)
         ori_image_shape = img_info.shape[:2]
         return img_info, img_str, ori_image_shape
@@ -48,7 +48,10 @@ class DOCKCDDataset(BaseDataset):
             gt_labels = []
             for shape_data in json_data['shapes']:
                 label_name = shape_data['label']
-                label = self.cls_map[label_name]
+                if len(self.cls_map) == 1:
+                    label = self.cls_map[label_name] + 1
+                else:
+                    label = self.cls_map[label_name]
                 if shape_data['shape_type'] == "polygon":
                     pts = shape_data['points']
                 else:
@@ -63,6 +66,8 @@ class DOCKCDDataset(BaseDataset):
                 gt_labels, dtype=np.int64
             )
             data_infos.append(data_info)
+        # if True:
+        #     data_infos = [data_inf for data_inf in data_infos if data_inf['ann']['polylines']]
         return data_infos
 
     def convert_labels(self, label):

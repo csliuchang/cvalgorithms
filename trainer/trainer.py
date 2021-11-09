@@ -116,8 +116,8 @@ class TrainerContainer(BaseRunner):
             self.logger.info('pretrained checkpoint is loaded.')
 
     def mode_info_printer(self):
-        model_str = model_info(self.model)
-        self.logger.info(model_str)
+        # model_str = model_info(self.model)
+        # self.logger.info(model_str)
         self.logger.info(self.model)
 
     def run_step(self):

@@ -7,14 +7,9 @@
         },
         "decode_head": {
             "type": "AlignHead",
-            "in_channels": 1024,
-            "head_width": 64,
+            "in_channels": [1024],
             "num_classes": 1,
-            "loss": {"type": "OhemCELoss",
-                    "thresh":  0.7,
-                    "n_min": 65536
-            },
-            "bound_loss": {"type": "DetailAggregateLoss"}
+            "loss": {"type": "CriterionOhemDSN"}
         }
     },
     "train_cfg": {},

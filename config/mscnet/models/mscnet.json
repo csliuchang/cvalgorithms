@@ -1,6 +1,6 @@
 {
     "model": {
-        "type": "SiameseEncoderDecoder",
+        "type": "ChangeEncoderDecoder",
         "backbone": {
             "type": "ResNet",
             "depth": 18,
@@ -8,7 +8,7 @@
             "num_classes": null
         },
         "decode_head": {
-            "type": "STAHead",
+            "type": "PRAHead",
             "in_channels": 1024,
             "head_width": 64,
             "num_classes": 1,

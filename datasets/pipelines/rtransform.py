@@ -2,26 +2,10 @@ import cv2
 import numpy as np
 from .transform import Resize, Rotate
 from ..builder import PIPELINES
-from engine.parallel import DataContainer as DC
 import torch
+from .utils import to_tensor, polyline2masks
 
 
-def to_tensor(data):
-    """Convert objects of various python types to :obj:`torch.Tensor`.
-
-    Supported types are: :class:`numpy.ndarray`, :class:`torch.Tensor`,
-    :class:`Sequence`, :class:`int` and :class:`float`.
-    """
-    if isinstance(data, torch.Tensor):
-        return data
-    elif isinstance(data, np.ndarray):
-        return torch.from_numpy(data)
-    elif isinstance(data, int):
-        return torch.LongTensor([data])
-    elif isinstance(data, float):
-        return torch.FloatTensor([data])
-    else:
-        raise TypeError(f'type {type(data)} cannot be converted to tensor.')
 
 
 def normalize(img, mean=None, std=None):
@@ -123,11 +107,14 @@ class Collect(object):
                  bg_first,
                  meta_keys=('filename', 'ori_image_shape', 'image_shape'),
                  fields=(dict(key='img', stack=True), dict(key='gt_bboxes'),
-                         dict(key='gt_labels'))):
+                         dict(key='gt_labels')),
+                 **kwargs):
         self.fields = fields
         self.keys = keys
         self.meta_keys = meta_keys
         self.bg_first = bg_first
+        bg_id = kwargs.get('bg_id', 255)
+        self.bg_id = bg_id
 
     def __call__(self, results):
         data = {}
@@ -158,7 +145,7 @@ class Collect(object):
             results['gt_labels'] = results['ann_info']['labels']
         elif 'polygons' in results:
             if 'masks' in self.keys:
-                results['masks'] = polyline2masks(results, self.bg_first)
+                results['masks'] = polyline2masks(results, bg_id=self.bg_id, bg_first=self.bg_first)
         elif 'masks' in results:
             masks = results['masks']
             results['masks'] = to_tensor(np.array(masks, dtype=np.int64))
@@ -174,17 +161,4 @@ class Collect(object):
                f'(keys={self.keys}, meta_keys={self.meta_keys})'
 
 
-def polyline2masks(results, bg_id=255, bg_first=False):
-    """
-    default background id is 0
-    """
-    if bg_first:
-        bg_id = 0
-    image_shape = results.get('image_shape', 'ori_image_shape')
-    mask = np.ones(shape=image_shape, dtype=np.uint8) * bg_id
-    for label_id, polyline in zip(results['ann_info']['labels'], results['polygons']):
-        # color = int(label_id + 1)
-        color = int(label_id + 1) if bg_first else int(label_id)
-        cv2.fillPoly(mask, np.array([polyline], np.int32), color=color, lineType=cv2.LINE_4)
 
-    return to_tensor(np.array(mask, dtype=np.int64))
