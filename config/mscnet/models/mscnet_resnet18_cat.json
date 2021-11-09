@@ -1,0 +1,28 @@
+{
+    "_base": "./config/mscnet/models/mscnet.json",
+    "pretrained": "/home/pupa/pretained/ResNet18_v1b.pth",
+    "model": {
+        "type": "ChangeEncoderDecoder",
+        "backbone": {
+            "type": "ResNet",
+            "depth": 18,
+            "out_levels": [2, 3, 4, 5],
+            "num_classes": null
+        },
+        "decode_head": {
+            "type": "MSCHead",
+            "in_channels": 64,
+            "num_classes": 1,
+            "loss": {"type": "BBContrastiveLoss"}
+        },
+        "siamese_layer": {
+            "type": "PixelDistance",
+            "use_att": {"enable": false,
+                "in_c": 64,
+                "stride": 1}
+        }
+    },
+    "train_cfg": {},
+    "test_cfg": {"mode": "whole"}
+}
+

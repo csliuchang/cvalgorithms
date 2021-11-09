@@ -1,0 +1,55 @@
+{
+    "_base": ["./config/stanet/models/stanet.json",
+              "./config/stanet/models/stanet_resnet18.json"],
+    "log_level": "INFO",
+    "network_type": "segmentation",
+    "dataset": {
+            "type":  "DOCKCDDataset",
+            "img_g_path": "images",
+            "img_n_path": "templates",
+            "data_root": "./data/DOCK-CD",
+            "train_pipeline": [{"type": "Resize", "img_scale": [224, 224]},
+                               {"type": "Collect", "keys": ["img", "masks"], "bg_first": false}],
+            "val_pipeline": [{"type": "Resize", "img_scale": [224, 224]},
+                              {"type": "Collect", "keys": ["img", "masks"], "bg_first": false}],
+            "train_file": "labelme_train.txt",
+            "val_file": "labelme_val.txt",
+            "auto_norm": false,
+            "mean": [0.485, 0.456, 0.406, 0.485, 0.456, 0.406],
+            "std": [0.229, 0.224, 0.225, 0.229, 0.224, 0.225]
+              },
+    "dataloader":{
+            "samples_per_gpu": 2,
+            "workers_per_gpu": 2
+    },
+    "workflow": [["train", 2], ["val", 1]],
+    "total_epochs": 200,
+    "num_classes": 1,
+    "log_iter": 10,
+    "optimizer": "ADAMW",
+    "learning_rate": 0.001,
+     "weight_decay": 1e-4,
+    "lr_scheduler": {"type": "CosineAnnealingWarmRestarts",
+                     "args": {"T_0": 5}
+                      },
+    "clip_gradients": {
+                    "type": "value",
+                    "enabled": true,
+                    "clip_value": 1.0,
+                    "norm_type": 2.0
+    },
+    "backbone_multiplier": 1.0,
+    "input_channel": 3,
+     "input_width": 448,
+     "input_height": 448,
+     "save_train_metrics_log": true,
+     "save_train_predict_fn": true,
+  "eval_period": 1,
+  "save_val_pred": false,
+  "ge_heat_map": {
+    "enable": false,
+    "mode": "score_cam"
+  },
+  "checkpoint_dir": "./outputs"
+
+}

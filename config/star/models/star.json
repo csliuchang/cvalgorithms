@@ -1,0 +1,22 @@
+{
+    "model": {
+        "type": "ChangeEncoderDecoder",
+        "backbone": {
+            "type": "ResNet",
+            "depth": 18,
+            "out_levels": [1, 2, 3, 4, 5],
+            "num_classes": null
+        },
+        "decode_head": {
+            "type": "MSCHead",
+            "in_channels": 1024,
+            "head_width": 64,
+            "num_classes": 1,
+            "loss": {"type": "BBContrastiveLoss"
+            }
+        }
+    },
+    "train_cfg": {},
+    "test_cfg": {"mode": "whole"}
+}
+
