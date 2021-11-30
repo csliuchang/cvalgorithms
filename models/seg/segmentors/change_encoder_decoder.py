@@ -2,9 +2,9 @@ from torch import nn
 import torch
 from ...utils import add_prefix, resize
 from ... import builder
-from ...builder import SEGMENTORS, build_siamese_layer
+from ...builder import SEGMENTORS
+from specific.siamese.builder import build_siamese_layer
 from .encoder_decoder import EncoderDecoder
-import torch.nn.functional as F
 
 
 @SEGMENTORS.register_module()
@@ -94,8 +94,8 @@ class ChangeEncoderDecoder(EncoderDecoder):
         losses = dict()
         x_n, x_g = x
         # share weight decode
-        features_n = self.decode_head.forward_train(x_n)
-        features_g = self.decode_head.forward_train(x_g)
+        features_n = self.decode_head(x_n, return_feat=True)
+        features_g = self.decode_head(x_g, return_feat=True)
         # siamese fuse
         changes = self.siamese_layer(features_n, features_g)
         loss_decode = self.decode_head.losses(changes, ground_truth)
@@ -106,8 +106,8 @@ class ChangeEncoderDecoder(EncoderDecoder):
         """Run forward function and calculate loss for decode head in
         inference."""
         x_n, x_g = x
-        features_n = self.decode_head.forward_train(x_n)
-        features_g = self.decode_head.forward_train(x_g)
+        features_n = self.decode_head(x_n, return_feat=True)
+        features_g = self.decode_head(x_g, return_feat=True)
         changes = self.siamese_layer(features_n, features_g)
         # print(changes[changes!=0])
         return changes
@@ -158,8 +158,8 @@ class ChangeEncoderDecoder(EncoderDecoder):
         return losses
 
     def forward_infer(self, inputs):
-        seg_logit = self.encode_decode(inputs)
-        return seg_logit
+        changes = self.encode_decode(inputs)
+        return changes
 
 
 

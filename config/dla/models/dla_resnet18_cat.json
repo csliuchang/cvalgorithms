@@ -1,5 +1,5 @@
 {
-    "_base": "./config/pranet/models/pranet.json",
+    "_base": "./config/dla/models/dla.json",
     "pretrained": "/home/pupa/pretained/ResNet18_v1b.pth",
     "model": {
         "type": "ChangeEncoderDecoder",
@@ -10,12 +10,16 @@
             "num_classes": null
         },
         "decode_head": {
-            "type": "PRAHead",
-            "in_channels": 64,
+            "type": "DLAHead",
+            "in_channels": [64, 128, 256, 512],
+            "head_width": 64,
+            "down_ratio": 2,
             "num_classes": 1,
+            "align_corners": true,
+            "act_cfg": {"type": "LeakyReLU", "inplace": true, "negative_slope": 0.01},
             "loss": {"type": "BCEDiceLoss"}
         },
-        "siamese_layer": {
+                "siamese_layer": {
             "type": "PixelSub",
             "in_c": 64,
             "ou_c": 1
@@ -24,4 +28,3 @@
     "train_cfg": {},
     "test_cfg": {"mode": "whole"}
 }
-

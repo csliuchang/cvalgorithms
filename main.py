@@ -43,7 +43,7 @@ def main():
     torch.cuda.set_device(rank % num_gpus)
     dist.init_process_group(
         backend='nccl',
-        init_method="tcp://127.0.0.1:12345",
+        init_method="tcp://127.0.0.1:11111",
         world_size=torch.cuda.device_count(),
         rank=cfg.local_rank)
     trainer = TrainerContainer(cfg)

@@ -134,6 +134,7 @@ class TrainerContainer(BaseRunner):
         train_dataloader = build_dataloader(self.train_dataset, cfg.dataloader.samples_per_gpu,
                                             cfg.dataloader.workers_per_gpu,
                                             len([cfg.local_rank, ]), seed=cfg.seed,
+                                            shuffle=True,
                                             drop_last=True)
         return train_dataloader
 

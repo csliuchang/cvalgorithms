@@ -18,9 +18,12 @@ class PRAHead(BaseDecodeHead):
     def init_weights(self):
         pass
 
-    def forward(self, inputs):
+    def forward(self, inputs, return_feat=False):
         features = self.decoder(inputs)
-        return features
+        if return_feat:
+            return features
+        else:
+            return self.conv_seg(features)
 
     def losses(self, seg_logit, seg_label):
         loss = dict()
@@ -31,21 +34,6 @@ class PRAHead(BaseDecodeHead):
             align_corners=self.align_corners)
         loss['loss'] = self.loss(seg_logit, seg_label)
         return loss
-
-    def forward_train(self, inputs, **kwargs):
-        """Forward function for training.
-
-        Parameters
-        ----------
-        inputs : list[Tensor]
-            List of multi-level img features.
-
-        Returns
-        -------
-        dict[str, Tensor]
-            a dictionary of loss components
-        """
-        return self.forward(inputs)
 
 
 class Decoder(nn.Module):

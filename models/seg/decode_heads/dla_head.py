@@ -131,25 +131,32 @@ class DLAHead(BaseDecodeHead):
 
         self.loss = build_loss(loss)
 
-        self.init_weights()
+        # self.init_weights()
 
-    def forward(self, x):
-        x = self.dla_up(x)
-        x = self.fc(x)
+    def forward(self, x, return_feat=False):
+        features = self.dla_up(x)
+        if return_feat:
+            return features
+        x = self.fc(features)
         x = F.interpolate(x, scale_factor=2, mode='bilinear', align_corners=True)
         return x
 
-    def init_weights(self):
-        for m in self.fc.modules():
-            if isinstance(m, nn.Conv2d):
-                n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
-                m.weight.data.normal_(0, math.sqrt(2. / n))
-            elif isinstance(m, nn.BatchNorm2d):
-                m.weight.data.fill_(1)
-                m.bias.data.zero_()
+    # def init_weights(self):
+    #     for m in self.fc.modules():
+    #         if isinstance(m, nn.Conv2d):
+    #             n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
+    #             m.weight.data.normal_(0, math.sqrt(2. / n))
+    #         elif isinstance(m, nn.BatchNorm2d):
+    #             m.weight.data.fill_(1)
+    #             m.bias.data.zero_()
 
     def losses(self, seg_logit, seg_label):
         loss = dict()
+        seg_logit = resize(
+            input=seg_logit,
+            size=seg_label.shape[1:],
+            mode='bilinear',
+            align_corners=self.align_corners)
         loss_1 = self.loss(seg_logit, seg_label)
         loss["loss"] = loss_1
         return loss
