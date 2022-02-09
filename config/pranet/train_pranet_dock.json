@@ -7,7 +7,7 @@
             "type":  "DOCKCDDataset",
             "img_g_path": "images",
             "img_n_path": "templates",
-            "data_root": "./data/DOCK-CD",
+            "data_root": "D:/DATASETS/DOCK-CD",
             "train_pipeline": [{"type": "Resize", "img_scale": [224, 224]},
                                {"type": "Rotate", "angle": 15},
                                {"type": "Collect", "keys": ["img", "masks"], "bg_first": true}],

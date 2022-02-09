@@ -1,5 +1,9 @@
 import numpy as np
-from shapely.geometry import Polygon
+try:
+    from shapely.geometry import Polygon
+except:
+    Polygon=None
+    print("shapely is not this version")
 
 
 def combine_predicts_gt(predicts, metas, gt, network_type='segmentation'):

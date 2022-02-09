@@ -1,4 +1,8 @@
-from . import rbbox_geo_cuda
+try:
+    from . import rbbox_geo_cuda
+except:
+    rbbox_geo_cuda = None
+    print('no rbbox_geo_cuda package in build')
 
 
 def rbbox_iou_iof(rb1, rb2, vec=False, iof=False):

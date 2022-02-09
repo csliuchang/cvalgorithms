@@ -56,7 +56,8 @@ class TrainerContainer(BaseRunner):
         self.resume_or_load()
 
         self.model.cuda()
-        self.model = self._build_ddp_model(cfg, self.model)
+        if cfg.distributed:
+            self.model = self._build_ddp_model(cfg, self.model)
 
         # build_optimizer
         optimizer = build_optimizer(cfg, self.model)
@@ -93,7 +94,7 @@ class TrainerContainer(BaseRunner):
         ret.append(hooks.EvalHook(cfg, test_and_save_results))
         if self.save_val_pred:
             ret.append(hooks.VisualPrediction(cfg))
-        if dist.get_rank() == 0:
+        # if dist.get_rank() == 0:
             ret.append(hooks.CheckpointContainer(cfg))
         return ret
 
@@ -135,7 +136,8 @@ class TrainerContainer(BaseRunner):
                                             cfg.dataloader.workers_per_gpu,
                                             len([cfg.local_rank, ]), seed=cfg.seed,
                                             shuffle=True,
-                                            drop_last=True)
+                                            drop_last=True,
+                                            distributed=cfg.distributed)
         return train_dataloader
 
     def build_val_loader(self, cfg):

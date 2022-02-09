@@ -1,3 +1,5 @@
+import platform
+
 import cv2
 import os
 import json
@@ -5,6 +7,7 @@ from .segdataset import BaseDataset
 import os.path as osp
 import numpy as np
 from .builder import DATASETS
+from cvtools.chg_process import trans_wins_format
 
 CLASS = ["vabnorm"]
 COLOR = [(255, 255, 255)]
@@ -41,6 +44,8 @@ class DOCKCDDataset(BaseDataset):
             data_info['filename'] = img_rel_path
             label_part_path = line_parts[1]
             label_file = os.path.join(self.data_root, label_part_path)
+            if platform.system() == "Windows":
+                label_file = trans_wins_format(label_file)
             # load json
             with open(label_file, 'r') as fp:
                 json_data = json.load(fp)

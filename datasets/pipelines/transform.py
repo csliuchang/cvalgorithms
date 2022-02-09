@@ -19,12 +19,12 @@ class Resize(object):
         image = results['img_info']
         image = cv2.resize(image, [self.resize_height, self.resize_width], interpolation=cv2.INTER_LINEAR)
         results['img_info'] = image
-        results['image_shape'] = [self.resize_height, self.resize_width]
+        results['image_shape'] = [self.resize_width, self.resize_height]
 
     def _resize_bboxes(self, results):
         original_height, original_width = results['ori_image_shape']
-        width_ratio = float(self.resize_width) / original_width
-        height_ratio = float(self.resize_height) / original_height
+        width_ratio = float(self.resize_height) / original_width
+        height_ratio = float(self.resize_width) / original_height
         if "bboxes" in results["ann_info"]:
             new_bbox = []
             for bbox in results["ann_info"]["bboxes"]:
@@ -43,8 +43,10 @@ class Resize(object):
         elif "masks" in results["ann_info"]:
             mask = np.array(results["ann_info"]['masks'], dtype=np.uint8)
             new_mask = cv2.resize(mask, [self.resize_height, self.resize_width], interpolation=cv2.INTER_NEAREST)
-            del (results["ann_info"]['masks'])
+            # del (results["ann_info"]['masks'])
             results["masks"] = new_mask
+        else:
+            raise Exception('not right format in results')
 
     def __call__(self, results):
         self._resize_img(results)
@@ -73,7 +75,7 @@ class Rotate(object):
     def _rotate_image(self, image, M):
         height, width, channel = image.shape[0], image.shape[1], image.shape[2]
         for c in range(channel):
-            image[:, :, c] = cv2.warpAffine(image[:, :, c], M, (height, width),
+            image[:, :, c] = cv2.warpAffine(image[:, :, c], M, (width, height),
                                             flags=cv2.INTER_AREA, borderMode=cv2.BORDER_REFLECT)
 
     def _rotate_annotation(self, results, M):
@@ -93,6 +95,18 @@ class Rotate(object):
         self._rotate_image(image, M)
         self._rotate_annotation(results, M)
         return results
+
+
+@PIPELINES.register_module()
+class Crop(object):
+    def __init__(self):
+        pass
+
+
+    def __call__(self, *args, **kwargs):
+        pass
+
+
 
 
 @PIPELINES.register_module()

@@ -11,10 +11,12 @@ import torch
 def parse_args():
     parser = argparse.ArgumentParser(description='cvalgorithms')
     parser.add_argument('--seed', type=int, default=2, help='random seed')
-    parser.add_argument('--config', default='../config/rretinanet/train_retinanet_msra.json', help='train config file path')
+    parser.add_argument('--config', default='../config/rretinanet/train_retinanet_msra.json',
+                        help='train config file path')
     parser.add_argument(
         '--resume-from', help='the checkpoint file to resume from')
     parser.add_argument('--work-dir', help='the dir to save logs and models')
+    parser.add_argument('--distributed', action='store_true', help='use ddp')
     parser.add_argument(
         '--local_rank',
         default=0,
@@ -41,11 +43,13 @@ def main():
     rank = int(os.environ['LOCAL_RANK'])
     num_gpus = torch.cuda.device_count()
     torch.cuda.set_device(rank % num_gpus)
-    dist.init_process_group(
-        backend='nccl',
-        init_method="tcp://127.0.0.1:11111",
-        world_size=torch.cuda.device_count(),
-        rank=cfg.local_rank)
+    if args.distributed:
+        dist.init_process_group(
+            backend='nccl',
+            init_method="tcp://127.0.0.1:23456",
+            world_size=torch.cuda.device_count(),
+            rank=cfg.local_rank)
+    cfg.distributed = args.distributed
     trainer = TrainerContainer(cfg)
     return trainer.train()
 

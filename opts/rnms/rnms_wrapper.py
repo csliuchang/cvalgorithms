@@ -1,7 +1,10 @@
 import numpy as np
 import torch
-
-from . import rnms_ext
+try:
+    from . import rnms_ext
+except:
+    rnms_ext = None
+    print("no rnms_ext package in your build")
 
 
 def rnms(dets, iou_thr, device_id=None):

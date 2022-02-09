@@ -67,7 +67,8 @@ class ChangeEncoderDecoder(EncoderDecoder):
         """
 
         super(EncoderDecoder, self).init_weights(pretrained)
-        self.backbone.init_weights(pretrained=pretrained)
+        if pretrained:
+            self.backbone.init_weights(pretrained=pretrained)
         self.decode_head.init_weights()
         if self.with_auxiliary_head:
             if isinstance(self.auxiliary_head, nn.ModuleList):

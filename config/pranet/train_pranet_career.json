@@ -1,0 +1,55 @@
+{
+    "_base": ["./config/pranet/models/pranet.json",
+              "./config/pranet/models/pranet_resnet18_cat.json"],
+    "log_level": "INFO",
+    "network_type": "segmentation",
+    "dataset": {
+            "type":  "CAREERCDDataset",
+            "img_g_path": "images",
+            "img_n_path": "templates",
+            "data_root": "C:\\Users\\user1\\Desktop\\career\\CAREER-CD",
+            "train_pipeline": [{"type": "Resize", "img_scale": [1024, 256]},
+                               {"type": "Collect", "keys": ["img", "masks"], "bg_first": true}],
+            "val_pipeline": [{"type": "Resize", "img_scale": [1024, 256]},
+                              {"type": "Collect", "keys": ["img", "masks"], "bg_first": true}],
+            "train_file": "labelme_train.txt",
+            "val_file": "labelme_val.txt",
+            "auto_norm": false,
+            "mean": [123.68, 116.28, 103.53, 123.68, 116.28, 103.53],
+            "std": [58.39, 57.12, 57.38, 58.39, 57.12, 57.38]
+              },
+    "dataloader":{
+            "samples_per_gpu": 2,
+            "workers_per_gpu": 2
+    },
+    "workflow": [["train", 2], ["val", 1]],
+    "total_epochs": 200,
+    "num_classes": 1,
+    "log_iter": 10,
+    "optimizer": "ADAMW",
+    "learning_rate": 0.001,
+     "weight_decay": 1e-4,
+    "lr_scheduler": {"type": "CosineAnnealingWarmRestarts",
+                     "args": {"T_0": 5}
+                      },
+    "clip_gradients": {
+                    "type": "value",
+                    "enabled": true,
+                    "clip_value": 1.0,
+                    "norm_type": 2.0
+    },
+    "backbone_multiplier": 1.0,
+    "input_channel": 3,
+     "input_width": 448,
+     "input_height": 448,
+     "save_train_metrics_log": true,
+     "save_train_predict_fn": true,
+  "eval_period": 1,
+  "save_val_pred": true,
+  "ge_heat_map": {
+    "enable": false,
+    "mode": "score_cam"
+  },
+  "checkpoint_dir": "./outputs"
+
+}

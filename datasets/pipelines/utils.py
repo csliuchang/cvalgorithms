@@ -28,7 +28,7 @@ def polyline2masks(results, bg_id=255, bg_first=False, tensor=True):
     """
     if bg_first:
         bg_id = 0
-    image_shape = results.get('image_shape', 'ori_image_shape')
+    image_shape = results.get('image_shape', results['ori_image_shape'])
     mask = np.ones(shape=image_shape, dtype=np.uint8) * bg_id
     for label_id, polyline in zip(results['ann_info']['labels'], results['polygons']):
         # color = int(label_id + 1)

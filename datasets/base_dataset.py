@@ -26,6 +26,7 @@ class BaseDataset(Dataset):
             self.ann_file = os.path.join(data_root, val_file)
         else:
             self.ann_file = os.path.join(data_root, 'txt_test.txt')
+        # self.ann_file = self.ann_file.replace("\\", "/") if "\\" in self.ann_file else self.ann_file
         self.data_infos = self.load_annotations(self.ann_file)
         if auto_norm:
             self.mean, self.std = self._compute_mean_std(self.data_infos)

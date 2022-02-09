@@ -149,6 +149,8 @@ class Collect(object):
         elif 'masks' in results:
             masks = results['masks']
             results['masks'] = to_tensor(np.array(masks, dtype=np.int64))
+        else:
+            raise Exception('Not support this format results')
         for key in self.meta_keys:
             img_meta[key] = results.get(key, None)
         data['img_metas'] = img_meta

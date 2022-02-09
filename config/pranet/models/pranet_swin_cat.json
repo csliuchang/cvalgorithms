@@ -1,0 +1,31 @@
+{
+    "_base": "./config/pranet/models/pranet.json",
+    "pretrained": "C:/Users/user1/Desktop/PRETRAINED/swin_tiny_patch4_window7_224.pth",
+    "model": {
+        "type": "ChangeEncoderDecoder",
+        "backbone": {
+            "type": "SwinTransformer",
+            "depths": [ 2, 2, 6, 2 ],
+            "num_heads": [3, 6, 12, 24],
+            "img_size": 224,
+            "num_classes": null,
+            "embed_dim": 96,
+            "window_size": 7,
+            "drop_path_rate": 0.2
+        },
+        "decode_head": {
+            "type": "PRAHead",
+            "in_channels": 64,
+            "num_classes": 1,
+            "loss": {"type": "BCEDiceLoss"}
+        },
+        "siamese_layer": {
+            "type": "PixelSub",
+            "in_c": 64,
+            "ou_c": 1
+        }
+    },
+    "train_cfg": {},
+    "test_cfg": {"mode": "whole"}
+}
+
