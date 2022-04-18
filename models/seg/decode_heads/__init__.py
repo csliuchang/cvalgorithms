@@ -8,3 +8,4 @@ from .segformer_head import SegformerHead
 from .sta_head import STAHead
 from .pra_head import PRAHead
 from .align_head import AlignHead
+from .stdc_head import STDCSimple

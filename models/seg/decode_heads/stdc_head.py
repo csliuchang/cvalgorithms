@@ -4,6 +4,8 @@ from .decode_head import BaseDecodeHead
 from ...builder import HEADS, build_loss
 import torch.nn.functional as F
 import math
+from ...utils import resize
+from models.seg.decode_heads.fcn_head import FCNHead
 
 BatchNorm2d = nn.BatchNorm2d
 
@@ -11,7 +13,8 @@ BatchNorm2d = nn.BatchNorm2d
 @HEADS.register_module()
 class STDCHead(BaseDecodeHead):
     def __init__(self, in_channels, mid_channels, conv_out_channels, sp16_in_channels, sp8_in_channels,
-                 sp4_in_channels, sp2_in_channels, loss, bound_loss, stride=[2, 4, 8, 16, 32], use_boundary_2=True, use_boundary_4=True,
+                 sp4_in_channels, sp2_in_channels, loss, bound_loss, stride=[2, 4, 8, 16, 32], use_boundary_2=True,
+                 use_boundary_4=True,
                  use_boundary_8=True, **kwargs):
         super(STDCHead, self).__init__(in_channels, **kwargs)
         self.arm16 = AttentionRefinementModule(mid_channels, 128)
@@ -97,6 +100,7 @@ class STDCHead(BaseDecodeHead):
             return feat_out
 
     def losses(self, seg_logit, seg_label):
+
         loss = dict()
         p1 = self.loss_p(seg_logit[0], seg_label)
         p2 = self.loss_2(seg_logit[1], seg_label)
@@ -242,3 +246,53 @@ class BiSeNetOutput(nn.Module):
             elif isinstance(module, BatchNorm2d):
                 nowd_params += list(module.parameters())
         return wd_params, nowd_params
+
+
+@HEADS.register_module()
+class STDCSimple(FCNHead):
+    def __init__(self, boundary_threshold=0.1, **kwargs):
+        super(STDCSimple, self).__init__(**kwargs)
+        self.boundary_threshold = boundary_threshold
+        # Using register buffer to make laplacian kernel on the same
+        # device of `seg_label`.
+        self.register_buffer(
+            'laplacian_kernel',
+            torch.tensor([-1, -1, -1, -1, 8, -1, -1, -1, -1],
+                         dtype=torch.float32,
+                         requires_grad=False).reshape((1, 1, 3, 3)))
+        self.fusion_kernel = torch.nn.Parameter(
+            torch.tensor([[6. / 10], [3. / 10], [1. / 10]],
+                         dtype=torch.float32).reshape(1, 3, 1, 1),
+            requires_grad=False)
+        self.stride_list = [1, 2, 4]
+
+    def losses(self, seg_logit, seg_label):
+        seg_label = seg_label.unsqueeze(1).float()
+
+        boundary_out = []
+        for idx in range(len(self.stride_list)):
+            boundary_targets = F.conv2d(
+                seg_label, self.laplacian_kernel, stride=self.stride_list[idx], padding=1)
+            boundary_targets = boundary_targets.clamp(min=0)
+            boundary_targets_up = resize(
+                boundary_targets,
+                size=seg_label.size()[2:],
+                mode='nearest')
+            boundary_targets_up[
+                boundary_targets_up > self.boundary_threshold] = 1
+            boundary_targets_up[
+                boundary_targets_up <= self.boundary_threshold] = 0
+            boundary_out.append(boundary_targets_up)
+        boudary_targets_pyramids = torch.stack(boundary_out, dim=1)
+
+        boundary_targets_pyramids = boudary_targets_pyramids.squeeze(2)
+        boundary_targets_pyramid = F.conv2d(boundary_targets_pyramids,
+                                            self.fusion_kernel)
+        seg_logit = F.interpolate(
+            seg_logit,
+            seg_label.shape[2:],
+            mode='bilinear',
+            align_corners=True)
+        loss = super(STDCSimple, self).losses(seg_logit,
+                                              boundary_targets_pyramid.squeeze(1).long())
+        return loss

@@ -4,9 +4,10 @@ from .base_dataset import BaseDataset
 import os
 import numpy as np
 from .builder import DATASETS
+from cvtools.chg_process import trans_wins_format
 
-CLASS = ('person', 'balloon')
-COLOR = [(204, 78, 210), (100, 200, 210)]
+CLASS = (["bad"])
+COLOR = [(204, 78, 210)]
 
 
 @DATASETS.register_module()
@@ -20,6 +21,7 @@ class SegDataset(BaseDataset):
 
     def load_annotations(self, ann_file):
         data_infos = []
+        ann_file = trans_wins_format(ann_file)
         lines = [line.strip() for line in open(ann_file, 'r').readlines()]
         for line in lines:
             data_info = dict()
@@ -42,12 +44,10 @@ class SegDataset(BaseDataset):
                     pts = None
                 polylines.append(pts)
                 gt_labels.append(label)
-
-            data_info['ann'] = dict()
-
-            data_info['ann']['polylines'] = polylines
-            data_info['ann']['labels'] = np.array(
+            labels = np.array(
                 gt_labels, dtype=np.int64
             )
+            data_info['annotations'] = \
+                {'segmentation': polylines, 'labels': labels}
             data_infos.append(data_info)
         return data_infos

@@ -32,7 +32,7 @@ def polyline2masks(results, bg_id=255, bg_first=False, tensor=True):
     mask = np.ones(shape=image_shape, dtype=np.uint8) * bg_id
     for label_id, polyline in zip(results['ann_info']['labels'], results['polygons']):
         # color = int(label_id + 1)
-        color = int(label_id) if bg_first else int(label_id)
+        color = int(label_id) + 1 if bg_first else int(label_id)
         cv2.fillPoly(mask, np.array([polyline], np.int32), color=color, lineType=cv2.LINE_4)
     if tensor:
         return to_tensor(np.array(mask, dtype=np.int64))

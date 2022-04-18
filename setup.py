@@ -8,6 +8,8 @@ import torch
 from torch.utils.cpp_extension import (BuildExtension, CppExtension,
                                        CUDAExtension)
 
+import torch.nn.modules
+
 
 def make_cuda_ext(name, module, sources, sources_cuda=[]):
 
@@ -37,14 +39,14 @@ def make_cuda_ext(name, module, sources, sources_cuda=[]):
 
 if __name__ == '__main__':
     setup(
-        name='cvalgorithms',
+        name='deepcv',
         description='DeepSight Detection Toolbox and Benchmark',
         author='deepsightAI',
-        author_email='liuchang@deepsight.com',
+        author_email='@deepsight.com',
         keywords='computer vision, classsification egmentation and detection',
         url='https://git.deepsight.ai/DeepLearningGroup/deepcv',
         packages=find_packages(exclude=('configs', 'tools', 'demo')),
-        package_data={'DeepSightAIDet.opts': ['*/*.so']},
+        package_data={'deepcv.opts': ['*/*.so']},
         classifiers=[
             'Development Status :: 4 - Beta',
             'License :: OSI Approved :: Apache Software License',
@@ -63,11 +65,6 @@ if __name__ == '__main__':
                 sources_cuda=[
                     'src/rcuda/rnms_cuda.cpp', 'src/rcuda/rnms_kernel.cu'
                 ]),
-            make_cuda_ext(
-                name='sigmoid_focal_loss_ext',
-                module='opts.sigmoid_focal_loss',
-                sources=['src/sigmoid_focal_loss_ext.cpp'],
-                sources_cuda=['src/cuda/sigmoid_focal_loss_cuda.cu']),
             make_cuda_ext(
                 name='rbbox_geo_cuda',
                 module='opts.rbbox_geo',
