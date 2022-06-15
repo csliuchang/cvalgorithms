@@ -151,7 +151,7 @@ class VisualPrediction(HookBase):
                 # pred = (result['predicts'] > 1).float()
                 pred = (torch.sigmoid(result['predicts']) > 0.5).float()
                 img2 = np.array(pred.reshape(cur_image_shape[0], cur_image_shape[1], -1).cpu().detach() * 255,
-                            dtype=np.float32)
+                                dtype=np.float32)
             h, w = img.shape[0], img.shape[1]
             img_placeholder = np.zeros((h, w * 2 + 20, 3), np.uint8)
             img_placeholder[0:h, 0:w] = img * 255
