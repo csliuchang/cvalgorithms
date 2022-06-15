@@ -1,25 +1,15 @@
 {
-<<<<<<< HEAD
     "_base": ["C:/Users/user1/PycharmProjects/cvalgorithms/config/stdcnet/models/stdcnet.json",
               "C:/Users/user1/PycharmProjects/cvalgorithms/config/stdcnet/models/stdcnet_resnet18.json"],
-=======
-    "_base": ["E:/PycharmProjects/cvalgorithms/config/stdcnet/models/stdcnet.json",
-              "E:/PycharmProjects/cvalgorithms/config/stdcnet/models/stdcnet_resnet18.json"],
->>>>>>> 4d9d417c8fc350500336042ba753ef0428936d08
     "log_level": "INFO",
     "network_type": "segmentation",
     "dataset": {
             "type":  "SegDataset",
-<<<<<<< HEAD
             "data_root": "C:/Users/user1/PycharmProjects/cvalgorithms/data/hci_cls1",
             "train_pipeline": [{"type": "Resize", "scale": [448, 448]},
                                {"type": "Normalize"},
                                {"type": "DefaultFormatBundle"}
             ],
-=======
-            "data_root": "E:/PycharmProjects/cvalgorithms/data/hci_cls1",
-            "train_pipeline": [{"type": "Resize", "scale": [448, 448]}],
->>>>>>> 4d9d417c8fc350500336042ba753ef0428936d08
             "val_pipeline": [{"type": "Resize", "scale": [448, 448]},
                               {"type": "Collect", "keys": ["img", "masks"], "bg_first": true}],
             "train_file": "labelme_train.txt",
@@ -57,10 +47,6 @@
     "enable": false,
     "mode": "score_cam"
   },
-<<<<<<< HEAD
   "checkpoint_dir": "C:/Users/user1/PycharmProjects/cvalgorithms/outputs"
-=======
-  "checkpoint_dir": "E:/PycharmProjects/PycharmProjects/cvalgorithms/outputs"
->>>>>>> 4d9d417c8fc350500336042ba753ef0428936d08
 
 }
