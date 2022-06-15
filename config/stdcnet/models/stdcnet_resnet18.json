@@ -10,18 +10,11 @@
             "num_classes": null
         },
         "decode_head": {
-            "type": "STDCHead",
+            "type": "STDCSimple",
             "in_channels": 512,
-            "mid_channels": 256,
-            "conv_out_channels": 128,
-            "sp2_in_channels": 64,
-            "sp4_in_channels": 64,
-            "sp8_in_channels": 128,
-            "sp16_in_channels": 512,
             "head_width": 64,
             "num_classes": 1,
-            "loss": {"type": "DiveCELoss"},
-            "bound_loss": {"type": "DetailAggregateLoss"}
+            "loss": {"type": "DiveCELoss"}
         }
     },
     "train_cfg": {},

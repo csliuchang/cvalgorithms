@@ -1,11 +1,9 @@
 import cv2
 import numpy as np
-from .transform import Resize, Rotate
+from .operate import Resize, Rotate
 from ..builder import PIPELINES
 import torch
 from .utils import to_tensor, polyline2masks
-
-
 
 
 def normalize(img, mean=None, std=None):

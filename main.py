@@ -11,7 +11,7 @@ import torch
 def parse_args():
     parser = argparse.ArgumentParser(description='cvalgorithms')
     parser.add_argument('--seed', type=int, default=2, help='random seed')
-    parser.add_argument('--config', default='../config/rretinanet/train_retinanet_msra.json',
+    parser.add_argument('--config', default='C:/Users/user1/PycharmProjects/cvalgorithms/config/stdcnet/train_bisenet_hci.json',
                         help='train config file path')
     parser.add_argument(
         '--resume-from', help='the checkpoint file to resume from')

@@ -33,7 +33,7 @@ class ChangeEncoderDecoder(EncoderDecoder):
 
     def extract_feat(self, inputs):
         """Use Siamese Network Extract Features"""
-        inputs_g, inputs_n = torch.chunk(inputs, 2, dim=1)
+        inputs_n, inputs_g = torch.chunk(inputs, 2, dim=1)
         features_n, features_g = self.backbone(inputs_n), self.backbone(inputs_g)
         if self.use_operation:
             return [torch.tanh(feature_n-feature_g) for feature_n, feature_g in zip(features_n, features_g)]

@@ -1,3 +1,5 @@
-from .compose import Compose
+from .augmentation import Augmentation
 from .rtransform import (RResize, polyline2masks)
-from .transform import (Resize, )
+from .operate import (Resize, )
+
+

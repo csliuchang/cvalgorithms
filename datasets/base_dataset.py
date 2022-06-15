@@ -4,7 +4,8 @@ import numpy as np
 import os
 import bisect
 import cv2
-from .pipelines import Compose
+from .pipelines import Augmentation
+from copy import deepcopy
 from torch.utils.data.dataset import ConcatDataset as _ConcatDataset
 
 __all__ = "BaseDataset"
@@ -15,8 +16,22 @@ class BaseDataset(Dataset):
     A _base datasets for rotate detection
     """
 
-    def __init__(self, data_root, train_pipeline, val_pipeline, auto_norm=True, mean=None, std=None, train_file=None, val_file=None, test_mode=False, stage='train'):
+    def __init__(self,
+                 data_root,
+                 train_pipeline,
+                 val_pipeline,
+                 auto_norm=True,
+                 mean=None,
+                 std=None,
+                 train_file=None,
+                 val_file=None,
+                 test_mode=False,
+                 support_type=None,
+                 stage='train'):
+        if support_type is None:
+            support_type = ['seg', 'box', 'rbox']
         self.stage = stage
+        self.type_list = support_type
         self.img_ids = None
         self.test_mode = test_mode
         self.data_root = data_root
@@ -32,8 +47,8 @@ class BaseDataset(Dataset):
             self.mean, self.std = self._compute_mean_std(self.data_infos)
         else:
             self.mean, self.std = mean, std
-        self.load_train_pipeline = Compose(train_pipeline)
-        self.load_val_pipeline = Compose(val_pipeline)
+        self.load_train_pipeline = Augmentation(train_pipeline)
+        self.load_val_pipeline = Augmentation(val_pipeline)
         if not self.test_mode:
             self._set_group_flag()
 
@@ -51,7 +66,7 @@ class BaseDataset(Dataset):
             return data
 
     def get_ann_info(self, index):
-        return self.data_infos[index]['ann']
+        return self.data_infos[index]['annotations']
 
     def load_image(self, index):
         img_pre_path = self.data_infos[index]['filename']
@@ -71,21 +86,21 @@ class BaseDataset(Dataset):
     def prepare_train_img(self, index):
         img_info, filename, ori_image_shape = self.load_image(index)
         ann_info = self.get_ann_info(index)
-        results = dict(filename=filename, img_info=img_info, ann_info=ann_info, ori_image_shape=ori_image_shape,
+        results = dict(filename=filename, image=img_info, annotations=ann_info, image_size=ori_image_shape,
                        mean=self.mean, std=self.std)
         return self.load_train_pipeline(results)
 
     def prepare_val_img(self, index):
         img_info, filename, ori_image_shape = self.load_image(index)
         ann_info = self.get_ann_info(index)
-        results = dict(filename=filename, img_info=img_info, ann_info=ann_info, ori_image_shape=ori_image_shape,
+        results = dict(filename=filename, image=img_info, annotations=ann_info, image_size=ori_image_shape,
                        mean=self.mean, std=self.std)
         return self.load_val_pipeline(results)
 
     def prepare_test_img(self, index):
         img_info = self.load_image(index)
         ann_info = self.get_ann_info(index)
-        results = dict(img_info=img_info, ann_info=ann_info)
+        results = dict(image=img_info, annotations=ann_info)
         return results
 
     def _rand_another(self, index):
@@ -111,6 +126,8 @@ class BaseDataset(Dataset):
         mean = (int_mean / len(data)).tolist()
         std = (int_std / len(data)).tolist()
         return mean, std
+
+
 
 
 

@@ -83,23 +83,37 @@ def collate(batch, samples_per_gpu=1):
     """
     A batch collator that does nothing.
     """
-    images, img_metas, gt_bboxes, gt_labels, gt_masks = [], [], [], [], []
-    for sample in batch:
-        image = sample['img']
-        img_meta = sample['img_metas']
-        images.append(image)
-        img_metas.append(img_meta)
-        if 'gt_bboxes' in sample:
-            gt_bboxes.append(sample['gt_bboxes'])
-            gt_labels.append(sample['gt_labels'])
-            gt_masks.append(sample['gt_masks'])
-        elif 'masks' in sample:
-            gt_masks.append(sample['masks'])
-    images = torch.stack(images, dim=0)
-    images_collect = dict(img=images, img_metas=img_metas)
-    if gt_bboxes:
-        ground_truth = dict(gt_bboxes=gt_bboxes, gt_labels=gt_labels, gt_masks=gt_masks)
-    else:
-        gt_masks = torch.stack(gt_masks, dim=0)
-        ground_truth = dict(gt_masks=gt_masks)
-    return dict(images_collect=images_collect, ground_truth=ground_truth)
+    # images, img_metas, gt_bboxes, gt_labels, gt_masks = [], [], [], [], []
+    # for sample in batch:
+    #     image = sample['img']
+    #     img_meta = sample['img_metas']
+    #     images.append(image)
+    #     img_metas.append(img_meta)
+    #     if 'gt_bboxes' in sample:
+    #         gt_bboxes.append(sample['gt_bboxes'])
+    #         gt_labels.append(sample['gt_labels'])
+    #         gt_masks.append(sample['gt_masks'])
+    #     elif 'masks' in sample:
+    #         gt_masks.append(sample['masks'])
+    # images = torch.stack(images, dim=0)
+    # images_collect = dict(img=images, img_metas=img_metas)
+    # if gt_bboxes:
+    #     ground_truth = dict(gt_bboxes=gt_bboxes, gt_labels=gt_labels, gt_masks=gt_masks)
+    # else:
+    #     gt_masks = torch.stack(gt_masks, dim=0)
+    #     ground_truth = dict(gt_masks=gt_masks)
+    # return dict(images_collect=images_collect, ground_truth=ground_truth)
+    for idx in range(0, len(batch), samples_per_gpu):
+        stacked_img = [sample['image'] for sample in
+                       batch[idx: idx + samples_per_gpu]
+                       ]
+        if 'masks' in batch[0]['annotations']:
+            stacked_mask = [sample['annotations']['masks'] for sample in
+                            batch[idx: idx + samples_per_gpu]
+                            ]
+    inputs_img = torch.stack(stacked_img, dim=0)
+    gt_mask = torch.stack(stacked_mask, dim=0)
+    images_collect = {'img': inputs_img}
+    ground_truth = {"gt_masks": gt_mask}
+    return {'images_collect': images_collect, 'ground_truth': ground_truth
+            }
