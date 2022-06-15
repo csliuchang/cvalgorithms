@@ -123,7 +123,7 @@ class EncoderDecoder(BaseSegmentor):
 
         return losses
 
-    def forward_train(self, inputs, ground_truth):
+    def forward_train(self, inputs, ground_truth=None):
         """Forward function for training.
 
         Parameters
@@ -146,7 +146,7 @@ class EncoderDecoder(BaseSegmentor):
         loss_decode = self._decode_head_forward_train(x, ground_truth)
         losses.update(loss_decode)
 
-        if self.with_auxiliary_head:
+        if False:
             loss_aux = self._auxiliary_head_forward_train(
                 x, ground_truth)
             losses.update(loss_aux)

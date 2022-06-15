@@ -7,7 +7,7 @@
         },
         "decode_head": {
             "type": "STDCHead",
-            "in_channels": 1024,
+            "in_channels": 512,
             "head_width": 64,
             "num_classes": 1,
             "loss": {"type": "OhemCELoss",
@@ -18,7 +18,7 @@
         "auxiliary_head": [
             {
                 "type": "FCNHead",
-                "in_channels":1024,
+                "in_channels":512,
                 "num_classes": 1,
                 "num_convs": 1,
                 "head_width": 64,

@@ -86,7 +86,6 @@ class FCNHead(BaseDecodeHead):
         output = self.cls_seg(output)
         return output
 
-
     def losses(self, seg_logit, seg_label):
         loss = dict()
         seg_logit = resize(

@@ -20,7 +20,6 @@ class Augmentation(object):
                 raise TypeError('transform must be callable or a dict')
 
     def __call__(self, data):
-        print(data)
         for t in self.transforms:
             data = t(data)
             if data is None:
