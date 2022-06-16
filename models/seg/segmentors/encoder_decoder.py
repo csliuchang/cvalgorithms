@@ -108,7 +108,7 @@ class EncoderDecoder(BaseSegmentor):
         seg_logits = self.decode_head.forward_infer(x)
         return seg_logits
 
-    def _auxiliary_head_forward_train(self, x, ground_truth):
+    def _auxiliary_head_forward_train(self, x, ground_truth=None):
         """Run forward function and calculate loss for auxiliary head in
         training."""
         losses = dict()
@@ -146,7 +146,7 @@ class EncoderDecoder(BaseSegmentor):
         loss_decode = self._decode_head_forward_train(x, ground_truth)
         losses.update(loss_decode)
 
-        if False:
+        if self.with_auxiliary_head:
             loss_aux = self._auxiliary_head_forward_train(
                 x, ground_truth)
             losses.update(loss_aux)

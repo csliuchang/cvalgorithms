@@ -266,33 +266,33 @@ class STDCSimple(FCNHead):
             requires_grad=False)
         self.stride_list = [1, 2, 4]
 
-    def losses(self, seg_logit, seg_label):
-        seg_label = seg_label.unsqueeze(1).float()
-
-        boundary_out = []
-        for idx in range(len(self.stride_list)):
-            boundary_targets = F.conv2d(
-                seg_label, self.laplacian_kernel, stride=self.stride_list[idx], padding=1)
-            boundary_targets = boundary_targets.clamp(min=0)
-            boundary_targets_up = resize(
-                boundary_targets,
-                size=seg_label.size()[2:],
-                mode='nearest')
-            boundary_targets_up[
-                boundary_targets_up > self.boundary_threshold] = 1
-            boundary_targets_up[
-                boundary_targets_up <= self.boundary_threshold] = 0
-            boundary_out.append(boundary_targets_up)
-        boudary_targets_pyramids = torch.stack(boundary_out, dim=1)
-
-        boundary_targets_pyramids = boudary_targets_pyramids.squeeze(2)
-        boundary_targets_pyramid = F.conv2d(boundary_targets_pyramids,
-                                            self.fusion_kernel)
-        seg_logit = F.interpolate(
-            seg_logit,
-            seg_label.shape[2:],
-            mode='bilinear',
-            align_corners=True)
-        loss = super(STDCSimple, self).losses(seg_logit,
-                                              boundary_targets_pyramid.squeeze(1).long())
-        return loss
+    # def losses(self, seg_logit, seg_label):
+    #     seg_label = seg_label.unsqueeze(1).float()
+    #
+    #     boundary_out = []
+    #     for idx in range(len(self.stride_list)):
+    #         boundary_targets = F.conv2d(
+    #             seg_label, self.laplacian_kernel, stride=self.stride_list[idx], padding=1)
+    #         boundary_targets = boundary_targets.clamp(min=0)
+    #         boundary_targets_up = resize(
+    #             boundary_targets,
+    #             size=seg_label.size()[2:],
+    #             mode='nearest')
+    #         boundary_targets_up[
+    #             boundary_targets_up > self.boundary_threshold] = 1
+    #         boundary_targets_up[
+    #             boundary_targets_up <= self.boundary_threshold] = 0
+    #         boundary_out.append(boundary_targets_up)
+    #     boudary_targets_pyramids = torch.stack(boundary_out, dim=1)
+    #
+    #     boundary_targets_pyramids = boudary_targets_pyramids.squeeze(2)
+    #     boundary_targets_pyramid = F.conv2d(boundary_targets_pyramids,
+    #                                         self.fusion_kernel)
+    #     seg_logit = F.interpolate(
+    #         seg_logit,
+    #         seg_label.shape[2:],
+    #         mode='bilinear',
+    #         align_corners=True)
+    #     loss = super(STDCSimple, self).losses(seg_logit,
+    #                                           boundary_targets_pyramid.squeeze(1).long())
+    #     return loss
