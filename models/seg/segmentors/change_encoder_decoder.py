@@ -6,6 +6,9 @@ from ...builder import SEGMENTORS
 from specific.siamese.builder import build_siamese_layer
 from .encoder_decoder import EncoderDecoder
 from ..losses import BatchContrastiveLoss
+import torch.nn.functional as F
+import numpy as np
+import random
 
 
 @SEGMENTORS.register_module()
@@ -127,7 +130,6 @@ class ChangeEncoderDecoder(EncoderDecoder):
         image_sparse_feat, anchor_sparse_feat = self._sparse_feats(image_feat), self._sparse_feats(anchor_feat)
         # w distant
         dist = torch.pairwise_distance(image_sparse_feat, anchor_sparse_feat)
-        sent_msg(f"the pair distance is {dist.shape}")
         return dist
         pass
 
