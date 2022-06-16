@@ -1,11 +1,11 @@
 {
-    "_base": ["E:\\PycharmProjects\\cvalgorithms\\config\\stdcnet\\models\\stdcnet.json",
-              "E:\\PycharmProjects\\cvalgorithms\\config\\stdcnet\\models\\stdcnet_resnet18.json"],
+    "_base": ["./config/stdcnet/models/stdcnet.json",
+              "./config/stdcnet/models/stdcnet_resnet18.json"],
     "log_level": "INFO",
     "network_type": "segmentation",
     "dataset": {
             "type":  "SegDataset",
-            "data_root": "E:\\PycharmProjects\\cvalgorithms\\data\\hci_cls1",
+            "data_root": "./data/hci_cls1",
             "train_pipeline": [{"type": "Resize", "scale": [448, 448]},
                                {"type": "Normalize"},
                                {"type": "DefaultFormatBundle"}
@@ -48,6 +48,6 @@
     "enable": false,
     "mode": "score_cam"
   },
-  "checkpoint_dir": "E:\\PycharmProjects\\cvalgorithms\\outputs"
+  "checkpoint_dir": "./outputs"
 
 }
