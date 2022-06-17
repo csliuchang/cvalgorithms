@@ -6,8 +6,8 @@ import os.path as osp
 import numpy as np
 from .builder import DATASETS
 
-CLASS = ["DIF"]
-COLOR = [(255, 0, 20)]
+CLASS = ["change"]
+COLOR = [(100, 0, 20)]
 
 
 @DATASETS.register_module()

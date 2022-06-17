@@ -7,7 +7,7 @@
             "type":  "LEVIRDataset",
             "img_g_path": "A",
             "img_n_path": "B",
-            "data_root": "D:\\LEVIR-CD",
+            "data_root": "D:\\DATASETS\\DOCK-CD",
             "train_pipeline": [{"type": "Resize", "img_scale": [448, 448]},
                                {"type": "Rotate", "angle": 7},
                                {"type": "Collect", "keys": ["img", "masks"], "bg_first": true}],

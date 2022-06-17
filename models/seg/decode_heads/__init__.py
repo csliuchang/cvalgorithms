@@ -9,3 +9,4 @@ from .sta_head import STAHead
 from .pra_head import PRAHead
 from .align_head import AlignHead
 from .stdc_head import STDCSimple
+from .uper_head import UPerHead

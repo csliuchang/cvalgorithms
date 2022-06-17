@@ -17,11 +17,11 @@ class SiameseEncoderDecoder(EncoderDecoder):
                  backbone,
                  decode_head,
                  neck=None,
+                 fusion_mode='mid',
                  auxiliary_head=None,
                  siamese_layer=None,
                  train_cfg=None,
                  test_cfg=None,
-                 fus_type=None,
                  pretrained=None,
                  export_feature=None,
                  with_constant_head=True,
@@ -35,13 +35,13 @@ class SiameseEncoderDecoder(EncoderDecoder):
             test_cfg=test_cfg,
             pretrained=pretrained
         )
-        self.fus_type = fus_type
+        self.fusion_mode = fusion_mode
         self.export_feature = export_feature
         self.with_constant_head = with_constant_head
         self.constant_loss = BatchContrastiveLoss()
         self.sig = nn.Sigmoid()
         self.sft = nn.Softmax(dim=1)
-        if self.fus_type == "mid":
+        if self.fusion_mode == "mid":
             siamese_blocks = []
             for chn in siamese_layer.fea_list:
                 siamese_layer.in_c, siamese_layer.ou_c = chn, chn
@@ -101,10 +101,10 @@ class SiameseEncoderDecoder(EncoderDecoder):
         """Run forward function and calculate loss for decode head in
         training."""
         losses = dict()
-        if self.fus_type == "mid":
+        if self.fusion_mode == "mid":
             x = [self.siamese_layer[idx](x[0][idx], x[1][idx]) for idx in range(len(x[0]))]
             loss_decode = self.decode_head.forward_train(x, ground_truth)
-        elif self.fus_type == "later":
+        elif self.fusion_mode == "later":
             x_n, x_g = x
             # share weight decode
             _, features_n = self.decode_head(x_n, return_feat=True)
@@ -144,10 +144,10 @@ class SiameseEncoderDecoder(EncoderDecoder):
         """Run forward function and calculate loss for decode head in
         inference."""
         # trans tuple to list
-        if self.fus_type == "mid":
+        if self.fusion_mode == "mid":
             x = [self.siamese_layer[idx](x[0][idx], x[1][idx]) for idx in range(len(x[0]))]
             changes = self.decode_head.forward_infer(x)
-        elif self.fus_type == "later":
+        elif self.fusion_mode == "later":
             x_n, x_g = x
             _, features_n = self.decode_head(x_n, return_feat=True)
             _, features_g = self.decode_head(x_g, return_feat=True)
@@ -206,6 +206,8 @@ class SiameseEncoderDecoder(EncoderDecoder):
         dict[str, Tensor]
             a dictionary of loss components
         """
+        if type(ground_truth) is dict:
+            ground_truth = ground_truth['gt_masks']
         x = self.extract_feat(inputs)
         losses = dict()
         loss_decode = self._decode_head_forward_train(x, ground_truth)
@@ -224,7 +226,6 @@ class SiameseEncoderDecoder(EncoderDecoder):
             loss_cos = self._constant_head_forward_train(distance, ground_truth)
             losses.update(loss_cos)
             pass
-        torch.channel_shuffle()
 
         return losses
 
@@ -289,7 +290,7 @@ class SiameseEncoderDecoder(EncoderDecoder):
             size=images.shape[2:],
             mode='bilinear',
             align_corners=self.align_corners)
-        if self.fus_type == 'mid':
+        if self.fusion_mode == 'mid':
             changes = self.sft(changes)
         else:
             changes = self.sig(changes)

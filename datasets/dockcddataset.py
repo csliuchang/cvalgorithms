@@ -54,7 +54,7 @@ class DOCKCDDataset(BaseDataset):
             for shape_data in json_data['shapes']:
                 label_name = shape_data['label']
                 if len(self.cls_map) == 1:
-                    label = self.cls_map[label_name] + 1
+                    label = self.cls_map[label_name]
                 else:
                     label = self.cls_map[label_name]
                 if shape_data['shape_type'] == "polygon":
@@ -64,15 +64,13 @@ class DOCKCDDataset(BaseDataset):
                 polylines.append(pts)
                 gt_labels.append(label)
 
-            data_info['ann'] = dict()
+            data_info['annotations'] = dict()
 
-            data_info['ann']['polylines'] = polylines
-            data_info['ann']['labels'] = np.array(
+            data_info['annotations']['segmentation'] = polylines
+            data_info['annotations']['labels'] = np.array(
                 gt_labels, dtype=np.int64
             )
             data_infos.append(data_info)
-        # if True:
-        #     data_infos = [data_inf for data_inf in data_infos if data_inf['ann']['polylines']]
         return data_infos
 
     def convert_labels(self, label):
@@ -84,8 +82,8 @@ class DOCKCDDataset(BaseDataset):
         int_mean, int_std = None, None
         for data_pre in data:
             img_pre_path = data_pre['filename']
-            img_all_path_g = os.path.join(self.data_root, "train", "A", img_pre_path)
-            img_all_path_n = os.path.join(self.data_root, "train", "B", img_pre_path)
+            img_all_path_g = os.path.join(self.data_root,  img_pre_path)
+            img_all_path_n = os.path.join(self.data_root,  img_pre_path)
             img_info_g = cv2.imread(img_all_path_g, cv2.IMREAD_UNCHANGED)
             img_info_n = cv2.imread(img_all_path_n, cv2.IMREAD_UNCHANGED)
             img_info = np.concatenate([img_info_g, img_info_n], axis=-1)

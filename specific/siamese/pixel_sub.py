@@ -8,7 +8,7 @@ __all__ = ["PixelSub"]
 
 @SIAMESE_LAYER.register_module()
 class PixelSub(nn.Module):
-    def __init__(self, in_c, ou_c, add_conv=True):
+    def __init__(self, in_c, ou_c, add_conv=True, **kwargs):
         super(PixelSub, self).__init__()
         self.add_conv = add_conv
         self.conv_modules = nn.Sequential(BasicConv2d(in_c, in_c//2, 3, 1, 1),

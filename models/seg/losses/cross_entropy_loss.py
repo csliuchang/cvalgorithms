@@ -224,7 +224,7 @@ class CrossEntropyLoss(nn.Module):
             class_weight=class_weight,
             reduction=reduction,
             avg_factor=avg_factor,
-            **kwargs)
+            ignore_index=self.ignore_label)
 
         return loss_cls
 
@@ -389,6 +389,7 @@ class CriterionOhemDSN(nn.Module):
     '''
     DSN : We need to consider two supervision for the model.
     '''
+
     def __init__(self, ignore_index=255, thresh=0.7, min_kept=100000, use_weight=True, reduction='mean'):
         super(CriterionOhemDSN, self).__init__()
         self.ignore_index = ignore_index
@@ -404,13 +405,13 @@ class CriterionOhemDSN(nn.Module):
 
             scale_pred = F.interpolate(input=preds, size=(h, w), mode='bilinear', align_corners=True)
             loss3 = self.criterion(scale_pred, target)
-            return loss1 + loss2*0.8 + loss3*0.1
+            return loss1 + loss2 * 0.8 + loss3 * 0.1
         else:
             scale_pred = F.interpolate(input=preds[0], size=(h, w), mode='bilinear', align_corners=True)
             loss1 = self.criterion(scale_pred, target)
             loss2 = lovasz_softmax(F.softmax(scale_pred, dim=1), target, ignore=self.ignore_index)
 
-            return loss1 + loss2*0.8
+            return loss1 + loss2 * 0.8
 
 
 def lovasz_softmax(probas, labels, classes='present', per_image=False, ignore=None):
@@ -425,7 +426,7 @@ def lovasz_softmax(probas, labels, classes='present', per_image=False, ignore=No
     """
     if per_image:
         loss = mean(lovasz_softmax_flat(*flatten_probas(prob.unsqueeze(0), lab.unsqueeze(0), ignore), classes=classes)
-                          for prob, lab in zip(probas, labels))
+                    for prob, lab in zip(probas, labels))
     else:
         loss = lovasz_softmax_flat(*flatten_probas(probas, labels, ignore), classes=classes)
     return loss
@@ -445,7 +446,7 @@ def lovasz_softmax_flat(probas, labels, classes='present'):
     losses = []
     class_to_sum = list(range(C)) if classes in ['all', 'present'] else classes
     for c in class_to_sum:
-        fg = (labels == c).float() # foreground for class c
+        fg = (labels == c).float()  # foreground for class c
         if (classes is 'present' and fg.sum() == 0):
             continue
         if C == 1:
@@ -497,7 +498,7 @@ def lovasz_grad(gt_sorted):
     intersection = gts - gt_sorted.float().cumsum(0)
     union = gts + (1 - gt_sorted).float().cumsum(0)
     jaccard = 1. - intersection / union
-    if p > 1: # cover 1-pixel case
+    if p > 1:  # cover 1-pixel case
         jaccard[1:p] = jaccard[1:p] - jaccard[0:-1]
     return jaccard
 

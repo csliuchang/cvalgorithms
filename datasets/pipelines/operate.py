@@ -205,7 +205,6 @@ class Resize(Operate):
 
     def apply_segmentation(self, data: dict):
         image_size = data['image_size']
-        print("enhance ones data ")
         polylines = []
         for poly in data['annotations']['segmentation']:
             re_poly = [self.apply_coords(p, image_size) for p in poly]
@@ -231,14 +230,14 @@ class Normalize(Operate):
     def inverse(self) -> "Operate":
         pass
 
-    def __init__(self, mean=None, std=None, to_rgb=True, normal_auto=False):
+    def __init__(self, mean=None, std=None, to_rgb=False, normal_auto=False):
         super().__init__()
         self._set_attributes(locals())
         if mean is None or std is None:
             self.normal_auto = True
 
     @staticmethod
-    def normalize_(img, mean, std, to_rgb=True):
+    def normalize_(img, mean, std, to_rgb=False):
         if type(mean) is float:
             mean = np.array(np.repeat(mean, img.shape[-1]), dtype=np.float32)
         if type(std) is float:
@@ -281,7 +280,7 @@ class DefaultFormatBundle(Operate):
             img = data['image']
             if len(img.shape) < 3:
                 img = np.expand_dims(img, -1)
-            img = np.ascontiguousarray(img.transpose(2, 0, 1))
+            img = np.array(np.ascontiguousarray(img.transpose(2, 0, 1)), dtype=np.float32)
             data['image'] = to_tensor(img)
         if 'segmentation' in data['annotations']:
             data['annotations']['masks'] = \
@@ -290,7 +289,6 @@ class DefaultFormatBundle(Operate):
 
     def apply_image(self, img: np.ndarray):
         pass
-
 
 @PIPELINES.register_module()
 class Rotate(object):
