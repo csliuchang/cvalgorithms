@@ -1,5 +1,5 @@
 from .encoder_decoder import EncoderDecoder
 from .cascade_encoder_decoder import CascadeEncoderDecoder
-from .change_encoder_decoder import ChangeEncoderDecoder
+from .siamese_encoder_decoder import SiameseEncoderDecoder
 
 __all__ = [k for k in globals().keys() if not k.startswith("_")]

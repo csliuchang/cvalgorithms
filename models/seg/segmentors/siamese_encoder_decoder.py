@@ -12,7 +12,7 @@ import random
 
 
 @SEGMENTORS.register_module()
-class ChangeEncoderDecoder(EncoderDecoder):
+class SiameseEncoderDecoder(EncoderDecoder):
     def __init__(self,
                  backbone,
                  decode_head,
@@ -26,7 +26,7 @@ class ChangeEncoderDecoder(EncoderDecoder):
                  export_feature=None,
                  with_constant_head=True,
                  **kwargs):
-        super(ChangeEncoderDecoder, self).__init__(
+        super(SiameseEncoderDecoder, self).__init__(
             backbone=backbone,
             decode_head=decode_head,
             neck=neck,
@@ -224,6 +224,7 @@ class ChangeEncoderDecoder(EncoderDecoder):
             loss_cos = self._constant_head_forward_train(distance, ground_truth)
             losses.update(loss_cos)
             pass
+        torch.channel_shuffle()
 
         return losses
 
