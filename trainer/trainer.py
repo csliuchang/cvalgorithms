@@ -81,7 +81,7 @@ class TrainerContainer(BaseRunner):
         Returns:
             list[HookBase]:
         """
-        cfg = self.cfg
+        cfg = self.cfg.clone()
 
         ret = [
         ]

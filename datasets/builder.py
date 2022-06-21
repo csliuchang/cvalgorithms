@@ -108,12 +108,14 @@ def collate(batch, samples_per_gpu=1):
                        batch[idx: idx + samples_per_gpu]
                        ]
         if 'masks' in batch[0]['annotations']:
-            stacked_mask = [sample['annotations']['masks'] for sample in
-                            batch[idx: idx + samples_per_gpu]
-                            ]
+            gt_results = [sample['annotations']['masks'] for sample in
+                          batch[idx: idx + samples_per_gpu]
+                          ]
+        else:
+            print("not support this ground truths label !")
     inputs_img = torch.stack(stacked_img, dim=0)
-    gt_mask = torch.stack(stacked_mask, dim=0)
-    images_collect = {'img': inputs_img}
+    gt_mask = torch.stack(gt_results, dim=0)
+    images_collect = {'img': inputs_img, 'img_metas': None}
     ground_truth = {"gt_masks": gt_mask}
     return {'images_collect': images_collect, 'ground_truth': ground_truth
             }
