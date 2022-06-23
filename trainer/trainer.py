@@ -2,7 +2,7 @@ from trainer.tools import BaseRunner, TrainerBase
 from models import build_detector, build_segmentor
 from datasets.builder import build_dataloader
 from engine.optimizer import build_optimizer
-from utils import get_root_logger, load_checkpoint, model_info
+from utils import get_root_logger, load_checkpoint, model_info, comm, path, events
 import copy
 from datasets import build_dataset
 import time
@@ -13,6 +13,7 @@ import torch
 import os
 from utils.bar import ProgressBar
 from utils.metrics.rotate_metrics import combine_predicts_gt
+from typing import Optional
 import torch.distributed as dist
 
 ModelBuilder = {"segmentation": build_segmentor,
@@ -62,8 +63,8 @@ class TrainerContainer(BaseRunner):
         # build_optimizer
         optimizer = build_optimizer(cfg, self.model)
         self.scheduler = self._initialize('lr_scheduler', torch.optim.lr_scheduler, optimizer)
-        self.start_epoch = 1
-        self.max_epoch = cfg.total_epochs
+        self.start_iter = 1
+        self.max_iter = cfg.total_epochs
         self.log_iter = cfg.log_iter
         self._trainer = TrainerBase(self.model, self.train_dataloader, optimizer, self.logger, self.scheduler)
         self.save_val_pred = cfg.save_val_pred
@@ -81,7 +82,7 @@ class TrainerContainer(BaseRunner):
         Returns:
             list[HookBase]:
         """
-        cfg = self.cfg.clone()
+        cfg = self.cfg
 
         ret = [
         ]
@@ -91,12 +92,18 @@ class TrainerContainer(BaseRunner):
             self._last_eval_results = self._eval()
             return self._last_eval_results
 
-        ret.append(hooks.EvalHook(cfg, test_and_save_results))
-        if self.save_val_pred:
-            ret.append(hooks.VisualPrediction(cfg))
-        # if dist.get_rank() == 0:
-            ret.append(hooks.CheckpointContainer(cfg))
+        # ret.append(hooks.EvalHook(cfg, test_and_save_results))
+        # if self.save_val_pred:
+        #     ret.append(hooks.VisualPrediction(cfg))
+        # # if dist.get_rank() == 0:
+        #     ret.append(hooks.CheckpointContainer(cfg))
+
+        if comm.is_main_process():
+            ret.append(hooks.PeriodicWriter(self.build_writers(), period=2))
         return ret
+
+    def build_writers(self):
+        return default_writers(self.cfg.checkpoint_dir, self.max_iter)
 
     def resume_or_load(self):
         """
@@ -122,14 +129,11 @@ class TrainerContainer(BaseRunner):
         self.logger.info(self.model)
 
     def run_step(self):
-        self._trainer.epoch = self.epoch
-        self._trainer.max_epoch = self.max_epoch
-        self._trainer.log_iter = self.log_iter
+        self._trainer.iter = self.iter
         self._trainer.run_step()
-        self.train_loss = self._trainer.train_loss
 
     def train(self):
-        super().train(self.start_epoch, self.max_epoch)
+        super().train(self.start_iter, self.max_iter)
 
     def build_train_loader(self, cfg):
         train_dataloader = build_dataloader(self.train_dataset, cfg.dataloader.samples_per_gpu,
@@ -193,3 +197,10 @@ class TrainerContainer(BaseRunner):
                                                     find_unused_parameters=True
                                                     )
         return model
+
+
+def default_writers(output_dir: str, max_iter: Optional[int]):
+    path.mkdir_or_exist(output_dir)
+    return [
+        events.CommonMetricPrinter(max_iter)
+    ]

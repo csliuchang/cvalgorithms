@@ -188,7 +188,7 @@ class TrainerBase(BaseRunner):
         super().__init__()
         self.logger = logger
         self.model = model
-        self._data_loader_iter = dataloader
+        self._data_loader_iter = iter(dataloader)
         self.optimizer = optimizer
         self.scheduler = scheduler
         self.max_epoch: int
@@ -201,31 +201,28 @@ class TrainerBase(BaseRunner):
         if not self.model.training:
             self.model.train()
 
-        for count, data in enumerate(self._data_loader_iter):
-            if count >= len(self._data_loader_iter):
-                break
-            _img, _ground_truth = data['images_collect']['img'].cuda(), data['ground_truth']
-            for key, value in _ground_truth.items():
-                if value is not None:
-                    if isinstance(value, torch.Tensor):
-                        _ground_truth[key] = value.cuda()
-            start = time.perf_counter()
-            loss_dict = self.model(_img, ground_truth=_ground_truth, return_metrics=True)
-            data_time = time.perf_counter() - start
-
-            if isinstance(loss_dict, torch.Tensor):
-                losses = loss_dict
-                loss_dict = {"total_loss": loss_dict}
-            else:
-                losses = \
+        start = time.perf_counter()
+        data = next(self._data_loader_iter)
+        _img, _ground_truth = data['images_collect']['img'].cuda(), data['ground_truth']
+        for key, value in _ground_truth.items():
+            if value is not None:
+                if isinstance(value, torch.Tensor):
+                    _ground_truth[key] = value.cuda()
+        data_time = time.perf_counter() - start
+        loss_dict = self.model(_img, ground_truth=_ground_truth, return_metrics=True)
+        if isinstance(loss_dict, torch.Tensor):
+            losses = loss_dict
+            loss_dict = {"total_loss": loss_dict}
+        else:
+            losses = \
                     loss_dict['loss']
 
-            self.optimizer.zero_grad()
-            losses.backward()
+        self.optimizer.zero_grad()
+        losses.backward()
+        self._write_metrics(loss_dict, data_time)
+        self.optimizer.step()
+        print("process ")
 
-            self._write_metrics(loss_dict, data_time)
-
-            self.optimizer.step()
 
     # def run_step(self):
     #     self.model.train()

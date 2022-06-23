@@ -6,12 +6,50 @@ import torch
 import datasets
 from trainer.tools.runner import HookBase
 from utils.metrics import SegEval, DetEval
+from utils.events import EventWriter
 import os.path as osp
 from utils import save_checkpoint
 import cv2
 import os
 
 from utils import mkdir_or_exist
+
+
+class IterationTimer(HookBase):
+    def __init__(self, warmup_iter=3):
+        super(IterationTimer, self).__init__()
+        self._warmup_iter = warmup_iter
+
+    def before_train(self):
+        pass
+
+    def after_train(self):
+        pass
+
+    def before_step(self):
+        pass
+
+    def after_step(self):
+        iter_done = self
+        pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class EvalHook(HookBase):
@@ -197,3 +235,28 @@ class CheckpointContainer(HookBase):
 
     def after_train(self):
         pass
+
+
+class PeriodicWriter(HookBase):
+    def __init__(self, writers, period=20):
+        """
+        Args:
+            writers(): a list of EventWriter objects
+            period:(int):
+        """
+        self._writers = writers
+        for w in writers:
+            assert isinstance(w, EventWriter), w
+        self._period = period
+
+    def after_step(self):
+        if (self.trainer.iter + 1) % self._period == 0 or (
+            self.trainer.iter == self.trainer.max_iter - 1
+        ):
+            for writer in self._writers:
+                writer.write()
+
+    def after_train(self):
+        for writer in self._writers:
+            writer.write()
+            writer.close()
