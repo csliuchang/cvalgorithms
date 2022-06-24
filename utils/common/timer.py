@@ -10,12 +10,12 @@ class Timer:
     A timer which computes the time elapsed since the start/reset of the timer.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.reset()
 
     def reset(self) -> None:
         """
-        Reset the timer
+        Reset the timer.
         """
         self._start = perf_counter()
         self._paused: Optional[float] = None
@@ -30,5 +30,41 @@ class Timer:
             raise ValueError("Trying to pause a Timer that is already paused!")
         self._paused = perf_counter()
 
+    def is_paused(self) -> bool:
+        """
+        Returns:
+            bool: whether the timer is currently paused
+        """
+        return self._paused is not None
 
-    def is_paused(self): -> bool
+    def resume(self) -> None:
+        """
+        Resume the timer.
+        """
+        if self._paused is None:
+            raise ValueError("Trying to resume a Timer that is not paused!")
+        # pyre-fixme[58]: `-` is not supported for operand types `float` and
+        #  `Optional[float]`.
+        self._total_paused += perf_counter() - self._paused
+        self._paused = None
+        self._count_start += 1
+
+    def seconds(self) -> float:
+        """
+        Returns:
+            (float): the total number of seconds since the start/reset of the
+                timer, excluding the time when the timer is paused.
+        """
+        if self._paused is not None:
+            end_time: float = self._paused  # type: ignore
+        else:
+            end_time = perf_counter()
+        return end_time - self._start - self._total_paused
+
+    def avg_seconds(self) -> float:
+        """
+        Returns:
+            (float): the average number of seconds between every start/reset and
+            pause.
+        """
+        return self.seconds() / self._count_start
