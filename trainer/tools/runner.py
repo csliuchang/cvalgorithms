@@ -1,10 +1,9 @@
-import logging
 import weakref
 from typing import List, Optional, Mapping
 import time
 import torch
 import numpy as np
-from utils import comm
+from utils import comm, logging
 from utils.events import EventStorage, get_event_storage
 
 
@@ -95,7 +94,6 @@ class BaseRunner:
         self._hooks: List[HookBase] = []
         self.iter: int = 0
         self.start_iter: int = 1
-        self.global_step: int = 0
         self.storage: EventStorage
         self.max_iter: int
 
@@ -111,14 +109,14 @@ class BaseRunner:
         """
         train logic from detectron2
         """
-        logger = logging.getLogger(__name__)
+        logger = logging.get_logger(__name__)
         logger.info("Starting training from iteration {}".format(start_iter))
         self.iter = self.start_iter = start_iter
         self.max_iter = max_iter
         with EventStorage(start_iter) as self.storage:
             try:
                 self.before_train()
-                for self.epoch in range(start_iter, max_iter):
+                for self.iter in range(start_iter, max_iter):
                     self.before_step()
                     self.run_step()
                     self.after_step()
@@ -164,7 +162,7 @@ class BaseRunner:
         return ret
 
     def load_state_dict(self, state_dict):
-        logger = logging.getLogger(__name__)
+        logger = logging.get_logger(__name__)
         self.iter = state_dict["iteration"]
         for key, value in state_dict.get("hooks", {}).items():
             for h in self._hooks:
@@ -184,9 +182,8 @@ class TrainerBase(BaseRunner):
     A simple trainer for the most common type of task:
     """
 
-    def __init__(self, model, dataloader, optimizer, logger, scheduler):
+    def __init__(self, model, dataloader, optimizer, scheduler):
         super().__init__()
-        self.logger = logger
         self.model = model
         self._data_loader_iter = iter(dataloader)
         self.optimizer = optimizer
@@ -223,48 +220,6 @@ class TrainerBase(BaseRunner):
         self.optimizer.step()
         print("process ")
 
-
-    # def run_step(self):
-    #     self.model.train()
-    #     all_losses = []
-    #     logger_batch = 0
-    #     start = time.time()
-    #     for count, data in enumerate(self._data_loader_iter):
-    #         if count >= len(self._data_loader_iter):
-    #             break
-    #         self.global_step += 1
-    #         _img, _ground_truth = data['images_collect']['img'],
-    #         # img show
-    #         # img = _img.permute(0, 2, 3, 1)
-    #         # img = img.detach().cpu().numpy().reshape(448, 448, -1)
-    #         # img_1, img_2 = img[:, :, :3]*255, img[:, :, 3:]*255
-    #         # ground_truth = _ground_truth['gt_masks'].permute(1, 2, 0).cpu().numpy()
-    #         # ground_truth = ground_truth.reshape(448, 448, -1)
-    #         # import cv2
-    #         # cv2.imwrite('result_n.png', img_1)
-    #         # cv2.imwrite('result_g.png', img_2)
-    #         # cv2.imwrite('gt.png', ground_truth)
-    #         _img = _img.cuda()
-    #         batch = _img.shape[0]
-    #         logger_batch += batch
-    #         for key, value in _ground_truth.items():
-    #             if value is not None:
-    #                 if isinstance(value, torch.Tensor):
-    #                     _ground_truth[key] = value.cuda()
-    #         # train model
-    #         self.optimizer.zero_grad()
-    #         loss_dict = self.model(_img, ground_truth=_ground_truth, return_metrics=True)
-    #         losses = loss_dict["loss"]
-    #         losses.backward()
-    #         losses = losses.detach().cpu().numpy()
-    #         all_losses.append(losses)
-    #         self.optimizer.step()
-    #         self.scheduler.step()
-    #         if self.global_step % self.log_iter == 0:
-    #             batch_time = time.time() - start
-    #             self._write_metrics(batch, count, all_losses, batch_time, logger_batch)
-    #     self.train_loss = sum(all_losses) / len(self._data_loader_iter.dataset)
-
     def _write_metrics(
             self,
             loss_dict: Mapping[str, torch.Tensor],
@@ -272,13 +227,6 @@ class TrainerBase(BaseRunner):
             prefix: str = "",
     ) -> None:
         TrainerBase.write_metrics(loss_dict, data_time, prefix)
-
-        # def _write_metrics(self, batch, count, all_losses, batch_time, logger_batch):
-
-    #     self.logger.info(
-    #         'epochs=>[%d/%d], pers=>[%d/%d], training step: %d, running loss: %f, time/pers: %d ms' % (
-    #             self.epoch, self.max_epoch, (count + 1) * batch, len(self._data_loader_iter.dataset), self.global_step,
-    #             np.array(all_losses).mean(), (batch_time * 1000) / logger_batch))
 
     @staticmethod
     def write_metrics(

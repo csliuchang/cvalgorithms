@@ -18,8 +18,23 @@ from utils import mkdir_or_exist
 
 
 class IterationTimer(HookBase):
+    """
+    Track the time spent for each iteration (each run_step call in the trainer).
+    Print a summary in the end of training.
+
+    This hook uses the time between the call to its :meth:`before_step`
+    and :meth:`after_step` methods.
+    Under the convention that :meth:`before_step` of all hooks should only
+    take negligible amount of time, the :class:`IterationTimer` hook should be
+    placed at the beginning of the list of hooks to obtain accurate timing.
+    """
+
     def __init__(self, warmup_iter=3):
-        super(IterationTimer, self).__init__()
+        """
+        Args:
+            warmup_iter (int): the number of iterations at the beginning to exclude
+                from timing.
+        """
         self._warmup_iter = warmup_iter
         self._step_timer = Timer()
         self._start_time = time.perf_counter()
@@ -34,7 +49,6 @@ class IterationTimer(HookBase):
         logger = logging.getLogger(__name__)
         total_time = time.perf_counter() - self._start_time
         total_time_minus_hooks = self._total_timer.seconds()
-
         hook_time = total_time - total_time_minus_hooks
 
         num_iter = self.trainer.storage.iter + 1 - self.trainer.start_iter - self._warmup_iter
@@ -49,6 +63,7 @@ class IterationTimer(HookBase):
                     total_time_minus_hooks / num_iter,
                 )
             )
+
         logger.info(
             "Total training time: {} ({} on hooks)".format(
                 str(datetime.timedelta(seconds=int(total_time))),
@@ -66,7 +81,7 @@ class IterationTimer(HookBase):
         iter_done = self.trainer.storage.iter - self.trainer.start_iter + 1
         if iter_done >= self._warmup_iter:
             sec = self._step_timer.seconds()
-            self.trainer.storage.put_scalar(time=sec)
+            self.trainer.storage.put_scalars(time=sec)
         else:
             self._start_time = time.perf_counter()
             self._total_timer.reset()
@@ -260,11 +275,18 @@ class CheckpointContainer(HookBase):
 
 
 class PeriodicWriter(HookBase):
+    """
+    Write events to EventStorage (by calling ``writer.write()``) periodically.
+
+    It is executed every ``period`` iterations and after the last iteration.
+    Note that ``period`` does not affect how data is smoothed by each writer.
+    """
+
     def __init__(self, writers, period=20):
         """
         Args:
-            writers(): a list of EventWriter objects
-            period:(int):
+            writers (list[EventWriter]): a list of EventWriter objects
+            period (int):
         """
         self._writers = writers
         for w in writers:
@@ -280,5 +302,9 @@ class PeriodicWriter(HookBase):
 
     def after_train(self):
         for writer in self._writers:
+            # If any new data is found (e.g. produced by other after_train),
+            # write them before closing
             writer.write()
             writer.close()
+
+

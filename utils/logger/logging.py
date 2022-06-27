@@ -50,7 +50,7 @@ VERBOSE_LEVELS = [logging.DEBUG, logging.WARNING, logging.ERROR, logging.CRITICA
 
 @functools.lru_cache()
 def get_logger(
-    output=None, distributed_rank=0, *, color=True, name="pupadetector", abbrev_name=None
+    output=None, distributed_rank=0, *, color=True, name="cvalgorithms", abbrev_name=None
 ):
     """
     Initialize the detectron2 logger and set its verbosity level to "DEBUG".
@@ -105,7 +105,8 @@ def get_logger(
 
         if distributed_rank == 0:
             fh = logging.StreamHandler(_cached_log_stream(filename))
-            fh.setLevel(logging.INFO)
+            # set log level
+            fh.setLevel(logging.DEBUG)
             fh.setFormatter(plain_formatter)
             logger.addHandler(fh)
 

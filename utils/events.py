@@ -1,4 +1,4 @@
-import logging
+from utils import logging
 from typing import List, Optional, Tuple
 import numpy as np
 import time
@@ -6,9 +6,14 @@ import datetime
 from collections import defaultdict
 from contextlib import contextmanager
 import torch
+from iopath.common.file_io import PathManager as PathManagerBase
+import json
+import os
 
 
 _CURRENT_STORAGE_STACK = []
+
+PathManager = PathManagerBase()
 
 
 def get_event_storage():
@@ -327,7 +332,7 @@ class CommonMetricPrinter(EventWriter):
     To print something in more customized ways, please implement a similar printer by yourself.
     """
     def __init__(self, max_iter: Optional[int] = None, window_size: int = 20):
-        self.logger = logging.getLogger(__name__)
+        self.logger = logging.get_logger(__name__)
         self._max_iter = max_iter
         self._window_size = window_size
         self._last_write = None  # (step, time) of last call to write(). Used to compute ETA
@@ -395,3 +400,84 @@ class CommonMetricPrinter(EventWriter):
             )
         )
         pass
+
+
+class JSONWriter(EventWriter):
+    """
+    Write scalars to a json file.
+
+    It saves scalars as one json per line (instead of a big json) for easy parsing.
+
+    Examples parsing such a json file:
+    ::
+        $ cat metrics.json | jq -s '.[0:2]'
+        [
+          {
+            "data_time": 0.008433341979980469,
+            "iteration": 19,
+            "loss": 1.9228371381759644,
+            "loss_box_reg": 0.050025828182697296,
+            "loss_classifier": 0.5316952466964722,
+            "loss_mask": 0.7236229181289673,
+            "loss_rpn_box": 0.0856662318110466,
+            "loss_rpn_cls": 0.48198649287223816,
+            "lr": 0.007173333333333333,
+            "time": 0.25401854515075684
+          },
+          {
+            "data_time": 0.007216215133666992,
+            "iteration": 39,
+            "loss": 1.282649278640747,
+            "loss_box_reg": 0.06222952902317047,
+            "loss_classifier": 0.30682939291000366,
+            "loss_mask": 0.6970193982124329,
+            "loss_rpn_box": 0.038663312792778015,
+            "loss_rpn_cls": 0.1471673548221588,
+            "lr": 0.007706666666666667,
+            "time": 0.2490077018737793
+          }
+        ]
+
+        $ cat metrics.json | jq '.loss_mask'
+        0.7126231789588928
+        0.689423680305481
+        0.6776131987571716
+        ...
+
+    """
+
+    def __init__(self, json_file, window_size=20):
+        """
+        Args:
+            json_file (str): path to the json file. New data will be appended if the file exists.
+            window_size (int): the window size of median smoothing for the scalars whose
+                `smoothing_hint` are True.
+        """
+        self._file_handle = PathManager.open(json_file, "a")
+        self._window_size = window_size
+        self._last_write = -1
+
+    def write(self):
+        storage = get_event_storage()
+        to_save = defaultdict(dict)
+
+        for k, (v, iter) in storage.latest_with_smoothing_hint(self._window_size).items():
+            # keep scalars that have not been written
+            if iter <= self._last_write:
+                continue
+            to_save[iter][k] = v
+        if len(to_save):
+            all_iters = sorted(to_save.keys())
+            self._last_write = max(all_iters)
+
+        for itr, scalars_per_iter in to_save.items():
+            scalars_per_iter["iteration"] = itr
+            self._file_handle.write(json.dumps(scalars_per_iter, sort_keys=True) + "\n")
+        self._file_handle.flush()
+        try:
+            os.fsync(self._file_handle.fileno())
+        except AttributeError:
+            pass
+
+    def close(self):
+        self._file_handle.close()

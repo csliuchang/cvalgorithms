@@ -2,7 +2,7 @@ from trainer.tools import BaseRunner, TrainerBase
 from models import build_detector, build_segmentor
 from datasets.builder import build_dataloader
 from engine.optimizer import build_optimizer
-from utils import get_root_logger, load_checkpoint, model_info, comm, path, events
+from utils import load_checkpoint, model_info, comm, path, events, logging
 import copy
 from datasets import build_dataset
 import time
@@ -42,7 +42,7 @@ class TrainerContainer(BaseRunner):
 
         self.cfg = cfg
 
-        self.logger = get_root_logger(log_file=self.work_dir, log_level='INFO')
+        # self.logger = get_root_logger(log_file=self.work_dir, log_level='INFO')
         self.network_type = cfg.network_type
         cfg.model.backbone.in_channels = cfg.input_channel
         cfg.model.backbone.input_size = (cfg.input_width, cfg.input_height)
@@ -66,7 +66,7 @@ class TrainerContainer(BaseRunner):
         self.start_iter = 0
         self.max_iter = cfg.total_epochs
         self.log_iter = cfg.log_iter
-        self._trainer = TrainerBase(self.model, self.train_dataloader, optimizer, self.logger, self.scheduler)
+        self._trainer = TrainerBase(self.model, self.train_dataloader, optimizer, self.scheduler)
         self.save_val_pred = cfg.save_val_pred
 
         self.metric: dict
@@ -85,6 +85,7 @@ class TrainerContainer(BaseRunner):
         cfg = self.cfg
 
         ret = [
+            hooks.IterationTimer()
         ]
 
         def test_and_save_results():
@@ -121,12 +122,14 @@ class TrainerContainer(BaseRunner):
         """
         if os.path.exists(self.cfg.pretrained):
             load_checkpoint(self.model, self.cfg.pretrained, map_location='cpu', strict=True)
-            self.logger.info('pretrained checkpoint is loaded.')
+            logger = logging.get_logger(__name__)
+            logger.info('pretrained checkpoint is loaded.')
 
     def mode_info_printer(self):
         # model_str = model_info(self.model)
         # self.logger.info(model_str)
-        self.logger.info(self.model)
+        logger = logging.get_logger(__name__)
+        logger.info(self.model)
 
     def run_step(self):
         self._trainer.iter = self.iter
@@ -158,7 +161,8 @@ class TrainerContainer(BaseRunner):
         final_collection = []
         total_frame = 0.0
         total_time = 0.0
-        self.logger.info('Start to eval in val dataset:')
+        logger = logging.get_logger(__name__)
+        logger.info('Start to eval in val dataset:')
         prog_bar = ProgressBar(len(self.val_dataloader))
         for i, data in enumerate(self.val_dataloader):
             _img, _ground_truth = data['images_collect']['img'], data['ground_truth']
@@ -202,5 +206,6 @@ class TrainerContainer(BaseRunner):
 def default_writers(output_dir: str, max_iter: Optional[int]):
     path.mkdir_or_exist(output_dir)
     return [
-        events.CommonMetricPrinter(max_iter)
+        events.CommonMetricPrinter(max_iter),
+        events.JSONWriter(os.path.join(output_dir, "metrics.json")),
     ]
