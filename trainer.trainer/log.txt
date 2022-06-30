@@ -332,3 +332,934 @@ Traceback (most recent call last):
   File "C:\Users\user1\PycharmProjects\cvalgorithms\utils\events.py", line 353, in _get_eta
     iteration - self._last_write[0]
 ZeroDivisionError: float division by zero
+[06/27 18:56:52] cvalgorithms INFO: SiameseEncoderDecoder(
+  (backbone): ConvNeXt(
+    (downsample_layers): ModuleList(
+      (0): Sequential(
+        (0): Conv2d(3, 96, kernel_size=(4, 4), stride=(4, 4))
+        (1): LayerNorm()
+      )
+      (1): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(96, 192, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (2): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(192, 384, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (3): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(384, 768, kernel_size=(2, 2), stride=(2, 2))
+      )
+    )
+    (stages): ModuleList(
+      (0): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (1): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (2): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (3): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (4): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (5): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (6): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (7): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (8): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (3): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+      )
+    )
+    (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  )
+  (decode_head): UPerHead(
+    (loss): CrossEntropyLoss()
+    (conv_seg): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+    (dropout): Dropout2d(p=0.1, inplace=False)
+    (psp_modules): PPM(
+      (ppm_blocks): ModuleList(
+        (0): ConvModule(
+          (conv): Conv2d(768, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (1): ConvModule(
+          (conv): Conv2d(768, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (2): ConvModule(
+          (conv): Conv2d(768, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (3): ConvModule(
+          (conv): Conv2d(768, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+    )
+    (bottleneck): ConvModule(
+      (conv): Conv2d(1024, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+    (lateral_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(384, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_bottleneck): ConvModule(
+      (conv): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+  )
+  (auxiliary_head): ModuleList(
+    (0): FCNHead(
+      (loss): CrossEntropyLoss()
+      (conv_seg): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+      (dropout): Dropout2d(p=0.1, inplace=False)
+      (convs): Sequential(
+        (0): ConvModule(
+          (conv): Conv2d(768, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+      (conv_cat): ConvModule(
+        (conv): Conv2d(832, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+  )
+  (constant_loss): BatchContrastiveLoss()
+  (sig): Sigmoid()
+  (sft): Softmax(dim=1)
+  (siamese_layer): ModuleList(
+    (0): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(96, 48, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(48, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(48, 192, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (1): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(96, 384, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (2): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(768, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(192, 768, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+)
+[06/27 18:56:52] cvalgorithms INFO: pretrained checkpoint is loaded.
+[06/27 18:57:13] cvalgorithms INFO: Starting training from iteration 0
+[06/28 18:41:40] cvalgorithms INFO: SiameseEncoderDecoder(
+  (backbone): ConvNeXt(
+    (downsample_layers): ModuleList(
+      (0): Sequential(
+        (0): Conv2d(3, 96, kernel_size=(4, 4), stride=(4, 4))
+        (1): LayerNorm()
+      )
+      (1): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(96, 192, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (2): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(192, 384, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (3): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(384, 768, kernel_size=(2, 2), stride=(2, 2))
+      )
+    )
+    (stages): ModuleList(
+      (0): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (1): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (2): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (3): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (4): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (5): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (6): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (7): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (8): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (3): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+      )
+    )
+    (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  )
+  (decode_head): UPerHead(
+    (loss): CrossEntropyLoss()
+    (conv_seg): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+    (dropout): Dropout2d(p=0.1, inplace=False)
+    (psp_modules): PPM(
+      (ppm_blocks): ModuleList(
+        (0): ConvModule(
+          (conv): Conv2d(768, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (1): ConvModule(
+          (conv): Conv2d(768, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (2): ConvModule(
+          (conv): Conv2d(768, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (3): ConvModule(
+          (conv): Conv2d(768, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+    )
+    (bottleneck): ConvModule(
+      (conv): Conv2d(1024, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+    (lateral_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(384, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_bottleneck): ConvModule(
+      (conv): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+  )
+  (auxiliary_head): ModuleList(
+    (0): FCNHead(
+      (loss): CrossEntropyLoss()
+      (conv_seg): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+      (dropout): Dropout2d(p=0.1, inplace=False)
+      (convs): Sequential(
+        (0): ConvModule(
+          (conv): Conv2d(768, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+      (conv_cat): ConvModule(
+        (conv): Conv2d(832, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+  )
+  (constant_loss): BatchContrastiveLoss()
+  (sig): Sigmoid()
+  (sft): Softmax(dim=1)
+  (siamese_layer): ModuleList(
+    (0): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(96, 48, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(48, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(48, 192, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (1): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(96, 384, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (2): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(768, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(192, 768, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+)
+[06/28 18:41:41] cvalgorithms INFO: pretrained checkpoint is loaded.
+[06/30 17:43:03] cvalgorithms INFO: SiameseEncoderDecoder(
+  (backbone): ConvNeXt(
+    (downsample_layers): ModuleList(
+      (0): Sequential(
+        (0): Conv2d(3, 96, kernel_size=(4, 4), stride=(4, 4))
+        (1): LayerNorm()
+      )
+      (1): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(96, 192, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (2): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(192, 384, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (3): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(384, 768, kernel_size=(2, 2), stride=(2, 2))
+      )
+    )
+    (stages): ModuleList(
+      (0): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (1): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (2): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (3): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (4): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (5): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (6): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (7): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (8): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (3): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+      )
+    )
+    (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  )
+  (decode_head): UPerHead(
+    (loss): CrossEntropyLoss()
+    (conv_seg): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+    (dropout): Dropout2d(p=0.1, inplace=False)
+    (psp_modules): PPM(
+      (ppm_blocks): ModuleList(
+        (0): ConvModule(
+          (conv): Conv2d(768, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (1): ConvModule(
+          (conv): Conv2d(768, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (2): ConvModule(
+          (conv): Conv2d(768, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (3): ConvModule(
+          (conv): Conv2d(768, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+    )
+    (bottleneck): ConvModule(
+      (conv): Conv2d(1024, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+    (lateral_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(384, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_bottleneck): ConvModule(
+      (conv): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+  )
+  (auxiliary_head): ModuleList(
+    (0): FCNHead(
+      (loss): CrossEntropyLoss()
+      (conv_seg): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+      (dropout): Dropout2d(p=0.1, inplace=False)
+      (convs): Sequential(
+        (0): ConvModule(
+          (conv): Conv2d(768, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+      (conv_cat): ConvModule(
+        (conv): Conv2d(832, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+  )
+  (constant_loss): BatchContrastiveLoss()
+  (sig): Sigmoid()
+  (sft): Softmax(dim=1)
+  (siamese_layer): ModuleList(
+    (0): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(96, 48, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(48, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(48, 192, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (1): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(96, 384, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (2): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(768, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(192, 768, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+)
+[06/30 17:43:03] cvalgorithms INFO: pretrained checkpoint is loaded.

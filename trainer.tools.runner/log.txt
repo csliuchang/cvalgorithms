@@ -70,3 +70,4 @@ Traceback (most recent call last):
   File "C:\Users\user1\PycharmProjects\cvalgorithms\utils\events.py", line 353, in _get_eta
     iteration - self._last_write[0]
 ZeroDivisionError: float division by zero
+[06/27 18:57:13] cvalgorithms INFO: Starting training from iteration 0

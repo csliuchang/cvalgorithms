@@ -17,3 +17,4 @@ timm~=0.4.12
 matplotlib~=3.3.4
 pillow~=8.4.0
 setuptools~=58.0.4
+einops~=0.3.2
