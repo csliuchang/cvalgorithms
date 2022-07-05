@@ -93,9 +93,9 @@ class BaseRunner:
     def __init__(self) -> None:
         self._hooks: List[HookBase] = []
         self.iter: int = 0
-        self.start_iter: int = 1
-        self.storage: EventStorage
+        self.start_iter: int = 0
         self.max_iter: int
+        self.storage: EventStorage
 
     def register_hooks(self, hooks: List[Optional[HookBase]]) -> None:
         hooks = [h for h in hooks if h is not None]
@@ -111,8 +111,10 @@ class BaseRunner:
         """
         logger = logging.get_logger(__name__)
         logger.info("Starting training from iteration {}".format(start_iter))
+
         self.iter = self.start_iter = start_iter
         self.max_iter = max_iter
+
         with EventStorage(start_iter) as self.storage:
             try:
                 self.before_train()
@@ -136,6 +138,8 @@ class BaseRunner:
             h.after_train()
 
     def before_step(self):
+        self.storage.iter = self.iter
+
         for h in self._hooks:
             h.before_step()
 
@@ -182,22 +186,20 @@ class TrainerBase(BaseRunner):
     A simple trainer for the most common type of task:
     """
 
-    def __init__(self, model, dataloader, optimizer, scheduler):
+    def __init__(self, model, data_loader, optimizer):
         super().__init__()
+
+        model.train()
+
         self.model = model
-        self._data_loader_iter = iter(dataloader)
+        self.data_loader = data_loader
+        self._data_loader_iter = iter(data_loader)
         self.optimizer = optimizer
-        self.scheduler = scheduler
-        self.max_epoch: int
-        self.log_iter: int
 
     def run_step(self):
         """
         Implement the standard training logic described above
         """
-        if not self.model.training:
-            self.model.train()
-
         start = time.perf_counter()
         data = next(self._data_loader_iter)
         _img, _ground_truth = data['images_collect']['img'].cuda(), data['ground_truth']
@@ -218,7 +220,6 @@ class TrainerBase(BaseRunner):
         losses.backward()
         self._write_metrics(loss_dict, data_time)
         self.optimizer.step()
-        print("process ")
 
     def _write_metrics(
             self,

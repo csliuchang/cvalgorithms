@@ -11,10 +11,12 @@ import os.path as osp
 import trainer.hooks as hooks
 import torch
 import os
+from evaluation.evaluator import DatasetEvaluator
 from utils.bar import ProgressBar
 from utils.metrics.rotate_metrics import combine_predicts_gt
 from typing import Optional
 import torch.distributed as dist
+from collections import OrderedDict
 
 ModelBuilder = {"segmentation": build_segmentor,
                 "rotate_detection": build_detector,
@@ -55,22 +57,18 @@ class TrainerContainer(BaseRunner):
         self.model = ModelBuilder[self.network_type](cfg.model, train_cfg=cfg.train_cfg, test_cfg=cfg.test_cfg)
         self.mode_info_printer()
         self.resume_or_load()
-
-        self.model.cuda()
+        self.model = self.model.cuda()
         if cfg.distributed:
             self.model = self._build_ddp_model(cfg, self.model)
 
         # build_optimizer
-        optimizer = build_optimizer(cfg, self.model)
-        self.scheduler = self._initialize('lr_scheduler', torch.optim.lr_scheduler, optimizer)
+        self.optimizer = build_optimizer(cfg, self.model)
+        self.scheduler = self._initialize('lr_scheduler', torch.optim.lr_scheduler, self.optimizer)
         self.start_iter = 0
         self.max_iter = cfg.total_epochs
         self.log_iter = cfg.log_iter
-        self._trainer = TrainerBase(self.model, self.train_dataloader, optimizer, self.scheduler)
+        self._trainer = TrainerBase(self.model, self.train_dataloader, self.optimizer)
         self.save_val_pred = cfg.save_val_pred
-
-        self.metric: dict
-        self.results: dict
 
         self.register_hooks(self.build_hooks())
 
@@ -82,22 +80,16 @@ class TrainerContainer(BaseRunner):
         Returns:
             list[HookBase]:
         """
-        cfg = self.cfg
-
         ret = [
-            hooks.IterationTimer()
+            hooks.IterationTimer(),
+            hooks.LRScheduler(),
         ]
 
         def test_and_save_results():
-            self.model.eval()
             self._last_eval_results = self._eval()
             return self._last_eval_results
 
-        # ret.append(hooks.EvalHook(cfg, test_and_save_results))
-        # if self.save_val_pred:
-        #     ret.append(hooks.VisualPrediction(cfg))
-        # # if dist.get_rank() == 0:
-        #     ret.append(hooks.CheckpointContainer(cfg))
+        ret.append(hooks.EvalHook(self.cfg, test_and_save_results))
 
         if comm.is_main_process():
             ret.append(hooks.PeriodicWriter(self.build_writers(), period=2))
@@ -139,52 +131,76 @@ class TrainerContainer(BaseRunner):
         super().train(self.start_iter, self.max_iter)
 
     def build_train_loader(self, cfg):
-        train_dataloader = build_dataloader(self.train_dataset, cfg.dataloader.samples_per_gpu,
+        train_dataloader = build_dataloader(self.train_dataset,
+                                            cfg.dataloader.samples_per_gpu,
                                             cfg.dataloader.workers_per_gpu,
-                                            len([cfg.local_rank, ]), seed=cfg.seed,
-                                            shuffle=True,
-                                            drop_last=True,
-                                            distributed=cfg.distributed)
+                                            seed=cfg.seed,
+                                            )
         return train_dataloader
 
     def build_val_loader(self, cfg):
-        val_dataloader = build_dataloader(self.val_dataset, 1, cfg.dataloader.workers_per_gpu, len([cfg.local_rank, ]),
+        val_dataloader = build_dataloader(self.val_dataset, 1, cfg.dataloader.workers_per_gpu,
                                           seed=cfg.seed
                                           )
         return val_dataloader
 
-    @torch.no_grad()
-    def _eval(self):
-        """
-        Eval logic
-        """
-        final_collection = []
-        total_frame = 0.0
-        total_time = 0.0
+    # @torch.no_grad()
+    # def _eval(self):
+    #     """
+    #     Evaluate the given model. The given model is expected to already contain
+    #     weights to evaluate.
+    #
+    #     Args:
+    #         cfg (CfgNode):
+    #         model (nn.Module):
+    #         evaluators (list[DatasetEvaluator] or None): if None, will call
+    #             :meth:`build_evaluator`. Otherwise, must have the same length as
+    #             ``cfg.DATASETS.TEST``.
+    #
+    #     Returns:
+    #         dict: a dict of result metrics
+    #     """
+    #     final_collection = []
+    #     total_frame = 0.0
+    #     total_time = 0.0
+    #     logger = logging.get_logger(__name__)
+    #     logger.info('Start to eval in val dataset:')
+    #     prog_bar = ProgressBar(len(self.val_dataloader))
+    #     for i, data in enumerate(self.val_dataloader):
+    #         _img, _ground_truth = data['images_collect']['img'], data['ground_truth']
+    #         _img = _img.cuda()
+    #         for key, value in _ground_truth.items():
+    #             if value is not None:
+    #                 if isinstance(value, torch.Tensor):
+    #                     _ground_truth[key] = value.cuda()
+    #         cur_batch = _img.shape[0]
+    #         total_frame += cur_batch
+    #         start_time = time.time()
+    #         predicts = self.model(_img)
+    #         if torch.cuda.is_available():
+    #             torch.cuda.synchronize()
+    #         total_time += (time.time() - start_time)
+    #         predict_gt_collection = combine_predicts_gt(predicts, data['images_collect']['img_metas'][0],
+    #                                                     _ground_truth, self.network_type)
+    #         final_collection.append(predict_gt_collection)
+    #         for _ in range(cur_batch):
+    #             prog_bar.update()
+    #     print('\t %2f FPS' % (total_frame / total_time))
+    #     return final_collection
+
+    def _eval(self, evaluators=None):
         logger = logging.get_logger(__name__)
-        logger.info('Start to eval in val dataset:')
-        prog_bar = ProgressBar(len(self.val_dataloader))
-        for i, data in enumerate(self.val_dataloader):
-            _img, _ground_truth = data['images_collect']['img'], data['ground_truth']
-            _img = _img.cuda()
-            for key, value in _ground_truth.items():
-                if value is not None:
-                    if isinstance(value, torch.Tensor):
-                        _ground_truth[key] = value.cuda()
-            cur_batch = _img.shape[0]
-            total_frame += cur_batch
-            start_time = time.time()
-            predicts = self.model(_img)
-            if torch.cuda.is_available():
-                torch.cuda.synchronize()
-            total_time += (time.time() - start_time)
-            predict_gt_collection = combine_predicts_gt(predicts, data['images_collect']['img_metas'][0],
-                                                        _ground_truth, self.network_type)
-            final_collection.append(predict_gt_collection)
-            for _ in range(cur_batch):
-                prog_bar.update()
-        print('\t %2f FPS' % (total_frame / total_time))
-        return final_collection
+        if isinstance(evaluators, DatasetEvaluator):
+            evaluators = [evaluators]
+
+        results = OrderedDict()
+
+        # progress bar
+        bar = ProgressBar(len(self.val_dataloader))
+        for idx, data in enumerate(self.val_dataloader):
+            # get data
+            _img, _ground_truth = data['images_collect']['img_']
+
 
     def _initialize(self, name, module, *args, **kwargs):
         module_name = self.cfg[name]['type']

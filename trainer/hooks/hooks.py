@@ -13,7 +13,9 @@ from utils import save_checkpoint
 import cv2
 import os
 from utils.common import Timer
-
+from trainer.core.lr_scheduler import ParamScheduler, LRMultiplier
+from collections import Counter
+from collections.abc import Mapping
 from utils import mkdir_or_exist
 
 
@@ -89,34 +91,88 @@ class IterationTimer(HookBase):
         self._total_timer.pause()
 
 
+# class EvalHook(HookBase):
+#     def __init__(self, cfg, eval_function):
+#         self._period = cfg.eval_period
+#         num_classes = cfg.num_classes
+#         network_type = cfg.network_type
+#         if network_type == "segmentation":
+#             self._eval_func = SegEval(num_classes)
+#         elif network_type == "rotate_detection":
+#             self._eval_func = DetEval(num_classes, rotate_eval=True)
+#         else:
+#             self._eval_func = DetEval(num_classes)
+#         self._func = eval_function
+#
+#     def _do_eval(self):
+#         results = self._func()
+#         self.trainer.results = results
+#         metrics = self._eval_func(results)
+#         return metrics
+#
+#     def after_step(self):
+#         next_epoch = self.trainer.epoch + 1
+#         if self._period > 0 and next_epoch % self._period == 0:
+#             # do the last eval in after_train
+#             if next_epoch != self.trainer.max_epoch:
+#                 self.trainer.metrics = self._do_eval()
+#
+#     def after_train(self):
+#         pass
 class EvalHook(HookBase):
-    def __init__(self, cfg, eval_function):
-        self._period = cfg.eval_period
-        num_classes = cfg.num_classes
-        network_type = cfg.network_type
-        if network_type == "segmentation":
-            self._eval_func = SegEval(num_classes)
-        elif network_type == "rotate_detection":
-            self._eval_func = DetEval(num_classes, rotate_eval=True)
-        else:
-            self._eval_func = DetEval(num_classes)
+    def __init__(self, eval_period, eval_function):
+        self._period = eval_period
         self._func = eval_function
 
     def _do_eval(self):
         results = self._func()
-        self.trainer.results = results
-        metrics = self._eval_func(results)
-        return metrics
+        if results:
+            assert isinstance(
+                results, dict
+            ), "Eval function must return a dict. Got {} instead.".format(results)
+
+            flattened_results = flatten_results_dict(results)
+            for k, v in flattened_results.items():
+                try:
+                    v = float(v)
+                except Exception as e:
+                    raise ValueError(
+                        "[EvalHook] eval_function should return a nested dict of float. "
+                        "Got '{}: {}' instead.".format(k, v)
+                    ) from e
+            self.trainer.storage.put_scalars(**flattened_results, smoothing_hint=False)
 
     def after_step(self):
-        next_epoch = self.trainer.epoch + 1
-        if self._period > 0 and next_epoch % self._period == 0:
-            # do the last eval in after_train
-            if next_epoch != self.trainer.max_epoch:
-                self.trainer.metrics = self._do_eval()
+        next_iter = self.trainer.iter + 1
+        if self._period > 0 and next_iter % self._period == 0:
+
+            if next_iter != self.trainer.max_iter:
+                self._do_eval()
 
     def after_train(self):
-        pass
+        if self.trainer.iter + 1 >= self.trainer.max_iter:
+            self._do_eval()
+        del self._func
+
+
+def flatten_results_dict(results):
+    """
+    Expand a hierarchical dict of scalars into a flat dict of scalars.
+    If results[k1][k2][k3] = v, the returned dict will have the entry
+    {"k1/k2/k3": v}.
+
+    Args:
+        results (dict):
+    """
+    r = {}
+    for k, v in results.items():
+        if isinstance(v, Mapping):
+            v = flatten_results_dict(v)
+            for kk, vv in v.items():
+                r[k + "/" + kk] = vv
+        else:
+            r[k] = v
+    return r
 
 
 class VisualPrediction(HookBase):
@@ -295,7 +351,7 @@ class PeriodicWriter(HookBase):
 
     def after_step(self):
         if (self.trainer.iter + 1) % self._period == 0 or (
-            self.trainer.iter == self.trainer.max_iter - 1
+                self.trainer.iter == self.trainer.max_iter - 1
         ):
             for writer in self._writers:
                 writer.write()
@@ -308,3 +364,58 @@ class PeriodicWriter(HookBase):
             writer.close()
 
 
+class LRScheduler(HookBase):
+    def __init__(self, optimizer=None, scheduler=None):
+        self._optimizer = optimizer
+        self._scheduler = scheduler
+
+    def before_train(self):
+        self._optimizer = self._optimizer or self.trainer.optimizer
+        if isinstance(self.scheduler, ParamScheduler):
+            self._scheduler = LRMultiplier(
+                self._optimizer,
+                self.scheduler,
+                self.trainer.max_iter,
+                last_iter=self.trainer.iter - 1,
+            )
+        self._best_param_group_id = LRScheduler.get_best_param_group_id(self._optimizer)
+
+    @staticmethod
+    def get_best_param_group_id(optimizer):
+        # NOTE: some heuristics on what LR to summarize
+        # summarize the param group with most parameters
+        largest_group = max(len(g["params"]) for g in optimizer.param_groups)
+
+        if largest_group == 1:
+            # If all groups have one parameter,
+            # then find the most common initial LR, and use it for summary
+            lr_count = Counter([g["lr"] for g in optimizer.param_groups])
+            lr = lr_count.most_common()[0][0]
+            for i, g in enumerate(optimizer.param_groups):
+                if g["lr"] == lr:
+                    return i
+
+        else:
+            for i, g in enumerate(optimizer.param_groups):
+                if len(g["params"]) == largest_group:
+                    return i
+
+    @property
+    def scheduler(self):
+        return self._scheduler or self.trainer.scheduler
+
+    def state_dict(self):
+        if isinstance(self.scheduler, torch.optim.lr_scheduler._LRScheduler):
+            return self.scheduler.state_dict()
+        return {}
+
+    def load_state_dict(self, state_dict):
+        if isinstance(self.scheduler, torch.optim.lr_scheduler._LRScheduler):
+            logger = logging.getLogger(__name__)
+            logger.info("Loading scheduler from state_dict ...")
+            self.scheduler.load_state_dict(state_dict)
+
+    def after_step(self):
+        lr = self._optimizer.param_groups[self._best_param_group_id]["lr"]
+        self.trainer.storage.put_scalar("lr", lr, smoothing_hint=False)
+        self.scheduler.step()

@@ -1,5 +1,6 @@
 import torch.distributed as dist
 import functools
+import numpy as np
 
 
 def get_world_size() -> int:
@@ -28,6 +29,45 @@ def _get_global_gloo_group():
         return dist.new_group(backend="gloo")
     else:
         return dist.group.WORLD
+
+
+def all_gather(data, group=None):
+    """
+    Run all_gather on arbitrary picklable data (not necessarily tensors).
+
+    Args:
+        data: any picklable object
+        group: a torch process group. By default, will use a group which
+            contains all ranks on gloo backend.
+
+    Returns:
+        list[data]: list of data gathered from each rank
+    """
+    if get_world_size() == 1:
+        return [data]
+    if group is None:
+        group = _get_global_gloo_group()  # use CPU group by default, to reduce GPU RAM usage.
+    world_size = dist.get_world_size(group)
+    if world_size == 1:
+        return [data]
+
+    output = [None for _ in range(world_size)]
+    dist.all_gather_object(output, data, group=group)
+    return output
+
+
+def shared_random_seed():
+    """
+    Returns:
+        int: a random number that is the same across all workers.
+        If workers need a shared RNG, they can use this shared seed to
+        create one.
+
+    All workers must call this function, otherwise it will deadlock.
+    """
+    ints = np.random.randint(2 ** 31)
+    all_ints = all_gather(ints)
+    return all_ints[0]
 
 
 def gather(data, dst=0, group=None):

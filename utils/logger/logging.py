@@ -30,10 +30,15 @@ class _ColorfulFormatter(logging.Formatter):
     """
 
     def __init__(self, *args, **kwargs):
+        self._root_name = kwargs.pop("root_name") + "."
+        self._abbrev_name = kwargs.pop("abbrev_name", "")
+        if len(self._abbrev_name):
+            self._abbrev_name = self._abbrev_name + "."
         super(_ColorfulFormatter, self).__init__(*args, **kwargs)
 
     def formatMessage(self, record):
-        log = logging.Formatter.formatMessage(self, record)
+        record.name = record.name.replace(self._root_name, self._abbrev_name)
+        log = super(_ColorfulFormatter, self).formatMessage(record)
         if record.levelno == logging.WARNING:
             prefix = colored("WARNING", "red", attrs=["blink"])
         elif record.levelno == logging.INFO:
@@ -48,7 +53,7 @@ class _ColorfulFormatter(logging.Formatter):
 VERBOSE_LEVELS = [logging.DEBUG, logging.WARNING, logging.ERROR, logging.CRITICAL]
 
 
-@functools.lru_cache()
+@functools.lru_cache()  # so that calling setup_logger multiple times won't add many handlers
 def get_logger(
     output=None, distributed_rank=0, *, color=True, name="cvalgorithms", abbrev_name=None
 ):
@@ -69,11 +74,16 @@ def get_logger(
         logging.Logger: a logger
     """
     logger = logging.getLogger(name)
+    if name in logger_initialized:
+        return logger
+    for logger_name in logger_initialized:
+        if name.startswith(logger_name):
+            return logger
     logger.setLevel(logging.DEBUG)
     logger.propagate = False
 
     if abbrev_name is None:
-        abbrev_name = "d2" if name == "detectron2" else name
+        abbrev_name = "d2" if name == "cvalgorithms" else name
 
     plain_formatter = logging.Formatter(
         "[%(asctime)s] %(name)s %(levelname)s: %(message)s", datefmt="%m/%d %H:%M:%S"
@@ -85,6 +95,8 @@ def get_logger(
             formatter = _ColorfulFormatter(
                 colored("[%(asctime)s %(filename)s]: ", "green") + "%(message)s",
                 datefmt="%m/%d %H:%M:%S",
+                root_name=name,
+                abbrev_name=str(abbrev_name),
             )
         else:
             formatter = plain_formatter
@@ -103,12 +115,13 @@ def get_logger(
 
         PathManager.mkdirs(os.path.dirname(filename))
 
-        if distributed_rank == 0:
-            fh = logging.StreamHandler(_cached_log_stream(filename))
-            # set log level
-            fh.setLevel(logging.DEBUG)
-            fh.setFormatter(plain_formatter)
-            logger.addHandler(fh)
+        fh = logging.StreamHandler(_cached_log_stream(filename))
+        # set log level
+        fh.setLevel(logging.DEBUG)
+        fh.setFormatter(plain_formatter)
+        logger.addHandler(fh)
+
+    logger_initialized[name] = True
 
     return logger
 
@@ -144,9 +157,12 @@ def print_log(msg, logger=None, level=logging.INFO):
             f'"silent" or None, but got {type(logger)}')
 
 
+# cache the opened file object, so that different calls to `setup_logger`
+# with the same file name can safely write to the same file.
 @functools.lru_cache(maxsize=None)
 def _cached_log_stream(filename):
-    io = PathManager.open(filename, "a")
+    # use 1K buffer if writing to cloud storage
+    io = PathManager.open(filename, "a", buffering=1024 if "://" in filename else -1)
     atexit.register(io.close)
     return io
 

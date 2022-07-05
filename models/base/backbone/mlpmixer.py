@@ -46,7 +46,7 @@ class MlpMixer(nn.Module):
     def __init__(self,
                  in_channels,
                  hidden_dim=256,
-                 patch_size=16,
+                 patch_size=4,
                  image_size=256,
                  num_classes=1000,
                  num_blocks=8,
@@ -89,6 +89,5 @@ class MlpMixer(nn.Module):
 
 if __name__ == "__main__":
     mlp = MlpMixer(in_channels=3)
-    inputs = torch.randn(1, 3, 256, 256)
+    inputs = torch.randn(2, 3, 256, 256)
     outputs = mlp(inputs)
-    pass
