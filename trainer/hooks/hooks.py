@@ -120,8 +120,8 @@ class IterationTimer(HookBase):
 #     def after_train(self):
 #         pass
 class EvalHook(HookBase):
-    def __init__(self, eval_period, eval_function):
-        self._period = eval_period
+    def __init__(self, cfg, eval_function):
+        self._period = cfg.eval_period
         self._func = eval_function
 
     def _do_eval(self):

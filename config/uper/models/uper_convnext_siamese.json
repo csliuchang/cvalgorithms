@@ -1,0 +1,26 @@
+{
+    "_base": "./config/uper/models/uper.json",
+    "pretrained": "C:\\Users\\user1\\Desktop\\pretrained\\convnext_tiny_1k_224_ema.pth",
+    "model": {
+        "type": "SiameseEncoderDecoder",
+        "backbone": {
+            "type": "ConvNeXt",
+            "out_levels": [2, 3, 4],
+            "use_conv_last": true
+        },
+        "fusion_mode": "mid",
+        "decode_head": {
+            "type": "UPerHead",
+            "in_channels": [192, 384, 768],
+            "head_width": 64,
+            "num_classes": 1,
+            "loss": {"type": "CrossEntropyLoss",
+                     "use_sigmoid": false ,
+                     "loss_weight": 1.0
+            }
+        }
+    },
+    "train_cfg": {},
+    "test_cfg": {"mode": "whole"},
+    "use_operation": true
+}

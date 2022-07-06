@@ -1,4 +1,4 @@
-from evaluator import DatasetEvaluator
+from .evaluator import DatasetEvaluator
 from collections import OrderedDict
 
 
@@ -14,3 +14,6 @@ class ChangeEvaluation(DatasetEvaluator):
         """
         self._results = OrderedDict()
         pass
+
+    def reset(self):
+        self._predictions = []

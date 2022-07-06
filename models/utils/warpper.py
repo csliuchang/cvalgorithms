@@ -4,8 +4,6 @@ import warnings
 import torch.nn as nn
 
 
-
-
 def resize(input,
            size=None,
            scale_factor=None,

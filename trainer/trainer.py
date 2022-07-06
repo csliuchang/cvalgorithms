@@ -1,6 +1,6 @@
 from trainer.tools import BaseRunner, TrainerBase
 from models import build_detector, build_segmentor
-from datasets.builder import build_dataloader
+from datasets.builder import build_train_dataloader, build_val_dataloader
 from engine.optimizer import build_optimizer
 from utils import load_checkpoint, model_info, comm, path, events, logging
 import copy
@@ -11,12 +11,12 @@ import os.path as osp
 import trainer.hooks as hooks
 import torch
 import os
-from evaluation.evaluator import DatasetEvaluator
 from utils.bar import ProgressBar
 from utils.metrics.rotate_metrics import combine_predicts_gt
 from typing import Optional
 import torch.distributed as dist
 from collections import OrderedDict
+from evaluation import ChangeEvaluation, DatasetEvaluators, DatasetEvaluator, inference_on_dataset
 
 ModelBuilder = {"segmentation": build_segmentor,
                 "rotate_detection": build_detector,
@@ -51,7 +51,6 @@ class TrainerContainer(BaseRunner):
 
         # build dataloader
         self.train_dataloader = self.build_train_loader(cfg)
-        self.val_dataloader = self.build_val_loader(cfg)
 
         # build model
         self.model = ModelBuilder[self.network_type](cfg.model, train_cfg=cfg.train_cfg, test_cfg=cfg.test_cfg)
@@ -86,7 +85,7 @@ class TrainerContainer(BaseRunner):
         ]
 
         def test_and_save_results():
-            self._last_eval_results = self._eval()
+            self._last_eval_results = self._eval(self.cfg, self.model)
             return self._last_eval_results
 
         ret.append(hooks.EvalHook(self.cfg, test_and_save_results))
@@ -131,17 +130,18 @@ class TrainerContainer(BaseRunner):
         super().train(self.start_iter, self.max_iter)
 
     def build_train_loader(self, cfg):
-        train_dataloader = build_dataloader(self.train_dataset,
-                                            cfg.dataloader.samples_per_gpu,
-                                            cfg.dataloader.workers_per_gpu,
-                                            seed=cfg.seed,
-                                            )
+        train_dataloader = build_train_dataloader(self.train_dataset,
+                                                  cfg.dataloader.samples_per_gpu,
+                                                  cfg.dataloader.workers_per_gpu,
+                                                  seed=cfg.seed,
+                                                  )
         return train_dataloader
 
     def build_val_loader(self, cfg):
-        val_dataloader = build_dataloader(self.val_dataset, 1, cfg.dataloader.workers_per_gpu,
-                                          seed=cfg.seed
-                                          )
+        val_dataloader = build_val_dataloader(self.val_dataset,
+                                              1,
+                                              cfg.dataloader.workers_per_gpu,
+                                              )
         return val_dataloader
 
     # @torch.no_grad()
@@ -188,19 +188,37 @@ class TrainerContainer(BaseRunner):
     #     print('\t %2f FPS' % (total_frame / total_time))
     #     return final_collection
 
-    def _eval(self, evaluators=None):
+    def _eval(self, cfg, model, evaluators=None):
+
         logger = logging.get_logger(__name__)
+
         if isinstance(evaluators, DatasetEvaluator):
             evaluators = [evaluators]
 
         results = OrderedDict()
 
-        # progress bar
-        bar = ProgressBar(len(self.val_dataloader))
-        for idx, data in enumerate(self.val_dataloader):
-            # get data
-            _img, _ground_truth = data['images_collect']['img_']
+        try:
+            evaluator = self.build_evaluator(cfg)
+        except NotImplementedError:
+            logger.warn(
+                "No evaluator found. Use `DefaultTrainer.test(evaluators=)`, "
+                "or implement its `build_evaluator` method."
+            )
+            results[cfg.network_type] = {}
 
+        results_i = inference_on_dataset(model, self.build_val_loader(cfg), evaluator)
+        results[cfg.network_type] = results_i
+
+        if len(results) == 1:
+            results = list(results.values())[0]
+        return results
+
+    def build_evaluator(self, cfg):
+        output_dir, evaluator_type = cfg.checkpoint_dir, cfg.network_type
+        evaluator_list = []
+        if evaluator_type == "segmentation":
+            evaluator_list.append(ChangeEvaluation)
+        return DatasetEvaluators(evaluator_list)
 
     def _initialize(self, name, module, *args, **kwargs):
         module_name = self.cfg[name]['type']

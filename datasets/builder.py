@@ -128,17 +128,53 @@ class TrainingSampler(Sampler):
                 yield from torch.arange(self._size).tolist()
 
 
+class InferenceSampler(Sampler):
+    """
+    Produce indices for inference across all workers.
+    Inference needs to run on the __exact__ set of samples,
+    therefore when the total number of samples is not divisible by the number of workers,
+    this sampler produces different number of samples on different workers.
+    """
+
+    def __init__(self, size: int):
+        """
+        Args:
+            size (int): the total number of data of the underlying dataset to sample from
+        """
+        self._size = size
+        assert size > 0
+        self._rank = comm.get_rank()
+        self._world_size = comm.get_world_size()
+        self._local_indices = self._get_local_indices(size, self._world_size, self._rank)
+
+    @staticmethod
+    def _get_local_indices(total_size, world_size, rank):
+        shard_size = total_size // world_size
+        left = total_size % world_size
+        shard_sizes = [shard_size + int(r < left) for r in range(world_size)]
+
+        begin = sum(shard_sizes[:rank])
+        end = min(sum(shard_sizes[: rank + 1]), total_size)
+        return range(begin, end)
+
+    def __iter__(self):
+        yield from self._local_indices
+
+    def __len__(self):
+        return len(self._local_indices)
+
+
 def build_dataset(cfg, default_args=None):
     dataset = build_from_cfg(cfg, DATASETS, default_args)
     return dataset
 
 
-def build_dataloader(dataset,
-                     total_batch_size,
-                     workers_per_gpu,
-                     seed=None,
-                     sampler_name="TrainingSampler",
-                     **kwargs):
+def build_train_dataloader(dataset,
+                           total_batch_size,
+                           workers_per_gpu,
+                           seed=None,
+                           sampler_name="TrainingSampler",
+                           **kwargs):
     """Build Pytorch Dataloader.
 
 
@@ -147,12 +183,12 @@ def build_dataloader(dataset,
     """
     world_size, rank = comm.get_world_size(), comm.get_rank()
     assert (
-        total_batch_size > 0 and total_batch_size % world_size == 0
+            total_batch_size > 0 and total_batch_size % world_size == 0
     ), "Total batch size ({}) must be divisible by the number of gpus ({}).".format(
         total_batch_size, world_size
     )
     batch_size = total_batch_size // world_size
-    num_workers = workers_per_gpu
+    num_workers = workers_per_gpu * world_size
     if sampler_name == "TrainingSampler":
         sampler = TrainingSampler(len(dataset))
     else:
@@ -176,6 +212,25 @@ def build_dataloader(dataset,
         **kwargs
     )
 
+    return data_loader
+
+
+def build_val_dataloader(dataset,
+                         batch_size,
+                         workers_per_gpu=0,
+                         sampler_name=None
+                         ):
+    num_workers = workers_per_gpu
+    if sampler_name is None:
+        sampler = InferenceSampler(len(dataset))
+
+    data_loader = DataLoader(
+        dataset,
+        batch_size=batch_size,
+        sampler=sampler,
+        num_workers=num_workers,
+        collate_fn=partial(collate, samples_per_gpu=batch_size),
+    )
     return data_loader
 
 
