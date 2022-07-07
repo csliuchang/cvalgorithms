@@ -5,6 +5,8 @@ import os
 import atexit
 import functools
 import sys
+import time
+from collections import Counter
 from iopath.common.file_io import PathManager as PathManagerBase
 
 PathManager = PathManagerBase()
@@ -55,7 +57,7 @@ VERBOSE_LEVELS = [logging.DEBUG, logging.WARNING, logging.ERROR, logging.CRITICA
 
 @functools.lru_cache()  # so that calling setup_logger multiple times won't add many handlers
 def get_logger(
-    output=None, distributed_rank=0, *, color=True, name="cvalgorithms", abbrev_name=None
+        output=None, distributed_rank=0, *, color=True, name="cvalgorithms", abbrev_name=None
 ):
     """
     Initialize the detectron2 logger and set its verbosity level to "DEBUG".
@@ -171,3 +173,42 @@ def get_root_logger(log_file=None, log_level=logging.INFO):
     logger = get_logger(log_file)
 
     return logger
+
+
+_LOG_COUNTER = Counter()
+_LOG_TIMER = {}
+
+
+def _find_caller():
+    """
+    Returns:
+        str: module name of the caller
+        tuple: a hashable key to be used to identify different callers
+    """
+    frame = sys._getframe(2)
+    while frame:
+        code = frame.f_code
+        if os.path.join("utils", "logger.") not in code.co_filename:
+            mod_name = frame.f_globals["__name__"]
+            if mod_name == "__main__":
+                mod_name = "detectron2"
+            return mod_name, (code.co_filename, frame.f_lineno, code.co_name)
+        frame = frame.f_back
+
+
+def log_every_n_seconds(lvl, msg, n=1, *, name=None):
+    """
+    Log no more than once per n seconds.
+
+    Args:
+        lvl (int): the logging level
+        msg (str):
+        n (int):
+        name (str): name of the logger to use. Will use the caller's module by default.
+    """
+    caller_module, key = _find_caller()
+    last_logged = _LOG_TIMER.get(key, None)
+    current_time = time.time()
+    if last_logged is None or current_time - last_logged >= n:
+        logging.getLogger(name or caller_module).log(lvl, msg)
+        _LOG_TIMER[key] = current_time

@@ -202,7 +202,7 @@ class TrainerBase(BaseRunner):
         """
         start = time.perf_counter()
         data = next(self._data_loader_iter)
-        _img, _ground_truth = data['images_collect']['img'].cuda(), data['ground_truth']
+        _img, _ground_truth = data['image_meta'].cuda(), data['ground_truth']
         for key, value in _ground_truth.items():
             if value is not None:
                 if isinstance(value, torch.Tensor):

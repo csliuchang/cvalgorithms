@@ -218,7 +218,8 @@ def build_train_dataloader(dataset,
 def build_val_dataloader(dataset,
                          batch_size,
                          workers_per_gpu=0,
-                         sampler_name=None
+                         sampler_name=None,
+                         collate_fn=None
                          ):
     num_workers = workers_per_gpu
     if sampler_name is None:
@@ -229,7 +230,7 @@ def build_val_dataloader(dataset,
         batch_size=batch_size,
         sampler=sampler,
         num_workers=num_workers,
-        collate_fn=partial(collate, samples_per_gpu=batch_size),
+        collate_fn=trivial_batch_collator if collate_fn is None else collate_fn,
     )
     return data_loader
 
@@ -269,9 +270,17 @@ def collate(batch, samples_per_gpu=1):
                           ]
         else:
             print("not support this ground truths label !")
-    inputs_img = torch.stack(stacked_img, dim=0)
+    inputs_img = torch.cat(stacked_img, dim=0)
     gt_mask = torch.stack(gt_results, dim=0)
-    images_collect = {'img': inputs_img, 'img_metas': None}
     ground_truth = {"gt_masks": gt_mask}
-    return {'images_collect': images_collect, 'ground_truth': ground_truth
+    return {'image_meta': inputs_img,
+            'image_id': None,
+            'ground_truth': ground_truth
             }
+
+
+def trivial_batch_collator(batch):
+    """
+        A batch collator that does nothing.
+    """
+    return batch

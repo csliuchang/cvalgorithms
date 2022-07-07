@@ -1,6 +1,7 @@
 import torch.distributed as dist
 import functools
 import numpy as np
+import torch
 
 
 def get_world_size() -> int:
@@ -104,3 +105,19 @@ def gather(data, dst=0, group=None):
 
 def is_main_process() -> bool:
     return get_rank() == 0
+
+
+def synchronize():
+    if not dist.is_available():
+        return
+    if not dist.is_available():
+        return
+    world_size = dist.get_world_size()
+    if world_size == 1:
+        return
+    if dist.get_backend() == dist.Backend.NCCL:
+        # This argument is needed to avoid warnings.
+        # It's valid only for NCCL backend.
+        dist.barrier(device_ids=[torch.cuda.current_device()])
+    else:
+        dist.barrier()

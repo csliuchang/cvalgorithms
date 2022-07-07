@@ -16,7 +16,7 @@ from utils.metrics.rotate_metrics import combine_predicts_gt
 from typing import Optional
 import torch.distributed as dist
 from collections import OrderedDict
-from evaluation import ChangeEvaluation, DatasetEvaluators, DatasetEvaluator, inference_on_dataset
+from evaluation import LEVIRCDEvaluation, DatasetEvaluators, DatasetEvaluator, inference_on_dataset
 
 ModelBuilder = {"segmentation": build_segmentor,
                 "rotate_detection": build_detector,
@@ -144,50 +144,6 @@ class TrainerContainer(BaseRunner):
                                               )
         return val_dataloader
 
-    # @torch.no_grad()
-    # def _eval(self):
-    #     """
-    #     Evaluate the given model. The given model is expected to already contain
-    #     weights to evaluate.
-    #
-    #     Args:
-    #         cfg (CfgNode):
-    #         model (nn.Module):
-    #         evaluators (list[DatasetEvaluator] or None): if None, will call
-    #             :meth:`build_evaluator`. Otherwise, must have the same length as
-    #             ``cfg.DATASETS.TEST``.
-    #
-    #     Returns:
-    #         dict: a dict of result metrics
-    #     """
-    #     final_collection = []
-    #     total_frame = 0.0
-    #     total_time = 0.0
-    #     logger = logging.get_logger(__name__)
-    #     logger.info('Start to eval in val dataset:')
-    #     prog_bar = ProgressBar(len(self.val_dataloader))
-    #     for i, data in enumerate(self.val_dataloader):
-    #         _img, _ground_truth = data['images_collect']['img'], data['ground_truth']
-    #         _img = _img.cuda()
-    #         for key, value in _ground_truth.items():
-    #             if value is not None:
-    #                 if isinstance(value, torch.Tensor):
-    #                     _ground_truth[key] = value.cuda()
-    #         cur_batch = _img.shape[0]
-    #         total_frame += cur_batch
-    #         start_time = time.time()
-    #         predicts = self.model(_img)
-    #         if torch.cuda.is_available():
-    #             torch.cuda.synchronize()
-    #         total_time += (time.time() - start_time)
-    #         predict_gt_collection = combine_predicts_gt(predicts, data['images_collect']['img_metas'][0],
-    #                                                     _ground_truth, self.network_type)
-    #         final_collection.append(predict_gt_collection)
-    #         for _ in range(cur_batch):
-    #             prog_bar.update()
-    #     print('\t %2f FPS' % (total_frame / total_time))
-    #     return final_collection
-
     def _eval(self, cfg, model, evaluators=None):
 
         logger = logging.get_logger(__name__)
@@ -217,7 +173,7 @@ class TrainerContainer(BaseRunner):
         output_dir, evaluator_type = cfg.checkpoint_dir, cfg.network_type
         evaluator_list = []
         if evaluator_type == "segmentation":
-            evaluator_list.append(ChangeEvaluation)
+            evaluator_list.append(LEVIRCDEvaluation())
         return DatasetEvaluators(evaluator_list)
 
     def _initialize(self, name, module, *args, **kwargs):

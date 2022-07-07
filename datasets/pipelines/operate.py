@@ -281,7 +281,7 @@ class DefaultFormatBundle(Operate):
             if len(img.shape) < 3:
                 img = np.expand_dims(img, -1)
             img = np.array(np.ascontiguousarray(img.transpose(2, 0, 1)), dtype=np.float32)
-            data['image'] = to_tensor(img)
+            data['image'] = to_tensor(img).unsqueeze(dim=0)
         if 'segmentation' in data['annotations']:
             data['annotations']['masks'] = \
                 polyline2masks(data, bg_id=self.background, bg_first=self.bg_first)
