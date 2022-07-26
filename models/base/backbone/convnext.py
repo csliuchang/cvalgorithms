@@ -1,9 +1,7 @@
 import torch.nn as nn
-import math
 import torch
-from torch.nn import init
 from .pvt import trunc_normal_
-from .utils import DropPath
+from models.base.utils import DropPath
 from models.builder import BACKBONES
 import torch.nn.functional as F
 

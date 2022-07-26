@@ -11,7 +11,7 @@ from mmcv.cnn.bricks.transformer import MultiheadAttention
 from mmcv.runner import BaseModule, ModuleList, Sequential, _load_checkpoint
 from utils import get_root_logger
 from models.builder import BACKBONES
-from .utils import PatchEmbed, nchw_to_nlc, nlc_to_nchw
+from models.base.utils import PatchEmbed, nchw_to_nlc, nlc_to_nchw
 
 
 class MixFFN(BaseModule):

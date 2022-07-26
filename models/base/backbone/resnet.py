@@ -1,12 +1,11 @@
 from collections import OrderedDict
 import torch.nn as nn
-import torch.utils.checkpoint as cp
 
 from models.builder import BACKBONES
 from models.base import (build_activation_layer, build_conv_layer,
-                         build_norm_layer, ConvModule, _BatchNorm)
+                         build_norm_layer, _BatchNorm)
 from utils import load_checkpoint
-from .utils import BasicBlock, Bottleneck, ResLayer
+from models.base.utils import BasicBlock, Bottleneck, ResLayer
 from models.utils import constant_init, kaiming_init
 from utils import get_logger
 
