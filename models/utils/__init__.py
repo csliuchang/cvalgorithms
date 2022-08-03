@@ -5,3 +5,4 @@ from .matcher import *
 from .map_generate import *
 from .weight_init import *
 from .warpper import *
+from .fp16_utils import auto_fp16

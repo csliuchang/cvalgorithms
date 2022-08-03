@@ -1,12 +1,14 @@
 import torch.nn as nn
 import torch
-from .pvt import trunc_normal_
+from models.base.transformer.common import trunc_normal_
 from models.base.utils import DropPath
+from models.utils import auto_fp16
 from models.builder import BACKBONES
 import torch.nn.functional as F
+from timm.models import gluon_resnet18_v1b
 
 
-@BACKBONES.register_module()
+# @BACKBONES.register_module()
 class ConvNeXt(nn.Module):
     r""" ConvNeXt
         A PyTorch impl of : `A ConvNet for the 2020s`  -
@@ -60,21 +62,14 @@ class ConvNeXt(nn.Module):
             self.head = nn.Linear(dims[-1], num_classes)
             self.head.weight.data.mul_(head_init_scale)
             self.head.bias.data.mul_(head_init_scale)
+        self.apply(self._init_weights)
 
-    def init_weights(self, pretrained=None):
-        for m in nn.ModuleList():
-            if isinstance(m, (nn.Conv2d, nn.Linear)):
-                trunc_normal_(m.weight, std=.02)
-                nn.init.constant_(m.bias, 0)
-        if isinstance(pretrained, str):
-            state_dict = torch.load(pretrained)["model"]
-            model_dict = self.state_dict()
-            state_dict_v = [state_dict[k] for k in state_dict]
-            for i, k in enumerate(model_dict):
-                if model_dict[k].shape == state_dict_v[i].shape:
-                    model_dict[k] = state_dict_v[i]
-            self.load_state_dict(model_dict , strict=False)
+    def _init_weights(self, m):
+        if isinstance(m, (nn.Conv2d, nn.Linear)):
+            trunc_normal_(m.weight, std=.02)
+            nn.init.constant_(m.bias, 0)
 
+    # @auto_fp16()
     def forward(self, x):
         feature_list = []
         for i in range(4):
@@ -150,8 +145,18 @@ class LayerNorm(nn.Module):
         if self.data_format == "channels_last":
             return F.layer_norm(x, self.normalized_shape, self.weight, self.bias, self.eps)
         elif self.data_format == "channels_first":
-            u = x.mean(1, keepdim=True)
-            s = (x - u).pow(2).mean(1, keepdim=True)
-            x = (x - u) / torch.sqrt(s + self.eps)
-            x = self.weight[:, None, None] * x + self.bias[:, None, None]
-            return x
+            mean = x.mean(1, keepdim=True)
+            std = x.std(1, keepdim=True)
+            return self.weight[:, None, None] * (x - mean) / (std + self.eps) + self.bias[:, None, None]
+
+
+if __name__ == "__main__":
+    from torchvision.models import *
+    import cv2
+    model = resnet18(True)
+    model.half().cuda()
+    img = cv2.imread("C:/Users/user1/Desktop/match/20220708062636002779-20220708062613697286_7_0-scene_c1-ng.png") / 10.
+    img = torch.tensor(img).unsqueeze(0).permute(0, 3, 1, 2)
+    img = img.type(torch.HalfTensor).cuda()
+    outputs = model(img)
+    print(outputs)

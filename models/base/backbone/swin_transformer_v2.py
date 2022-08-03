@@ -5,25 +5,6 @@ import torch.nn.functional as F
 import numpy as np
 
 
-class Mlp(nn.Module):
-    def __init__(self, in_features, hidden_features=None, out_features=None, act_layer=nn.GELU, drop=0.):
-        super(Mlp, self).__init__()
-        out_features = out_features or in_features
-        self.fc1 = nn.Linear(in_features, hidden_features)
-        self.act = act_layer()
-        self.fc2 = nn.Linear(hidden_features, out_features)
-        self.drop = nn.Dropout(drop)
-
-    def forward(self, x):
-        x = self.fc1(x)
-        x = self.act(x)
-
-        x = self.drop(x)
-        x = self.fc2(x)
-        x = self.drop(x)
-        return x
-
-
 def window_partition(x, window_size):
     """
     Args:
@@ -463,6 +444,7 @@ class SwinTransformerV2(nn.Module):
             self.norm = norm_layer(self.num_features)
             self.avgpool = nn.AdaptiveAvgPool1d(1)
             self.head = nn.Linear(self.num_features, num_classes)
+        self.apply(self._init_weights)
 
     def _init_weights(self, m):
         if isinstance(m, nn.Linear):
@@ -474,6 +456,7 @@ class SwinTransformerV2(nn.Module):
             nn.init.constant_(m.weight, 1.0)
 
     def forward_features(self, x):
+        b = x.shape[0]
         x = self.patch_embed(x)
         if self.ape:
             x = x + self.absolute_pos_embed
@@ -481,7 +464,9 @@ class SwinTransformerV2(nn.Module):
         feature_lists = []
         for layer in self.layers:
             x = layer(x)
-            feature_lists.append(x)
+            h, w = layer.input_resolution
+            features = x.reshape(b, h, w, -1).permute(0, 3, 1, 2).contiguous()
+            feature_lists.append(features)
         return feature_lists
 
     def forward(self, x):
@@ -497,7 +482,7 @@ class SwinTransformerV2(nn.Module):
 
 
 if __name__ == "__main__":
-    model = SwinTransformerV2(img_size=224, patch_size=4, in_channels=3, embed_dim=96).cuda()
-    x = torch.randn(1, 3, 224, 224).cuda()
+    model = SwinTransformerV2(img_size=512, patch_size=4, window_size=16, in_channels=3, embed_dim=96).cuda()
+    x = torch.randn(1, 3, 512, 512).cuda()
     output = model(x)
     pass
