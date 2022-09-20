@@ -2,8 +2,10 @@ import torch
 import math
 import torch.nn as nn
 import numpy as np
-from models.base.transformer.common import Mlp, DropPath, PatchEmbed, trunc_normal_, add_decomposed_rel_pos, get_abs_pos
-from models.base.transformer.windows import window_partition, window_unpartition
+from models.base.utils import to_2tuple, trunc_normal_, DropPath
+from models.base.transformer import window_partition, window_unpartition, Mlp, \
+    add_decomposed_rel_pos, PatchEmbed, get_abs_pos
+from models.builder import BACKBONES
 
 
 def attention_pool(x, pool, norm=None):
@@ -16,54 +18,6 @@ def attention_pool(x, pool, norm=None):
         x = norm(x)
 
     return x
-
-
-def cal_rel_pos_spatial(
-        attn,
-        q,
-        has_cls_embed,
-        q_shape,
-        k_shape,
-        rel_pos_h,
-        rel_pos_w,
-):
-    """
-    Spatial Relative Positional Embeddings.
-    """
-    sp_idx = 1 if has_cls_embed else 0
-    q_h, q_w = q_shape
-    k_h, k_w = k_shape
-
-    # Scale up rel pos if shapes for q and k are different.
-    q_h_ratio = max(k_h / q_h, 1.0)
-    k_h_ratio = max(q_h / k_h, 1.0)
-    dist_h = (
-            torch.arange(q_h)[:, None] * q_h_ratio - torch.arange(k_h)[None, :] * k_h_ratio
-    )
-    dist_h += (k_h - 1) * k_h_ratio
-    q_w_ratio = max(k_w / q_w, 1.0)
-    k_w_ratio = max(q_w / k_w, 1.0)
-    dist_w = (
-            torch.arange(q_w)[:, None] * q_w_ratio - torch.arange(k_w)[None, :] * k_w_ratio
-    )
-    dist_w += (k_w - 1) * k_w_ratio
-
-    Rh = rel_pos_h[dist_h.long()]
-    Rw = rel_pos_w[dist_w.long()]
-
-    B, n_head, q_N, dim = q.shape
-
-    r_q = q[:, :, sp_idx:].reshape(B, n_head, q_h, q_w, dim)
-    rel_h = torch.einsum("byhwc,hkc->byhwk", r_q, Rh)
-    rel_w = torch.einsum("byhwc,wkc->byhwk", r_q, Rw)
-
-    attn[:, :, sp_idx:, sp_idx:] = (
-            attn[:, :, sp_idx:, sp_idx:].view(B, -1, q_h, q_w, k_h, k_w)
-            + rel_h[:, :, :, :, :, None]
-            + rel_w[:, :, :, :, None, :]
-    ).view(B, -1, q_h * q_w, k_h * k_w)
-
-    return attn
 
 
 class MultiScaleAttention(nn.Module):
@@ -315,15 +269,16 @@ def round_width(width, multiplier, min_width=1, divisor=1, verbose=False):
     return int(width_out)
 
 
+# @BACKBONES.register_module()
 class MViT(nn.Module):
     def __init__(self,
                  img_size=512, in_channels=3, patch_kernel=(7, 7), patch_stride=(4, 4), patch_padding=(3, 3),
                  num_heads=1, qkv_pool_kernel=(3, 3), stride_kv=4, window_size=56, mlp_ratio=4.0, qkv_bias=True,
                  embed_dim=96, depth=10, drop_path_rate=0.2, last_block_indexes=(0, 2, 7, 9),
                  norm_layer=nn.LayerNorm, residual_pooling=True, use_rel_pos=True, rel_pos_zero_init=True,
-                 out_features=("scale2", "scale3", "scale4", "scale5"), use_abs_pos=False, **kwargs):
+                 out_features=("scale2", "scale3", "scale4", "scale5"), use_abs_pos=False, out_levels=None, **kwargs):
         super(MViT, self).__init__()
-        patch_embed = PatchEmbed(
+        self.patch_embed = PatchEmbed(
             kernel_size=patch_kernel,
             stride=patch_stride,
             padding=patch_padding,
@@ -338,7 +293,6 @@ class MViT(nn.Module):
             self.pos_embed = None
 
         dim_out = embed_dim
-        self.patch_embed = patch_embed
 
         stage = 2
         stride = patch_stride[0]
@@ -396,16 +350,31 @@ class MViT(nn.Module):
         if self.pos_embed is not None:
             trunc_normal_(self.pos_embed, std=0.02)
 
-        self.apply(self._init_weights)
+        self.out_levels = out_levels
 
-    def _init_weights(self, m):
-        if isinstance(m, nn.Linear):
-            trunc_normal_(m.weight, std=0.02)
-            if isinstance(m, nn.Linear) and m.bias is not None:
+    def init_weights(self, pretrained=None):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                trunc_normal_(m.weight, std=0.02)
+                if isinstance(m, nn.Linear) and m.bias is not None:
+                    nn.init.constant_(m.bias, 0)
+            elif isinstance(m, nn.LayerNorm):
                 nn.init.constant_(m.bias, 0)
-        elif isinstance(m, nn.LayerNorm):
-            nn.init.constant_(m.bias, 0)
-            nn.init.constant_(m.weight, 1.0)
+                nn.init.constant_(m.weight, 1.0)
+        if pretrained is not None:
+            state_dict = torch.load(pretrained)['model_state']
+            model_dict = self.state_dict()
+            incorrect_shapes = []
+            for k in list(state_dict.keys()):
+                if k in model_dict:
+                    model_param = model_dict[k]
+                    shape_model = tuple(model_param.shape)
+                    shape_checkpoint = tuple(state_dict[k].shape)
+                    if shape_model != shape_checkpoint:
+                        incorrect_shapes.append((k, shape_checkpoint, shape_model))
+                        state_dict.pop(k)
+            self.load_state_dict(state_dict, strict=False)
+            pass
 
     def forward(self, x):
         x = self.patch_embed(x)
@@ -413,7 +382,7 @@ class MViT(nn.Module):
         if self.pos_embed is not None:
             x = x + get_abs_pos(self.pos_embed, self.pretrain_use_cls_token, x.shape[1:3])
 
-        outputs = {}
+        outputs = []
         stage = 2
         for i, blk in enumerate(self.blocks):
             x = blk(x)
@@ -421,9 +390,10 @@ class MViT(nn.Module):
                 name = f"scale{stage}"
                 if name in self._out_features:
                     x_out = getattr(self, f"{name}_norm")(x)
-                    outputs[name] = x_out.permute(0, 3, 1, 2)
+                    outputs.append(x_out.permute(0, 3, 1, 2))
                 stage += 1
-
+        if self.out_levels is not None:
+            outputs = [outputs[level] for level in self.out_levels]
         return outputs
 
 

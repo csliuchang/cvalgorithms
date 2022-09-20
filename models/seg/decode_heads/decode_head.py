@@ -6,7 +6,7 @@ import torch.nn as nn
 from ...utils import normal_init, resize
 
 from ...builder import build_loss
-from specific.pixel import build_pixel_sampler
+from models.specific import build_pixel_sampler
 
 
 class BaseDecodeHead(nn.Module, metaclass=ABCMeta):

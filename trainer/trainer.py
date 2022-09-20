@@ -48,6 +48,7 @@ class TrainerContainer(BaseRunner):
         self.network_type = cfg.network_type
         cfg.model.backbone.in_channels = cfg.input_channel
         cfg.model.backbone.input_size = (cfg.input_width, cfg.input_height)
+        cfg.model.decode_head.num_classes = cfg.num_classes
 
         # build dataloader
         self.train_dataloader = self.build_train_loader(cfg)
@@ -154,7 +155,7 @@ class TrainerContainer(BaseRunner):
         results = OrderedDict()
 
         try:
-            evaluator = self.build_evaluator(cfg)
+            evaluators = self.build_evaluator(cfg)
         except NotImplementedError:
             logger.warn(
                 "No evaluator found. Use `DefaultTrainer.test(evaluators=)`, "
@@ -162,7 +163,7 @@ class TrainerContainer(BaseRunner):
             )
             results[cfg.network_type] = {}
 
-        results_i = inference_on_dataset(model, self.build_val_loader(cfg), evaluator)
+        results_i = inference_on_dataset(model, self.build_val_loader(cfg), evaluators)
         results[cfg.network_type] = results_i
 
         if len(results) == 1:
@@ -173,7 +174,7 @@ class TrainerContainer(BaseRunner):
         output_dir, evaluator_type = cfg.checkpoint_dir, cfg.network_type
         evaluator_list = []
         if evaluator_type == "segmentation":
-            evaluator_list.append(LEVIRCDEvaluation())
+            evaluator_list.append(LEVIRCDEvaluation(num_classes=cfg.num_classes))
         return DatasetEvaluators(evaluator_list)
 
     def _initialize(self, name, module, *args, **kwargs):

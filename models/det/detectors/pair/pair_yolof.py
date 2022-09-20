@@ -1,10 +1,8 @@
-import torch.nn as nn
 import torch
-import torch.nn.functional as F
 
 from ....builder import DETECTORS, build_backbone, build_head, build_neck
 from . import PairBaseDetector
-from specific.bbox.coder.delta_xywha_bbox_coder import delta2bbox
+from models.specific.bbox.coder.delta_xywh_bbox_coder import delta2bbox
 
 __all__ = ["PairYOLOFeature"]
 

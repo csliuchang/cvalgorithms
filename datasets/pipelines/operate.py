@@ -290,6 +290,7 @@ class DefaultFormatBundle(Operate):
     def apply_image(self, img: np.ndarray):
         pass
 
+
 @PIPELINES.register_module()
 class Rotate(object):
     """

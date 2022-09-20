@@ -1,14 +1,7 @@
-import math
-from typing import Tuple
-
 import torch
 import torch.nn as nn
 from .comm import box_xyxy_to_cxcywh
 import numpy as np
-from specific.anchor.anchor_generator import DefaultAnchorGenerator
-from ..utils import nonzero_tuple, batched_nms
-
-
 
 
 def permute_to_N_HWA_K(tensor, K: int):

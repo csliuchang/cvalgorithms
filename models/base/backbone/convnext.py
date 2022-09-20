@@ -8,7 +8,7 @@ import torch.nn.functional as F
 from timm.models import gluon_resnet18_v1b
 
 
-# @BACKBONES.register_module()
+@BACKBONES.register_module()
 class ConvNeXt(nn.Module):
     r""" ConvNeXt
         A PyTorch impl of : `A ConvNet for the 2020s`  -
@@ -62,14 +62,19 @@ class ConvNeXt(nn.Module):
             self.head = nn.Linear(dims[-1], num_classes)
             self.head.weight.data.mul_(head_init_scale)
             self.head.bias.data.mul_(head_init_scale)
-        self.apply(self._init_weights)
 
-    def _init_weights(self, m):
-        if isinstance(m, (nn.Conv2d, nn.Linear)):
-            trunc_normal_(m.weight, std=.02)
-            nn.init.constant_(m.bias, 0)
+    def _customer_load_weight(self, weight):
+        if weight is not None and isinstance(weight, dict):
+            pass
 
-    # @auto_fp16()
+    def _init_weights(self, pretrained=None):
+        for m in nn.ModuleList():
+            if isinstance(m, (nn.Conv2d, nn.Linear)):
+                trunc_normal_(m.weight, std=.02)
+                nn.init.constant_(m.bias, 0)
+        if pretrained is not None:
+            self._customer_load_weight(pretrained)
+
     def forward(self, x):
         feature_list = []
         for i in range(4):

@@ -3,7 +3,7 @@ import torch
 from ...utils import add_prefix, resize
 from ... import builder
 from ...builder import SEGMENTORS
-from specific.siamese.builder import build_siamese_layer
+from models.specific.siamese.builder import build_siamese_layer
 from .encoder_decoder import EncoderDecoder
 from ..losses import BatchContrastiveLoss
 import torch.nn.functional as F

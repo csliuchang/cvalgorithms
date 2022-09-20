@@ -3,7 +3,7 @@ import torch
 from models.builder import DETECTORS, build_backbone, build_head, build_neck
 from models.det.detectors.base import BaseDetector
 from models.utils import points2rdets, rdets2points_tensor
-from specific.bbox.coder.delta_xywha_bbox_coder import delta2bbox
+from models.specific.bbox.coder.delta_xywha_bbox_coder import delta2bbox
 
 
 __all__ = ["RRetinaNet"]
