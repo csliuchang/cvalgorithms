@@ -23,7 +23,7 @@
             "workers_per_gpu": 2
     },
     "workflow": [["train", 2], ["val", 1]],
-    "total_epochs": 100,
+    "total_iter": 100000,
     "num_classes": 1,
     "log_iter": 10,
     "optimizer": "ADAMW",

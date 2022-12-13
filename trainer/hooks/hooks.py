@@ -91,34 +91,6 @@ class IterationTimer(HookBase):
         self._total_timer.pause()
 
 
-# class EvalHook(HookBase):
-#     def __init__(self, cfg, eval_function):
-#         self._period = cfg.eval_period
-#         num_classes = cfg.num_classes
-#         network_type = cfg.network_type
-#         if network_type == "segmentation":
-#             self._eval_func = SegEval(num_classes)
-#         elif network_type == "rotate_detection":
-#             self._eval_func = DetEval(num_classes, rotate_eval=True)
-#         else:
-#             self._eval_func = DetEval(num_classes)
-#         self._func = eval_function
-#
-#     def _do_eval(self):
-#         results = self._func()
-#         self.trainer.results = results
-#         metrics = self._eval_func(results)
-#         return metrics
-#
-#     def after_step(self):
-#         next_epoch = self.trainer.epoch + 1
-#         if self._period > 0 and next_epoch % self._period == 0:
-#             # do the last eval in after_train
-#             if next_epoch != self.trainer.max_epoch:
-#                 self.trainer.metrics = self._do_eval()
-#
-#     def after_train(self):
-#         pass
 class EvalHook(HookBase):
     def __init__(self, cfg, eval_function):
         self._period = cfg.eval_period
@@ -419,3 +391,9 @@ class LRScheduler(HookBase):
         lr = self._optimizer.param_groups[self._best_param_group_id]["lr"]
         self.trainer.storage.put_scalar("lr", lr, smoothing_hint=False)
         self.scheduler.step()
+
+
+class DrawPredict(HookBase):
+    def __init__(self):
+        pass
+

@@ -14,4 +14,3 @@ def _fast_hist(label_gt, label_pred, num_classes):
                        + label_pred[mask], minlength=num_classes**2
                        ).reshape(num_classes, num_classes)
     return hist
-

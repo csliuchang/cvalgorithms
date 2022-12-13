@@ -343,8 +343,6 @@ class Crop(object):
         pass
 
 
-
-
 @PIPELINES.register_module()
 class CutPaste(object):
     def __init__(self):

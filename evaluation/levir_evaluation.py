@@ -13,7 +13,7 @@ class LEVIRCDEvaluation(DatasetEvaluator):
         self._logger = logger.get_logger(__name__)
         self._cpu_device = torch.device("cpu")
         self._distributed = distributed
-        self.num_classes = num_classes
+        self.num_classes = num_classes + 1
 
     def evaluate(self, ):
         """
@@ -29,7 +29,9 @@ class LEVIRCDEvaluation(DatasetEvaluator):
         acc = tp.sum() / (hist.sum() + np.finfo(np.float32).eps)
         recall = tp / (sum_a1 + np.finfo(np.float32).eps)
         precision = tp / (sum_a0 + np.finfo(np.float32).eps)
-        iou = tp / (sum_a1 + sum_a0 - tp + np.finfo(np.float32).eps)
+        # iou = tp / (sum_a1 + sum_a0 - tp + np.finfo(np.float32).eps)
+        iou = tp / np.clip(sum_a1 + sum_a0 - tp, a_min=np.finfo(np.float32).eps)
+
         mean_iou = np.nanmean(iou)
         f1 = 2 * recall * precision / (recall + precision + np.finfo(np.float32).eps)
 

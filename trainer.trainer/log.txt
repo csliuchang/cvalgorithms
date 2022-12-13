@@ -35911,3 +35911,2266 @@ Traceback (most recent call last):
     + label_pred[mask], minlength=num_classes**2
 IndexError: boolean index did not match indexed array along dimension 0; dimension is 200704 but corresponding boolean dimension is 401408
 [09/07 18:42:49] cvalgorithms INFO:  eta: 0:00:27  iter: 19  total_loss: 69.13  decode.loss_seg: 0.5728  aux_0.loss: 0.5989  cnt.cnt_loss: 33.44  loss: 34.57  time: 0.3496  data_time: 0.0111  lr: 9.5492e-05  max_mem: 3232M
+[09/23 21:54:16] cvalgorithms INFO: SiameseEncoderDecoder(
+  (backbone): ConvNeXt(
+    (downsample_layers): ModuleList(
+      (0): Sequential(
+        (0): Conv2d(3, 96, kernel_size=(4, 4), stride=(4, 4))
+        (1): LayerNorm()
+      )
+      (1): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(96, 192, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (2): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(192, 384, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (3): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(384, 768, kernel_size=(2, 2), stride=(2, 2))
+      )
+    )
+    (stages): ModuleList(
+      (0): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (1): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (2): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (3): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (4): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (5): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (6): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (7): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (8): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (3): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+      )
+    )
+    (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  )
+  (decode_head): UPerHead(
+    (loss): CrossEntropyLoss()
+    (conv_seg): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+    (dropout): Dropout2d(p=0.1, inplace=False)
+    (psp_modules): PPM(
+      (ppm_blocks): ModuleList(
+        (0): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (1): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (2): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (3): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+    )
+    (bottleneck): ConvModule(
+      (conv): Conv2d(448, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+    (lateral_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(48, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(96, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_bottleneck): ConvModule(
+      (conv): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+  )
+  (auxiliary_head): ModuleList(
+    (0): FCNHead(
+      (loss): CrossEntropyLoss()
+      (conv_seg): Conv2d(64, 2, kernel_size=(1, 1), stride=(1, 1))
+      (dropout): Dropout2d(p=0.1, inplace=False)
+      (convs): Sequential(
+        (0): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+      (conv_cat): ConvModule(
+        (conv): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+  )
+  (constant_loss): BatchContrastiveLoss()
+  (sig): Sigmoid()
+  (sft): Softmax(dim=1)
+  (siamese_layer): ModuleList(
+    (0): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(96, 48, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(48, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(48, 48, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (1): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(96, 96, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (2): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(768, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(192, 192, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+)
+[09/23 21:54:45] cvalgorithms INFO: Starting training from iteration 0
+[09/23 21:54:51] cvalgorithms INFO:  iter: 1  total_loss: 231.6  decode.loss_seg: 0  aux_0.loss: 0.6823  cnt.cnt_loss: 115.1  loss: 115.8  data_time: 0.0670  lr: 0.00090451  max_mem: 3207M
+[09/23 21:54:51] cvalgorithms INFO:  eta: 0:00:33  iter: 3  total_loss: 182.1  decode.loss_seg: 0  aux_0.loss: 0.6621  cnt.cnt_loss: 90.41  loss: 91.07  time: 0.3477  data_time: 0.0358  lr: 0.00034549  max_mem: 3207M
+[09/23 21:54:52] cvalgorithms INFO:  eta: 0:00:32  iter: 5  total_loss: 125  decode.loss_seg: 0  aux_0.loss: 0.6381  cnt.cnt_loss: 61.86  loss: 62.51  time: 0.3471  data_time: 0.0253  lr: 0.001  max_mem: 3207M
+[09/23 21:54:53] cvalgorithms INFO:  eta: 0:00:32  iter: 7  total_loss: 92.45  decode.loss_seg: 0  aux_0.loss: 0.6264  cnt.cnt_loss: 45.57  loss: 46.23  time: 0.3481  data_time: 0.0200  lr: 0.00065451  max_mem: 3207M
+[09/23 21:54:54] cvalgorithms INFO:  eta: 0:00:31  iter: 9  total_loss: 92.45  decode.loss_seg: 0  aux_0.loss: 0.6255  cnt.cnt_loss: 45.57  loss: 46.23  time: 0.3484  data_time: 0.0169  lr: 9.5492e-05  max_mem: 3207M
+[09/23 21:54:54] cvalgorithms INFO:  eta: 0:00:30  iter: 11  total_loss: 92.45  decode.loss_seg: 0  aux_0.loss: 0.6126  cnt.cnt_loss: 45.57  loss: 46.23  time: 0.3499  data_time: 0.0148  lr: 0.00090451  max_mem: 3207M
+[09/23 21:54:55] cvalgorithms INFO:  eta: 0:00:30  iter: 13  total_loss: 92.45  decode.loss_seg: 0  aux_0.loss: 0.5879  cnt.cnt_loss: 45.57  loss: 46.23  time: 0.3502  data_time: 0.0133  lr: 0.00034549  max_mem: 3207M
+[09/23 21:54:56] cvalgorithms INFO:  eta: 0:00:29  iter: 15  total_loss: 80.06  decode.loss_seg: 0  aux_0.loss: 0.5744  cnt.cnt_loss: 39.44  loss: 40.03  time: 0.3501  data_time: 0.0122  lr: 0.001  max_mem: 3207M
+[09/23 21:54:56] cvalgorithms INFO:  eta: 0:00:28  iter: 17  total_loss: 58.27  decode.loss_seg: 0  aux_0.loss: 0.5744  cnt.cnt_loss: 28.57  loss: 29.14  time: 0.3498  data_time: 0.0113  lr: 0.00065451  max_mem: 3207M
+[09/23 21:54:57] cvalgorithms INFO: Start inference on 216 batches
+[09/23 22:01:59] cvalgorithms ERROR: Exception during training:
+Traceback (most recent call last):
+  File "C:\Users\user1\PycharmProjects\cvalgorithms\trainer\tools\runner.py", line 124, in train
+    self.after_step()
+  File "C:\Users\user1\PycharmProjects\cvalgorithms\trainer\tools\runner.py", line 148, in after_step
+    h.after_step()
+  File "C:\Users\user1\PycharmProjects\cvalgorithms\trainer\hooks\hooks.py", line 150, in after_step
+    self._do_eval()
+  File "C:\Users\user1\PycharmProjects\cvalgorithms\trainer\hooks\hooks.py", line 128, in _do_eval
+    results = self._func()
+  File "C:\Users\user1\PycharmProjects\cvalgorithms\trainer\trainer.py", line 89, in test_and_save_results
+    self._last_eval_results = self._eval(self.cfg, self.model)
+  File "C:\Users\user1\PycharmProjects\cvalgorithms\trainer\trainer.py", line 166, in _eval
+    results_i = inference_on_dataset(model, self.build_val_loader(cfg), evaluators)
+  File "C:\Users\user1\PycharmProjects\cvalgorithms\evaluation\evaluator.py", line 98, in inference_on_dataset
+    evaluator.process(inputs, outputs)
+  File "C:\Users\user1\PycharmProjects\cvalgorithms\evaluation\evaluator.py", line 43, in process
+    evaluator.process(inputs, outputs)
+  File "C:\Users\user1\PycharmProjects\cvalgorithms\evaluation\levir_evaluation.py", line 57, in process
+    self._conf_matrix += _fast_hist(pred.flatten(), gt.flatten(), self.num_classes)
+  File "C:\Users\user1\PycharmProjects\cvalgorithms\evaluation\comm\computer_ops.py", line 15, in _fast_hist
+    ).reshape(num_classes, num_classes)
+ValueError: cannot reshape array of size 2 into shape (1,1)
+[09/23 22:01:59] cvalgorithms INFO:  eta: 0:00:27  iter: 19  total_loss: 42.12  decode.loss_seg: 0  aux_0.loss: 0.5667  cnt.cnt_loss: 20.55  loss: 21.06  time: 0.3509  data_time: 0.0106  lr: 9.5492e-05  max_mem: 3207M
+[09/23 22:03:04] cvalgorithms INFO: SiameseEncoderDecoder(
+  (backbone): ConvNeXt(
+    (downsample_layers): ModuleList(
+      (0): Sequential(
+        (0): Conv2d(3, 96, kernel_size=(4, 4), stride=(4, 4))
+        (1): LayerNorm()
+      )
+      (1): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(96, 192, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (2): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(192, 384, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (3): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(384, 768, kernel_size=(2, 2), stride=(2, 2))
+      )
+    )
+    (stages): ModuleList(
+      (0): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (1): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (2): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (3): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (4): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (5): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (6): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (7): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (8): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (3): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+      )
+    )
+    (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  )
+  (decode_head): UPerHead(
+    (loss): CrossEntropyLoss()
+    (conv_seg): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+    (dropout): Dropout2d(p=0.1, inplace=False)
+    (psp_modules): PPM(
+      (ppm_blocks): ModuleList(
+        (0): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (1): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (2): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (3): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+    )
+    (bottleneck): ConvModule(
+      (conv): Conv2d(448, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+    (lateral_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(48, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(96, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_bottleneck): ConvModule(
+      (conv): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+  )
+  (auxiliary_head): ModuleList(
+    (0): FCNHead(
+      (loss): CrossEntropyLoss()
+      (conv_seg): Conv2d(64, 2, kernel_size=(1, 1), stride=(1, 1))
+      (dropout): Dropout2d(p=0.1, inplace=False)
+      (convs): Sequential(
+        (0): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+      (conv_cat): ConvModule(
+        (conv): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+  )
+  (constant_loss): BatchContrastiveLoss()
+  (sig): Sigmoid()
+  (sft): Softmax(dim=1)
+  (siamese_layer): ModuleList(
+    (0): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(96, 48, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(48, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(48, 48, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (1): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(96, 96, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (2): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(768, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(192, 192, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+)
+[09/23 22:03:32] cvalgorithms INFO: Starting training from iteration 0
+[09/23 22:03:36] cvalgorithms INFO:  iter: 1  total_loss: 158.1  decode.loss_seg: 0.0003647  aux_0.loss: 0.6832  cnt.cnt_loss: 78.36  loss: 79.04  data_time: 0.0507  lr: 0.00090451  max_mem: 3207M
+[09/23 22:03:36] cvalgorithms INFO:  eta: 0:00:33  iter: 3  total_loss: 122  decode.loss_seg: 0  aux_0.loss: 0.661  cnt.cnt_loss: 60.35  loss: 60.99  time: 0.3478  data_time: 0.0276  lr: 0.00034549  max_mem: 3207M
+[09/23 22:03:37] cvalgorithms INFO:  eta: 0:00:32  iter: 5  total_loss: 78.46  decode.loss_seg: 0  aux_0.loss: 0.638  cnt.cnt_loss: 38.61  loss: 39.23  time: 0.3475  data_time: 0.0199  lr: 0.001  max_mem: 3207M
+[09/23 22:03:38] cvalgorithms INFO:  eta: 0:00:32  iter: 7  total_loss: 98.15  decode.loss_seg: 0  aux_0.loss: 0.6257  cnt.cnt_loss: 48.47  loss: 49.07  time: 0.3490  data_time: 0.0160  lr: 0.00065451  max_mem: 3207M
+[09/23 22:03:38] cvalgorithms INFO:  eta: 0:00:31  iter: 9  total_loss: 98.15  decode.loss_seg: 0  aux_0.loss: 0.623  cnt.cnt_loss: 48.47  loss: 49.07  time: 0.3487  data_time: 0.0136  lr: 9.5492e-05  max_mem: 3207M
+[09/23 22:03:39] cvalgorithms INFO:  eta: 0:00:30  iter: 11  total_loss: 117.4  decode.loss_seg: 0  aux_0.loss: 0.6109  cnt.cnt_loss: 58.16  loss: 58.72  time: 0.3490  data_time: 0.0121  lr: 0.00090451  max_mem: 3207M
+[09/23 22:03:40] cvalgorithms INFO:  eta: 0:00:29  iter: 13  total_loss: 98.15  decode.loss_seg: 0  aux_0.loss: 0.5888  cnt.cnt_loss: 48.47  loss: 49.07  time: 0.3488  data_time: 0.0110  lr: 0.00034549  max_mem: 3207M
+[09/23 22:03:40] cvalgorithms INFO:  eta: 0:00:29  iter: 15  total_loss: 98.15  decode.loss_seg: 0  aux_0.loss: 0.5751  cnt.cnt_loss: 48.47  loss: 49.07  time: 0.3487  data_time: 0.0102  lr: 0.001  max_mem: 3207M
+[09/23 22:03:41] cvalgorithms INFO:  eta: 0:00:28  iter: 17  total_loss: 78.46  decode.loss_seg: 0  aux_0.loss: 0.5629  cnt.cnt_loss: 38.61  loss: 39.23  time: 0.3497  data_time: 0.0096  lr: 0.00065451  max_mem: 3207M
+[09/23 22:03:42] cvalgorithms INFO: Start inference on 216 batches
+[09/23 22:04:22] cvalgorithms INFO: Total inference time: 0:00:11.932375 (0.056552 s / iter per device, on 1 devices)
+[09/23 22:04:22] cvalgorithms INFO: Total inference pure compute time: 0:00:10 (0.050832 s / iter per device, on 1 devices)
+[09/23 22:04:22] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.49522668588266194, 'acc': 0.9904533717653239, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/23 22:04:22] cvalgorithms INFO:  eta: 0:00:27  iter: 19  total_loss: 78.46  decode.loss_seg: 0  aux_0.loss: 0.5522  cnt.cnt_loss: 38.61  loss: 39.23  time: 0.3505  data_time: 0.0091  lr: 9.5492e-05  max_mem: 3207M
+[09/23 22:04:23] cvalgorithms INFO:  eta: 0:00:27  iter: 21  total_loss: 73.87  decode.loss_seg: 0  aux_0.loss: 0.5241  cnt.cnt_loss: 36.42  loss: 36.94  time: 0.3519  data_time: 0.0053  lr: 0.00090451  max_mem: 3207M
+[09/23 22:04:24] cvalgorithms INFO:  eta: 0:00:26  iter: 23  total_loss: 51.64  decode.loss_seg: 0  aux_0.loss: 0.4999  cnt.cnt_loss: 25.33  loss: 25.82  time: 0.3533  data_time: 0.0052  lr: 0.00034549  max_mem: 3207M
+[09/23 22:04:25] cvalgorithms INFO:  eta: 0:00:25  iter: 25  total_loss: 48.67  decode.loss_seg: 0  aux_0.loss: 0.4837  cnt.cnt_loss: 23.89  loss: 24.34  time: 0.3534  data_time: 0.0053  lr: 0.001  max_mem: 3207M
+[09/23 22:04:25] cvalgorithms INFO:  eta: 0:00:25  iter: 27  total_loss: 31.4  decode.loss_seg: 0  aux_0.loss: 0.4539  cnt.cnt_loss: 15.17  loss: 15.7  time: 0.3538  data_time: 0.0053  lr: 0.00065451  max_mem: 3207M
+[09/23 22:04:26] cvalgorithms INFO:  eta: 0:00:24  iter: 29  total_loss: 22.64  decode.loss_seg: 0  aux_0.loss: 0.4341  cnt.cnt_loss: 10.9  loss: 11.32  time: 0.3553  data_time: 0.0053  lr: 9.5492e-05  max_mem: 3207M
+[09/23 22:04:27] cvalgorithms INFO:  eta: 0:00:24  iter: 31  total_loss: 19.85  decode.loss_seg: 0  aux_0.loss: 0.4077  cnt.cnt_loss: 9.511  loss: 9.923  time: 0.3562  data_time: 0.0053  lr: 0.00090451  max_mem: 3207M
+[09/23 22:04:28] cvalgorithms INFO:  eta: 0:00:23  iter: 33  total_loss: 16.25  decode.loss_seg: 0  aux_0.loss: 0.3947  cnt.cnt_loss: 7.717  loss: 8.127  time: 0.3571  data_time: 0.0052  lr: 0.00034549  max_mem: 3207M
+[09/23 22:04:28] cvalgorithms INFO:  eta: 0:00:22  iter: 35  total_loss: 14.62  decode.loss_seg: 0  aux_0.loss: 0.3746  cnt.cnt_loss: 6.96  loss: 7.31  time: 0.3582  data_time: 0.0052  lr: 0.001  max_mem: 3207M
+[09/23 22:04:29] cvalgorithms INFO:  eta: 0:00:22  iter: 37  total_loss: 14.58  decode.loss_seg: 0  aux_0.loss: 0.3619  cnt.cnt_loss: 6.96  loss: 7.288  time: 0.3590  data_time: 0.0053  lr: 0.00065451  max_mem: 3207M
+[09/23 22:04:30] cvalgorithms INFO: Start inference on 216 batches
+[09/23 22:05:13] cvalgorithms INFO: Total inference time: 0:00:12.612535 (0.059775 s / iter per device, on 1 devices)
+[09/23 22:05:13] cvalgorithms INFO: Total inference pure compute time: 0:00:11 (0.053790 s / iter per device, on 1 devices)
+[09/23 22:05:13] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4937402263962209, 'acc': 0.9874804527924418, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/23 22:05:13] cvalgorithms INFO:  eta: 0:00:21  iter: 39  total_loss: 12.42  decode.loss_seg: 0  aux_0.loss: 0.3518  cnt.cnt_loss: 5.87  loss: 6.211  time: 0.3597  data_time: 0.0052  lr: 9.5492e-05  max_mem: 3207M
+[09/23 22:05:14] cvalgorithms INFO:  eta: 0:00:20  iter: 41  total_loss: 12.2  decode.loss_seg: 0  aux_0.loss: 0.3215  cnt.cnt_loss: 5.718  loss: 6.099  time: 0.3615  data_time: 0.0045  lr: 0.00090451  max_mem: 3207M
+[09/23 22:05:15] cvalgorithms INFO:  eta: 0:00:20  iter: 43  total_loss: 11.36  decode.loss_seg: 0  aux_0.loss: 0.3066  cnt.cnt_loss: 5.367  loss: 5.679  time: 0.3628  data_time: 0.0046  lr: 0.00034549  max_mem: 3207M
+[09/23 22:05:15] cvalgorithms INFO:  eta: 0:00:19  iter: 45  total_loss: 9.305  decode.loss_seg: 0  aux_0.loss: 0.294  cnt.cnt_loss: 4.317  loss: 4.653  time: 0.3639  data_time: 0.0047  lr: 0.001  max_mem: 3207M
+[09/23 22:05:16] cvalgorithms INFO:  eta: 0:00:18  iter: 47  total_loss: 7.315  decode.loss_seg: 0  aux_0.loss: 0.2769  cnt.cnt_loss: 3.396  loss: 3.657  time: 0.3651  data_time: 0.0048  lr: 0.00065451  max_mem: 3207M
+[09/23 22:05:17] cvalgorithms INFO:  eta: 0:00:18  iter: 49  total_loss: 6.963  decode.loss_seg: 0  aux_0.loss: 0.2633  cnt.cnt_loss: 3.218  loss: 3.481  time: 0.3664  data_time: 0.0049  lr: 9.5492e-05  max_mem: 3207M
+[09/23 22:05:18] cvalgorithms INFO:  eta: 0:00:17  iter: 51  total_loss: 5.961  decode.loss_seg: 0  aux_0.loss: 0.2491  cnt.cnt_loss: 2.75  loss: 2.98  time: 0.3673  data_time: 0.0050  lr: 0.00090451  max_mem: 3207M
+[09/23 22:05:18] cvalgorithms INFO:  eta: 0:00:16  iter: 53  total_loss: 5.08  decode.loss_seg: 0  aux_0.loss: 0.2375  cnt.cnt_loss: 2.302  loss: 2.54  time: 0.3678  data_time: 0.0051  lr: 0.00034549  max_mem: 3207M
+[09/23 22:05:19] cvalgorithms INFO:  eta: 0:00:16  iter: 55  total_loss: 4.829  decode.loss_seg: 0  aux_0.loss: 0.2308  cnt.cnt_loss: 2.196  loss: 2.415  time: 0.3682  data_time: 0.0051  lr: 0.001  max_mem: 3207M
+[09/23 22:05:20] cvalgorithms INFO:  eta: 0:00:15  iter: 57  total_loss: 4.437  decode.loss_seg: 0  aux_0.loss: 0.2232  cnt.cnt_loss: 1.958  loss: 2.218  time: 0.3697  data_time: 0.0051  lr: 0.00065451  max_mem: 3207M
+[09/23 22:05:21] cvalgorithms INFO: Start inference on 216 batches
+[09/23 22:06:06] cvalgorithms INFO: Total inference time: 0:00:12.912413 (0.061196 s / iter per device, on 1 devices)
+[09/23 22:06:06] cvalgorithms INFO: Total inference pure compute time: 0:00:11 (0.054944 s / iter per device, on 1 devices)
+[09/23 22:06:06] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.5093493675033444, 'acc': 0.9871090286398251, 'precision': 0.031682465656195966, 'recall': 0.9197541551151625, 'f1_score': 0.06125489632063688})])
+[09/23 22:06:06] cvalgorithms INFO:  eta: 0:00:14  iter: 59  total_loss: 4.081  decode.loss_seg: 0  aux_0.loss: 0.2136  cnt.cnt_loss: 1.81  loss: 2.041  time: 0.3711  data_time: 0.0052  lr: 9.5492e-05  max_mem: 3207M
+[09/23 22:06:07] cvalgorithms INFO:  eta: 0:00:14  iter: 61  total_loss: 3.797  decode.loss_seg: 0  aux_0.loss: 0.204  cnt.cnt_loss: 1.691  loss: 1.898  time: 0.3720  data_time: 0.0053  lr: 0.00090451  max_mem: 3207M
+[09/23 22:06:08] cvalgorithms INFO:  eta: 0:00:13  iter: 63  total_loss: 3.549  decode.loss_seg: 0  aux_0.loss: 0.196  cnt.cnt_loss: 1.565  loss: 1.774  time: 0.3722  data_time: 0.0053  lr: 0.00034549  max_mem: 3207M
+[09/23 22:06:08] cvalgorithms INFO:  eta: 0:00:12  iter: 65  total_loss: 3.391  decode.loss_seg: 0  aux_0.loss: 0.1926  cnt.cnt_loss: 1.481  loss: 1.696  time: 0.3723  data_time: 0.0052  lr: 0.001  max_mem: 3207M
+[09/23 22:06:09] cvalgorithms INFO:  eta: 0:00:12  iter: 67  total_loss: 2.977  decode.loss_seg: 0  aux_0.loss: 0.1834  cnt.cnt_loss: 1.296  loss: 1.488  time: 0.3726  data_time: 0.0051  lr: 0.00065451  max_mem: 3207M
+[09/23 22:06:10] cvalgorithms INFO:  eta: 0:00:11  iter: 69  total_loss: 2.873  decode.loss_seg: 0  aux_0.loss: 0.1754  cnt.cnt_loss: 1.231  loss: 1.437  time: 0.3727  data_time: 0.0050  lr: 9.5492e-05  max_mem: 3207M
+[09/23 22:06:11] cvalgorithms INFO:  eta: 0:00:10  iter: 71  total_loss: 2.798  decode.loss_seg: 0  aux_0.loss: 0.1702  cnt.cnt_loss: 1.214  loss: 1.399  time: 0.3729  data_time: 0.0050  lr: 0.00090451  max_mem: 3207M
+[09/23 22:06:12] cvalgorithms INFO:  eta: 0:00:09  iter: 73  total_loss: 2.798  decode.loss_seg: 0  aux_0.loss: 0.1629  cnt.cnt_loss: 1.214  loss: 1.399  time: 0.3732  data_time: 0.0049  lr: 0.00034549  max_mem: 3207M
+[09/23 22:06:12] cvalgorithms INFO:  eta: 0:00:09  iter: 75  total_loss: 2.798  decode.loss_seg: 0  aux_0.loss: 0.1536  cnt.cnt_loss: 1.214  loss: 1.399  time: 0.3735  data_time: 0.0049  lr: 0.001  max_mem: 3207M
+[09/23 22:06:13] cvalgorithms INFO:  eta: 0:00:08  iter: 77  total_loss: 2.666  decode.loss_seg: 0  aux_0.loss: 0.1475  cnt.cnt_loss: 1.174  loss: 1.333  time: 0.3736  data_time: 0.0049  lr: 0.00065451  max_mem: 3207M
+[09/23 22:06:14] cvalgorithms INFO: Start inference on 216 batches
+[09/23 22:07:00] cvalgorithms INFO: Total inference time: 0:00:13.002553 (0.061623 s / iter per device, on 1 devices)
+[09/23 22:07:00] cvalgorithms INFO: Total inference pure compute time: 0:00:11 (0.055286 s / iter per device, on 1 devices)
+[09/23 22:07:00] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4919323040830982, 'acc': 0.9838646081661964, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/23 22:07:00] cvalgorithms INFO:  eta: 0:00:07  iter: 79  total_loss: 2.609  decode.loss_seg: 0  aux_0.loss: 0.1439  cnt.cnt_loss: 1.174  loss: 1.305  time: 0.3737  data_time: 0.0049  lr: 9.5492e-05  max_mem: 3207M
+[09/23 22:07:01] cvalgorithms INFO:  eta: 0:00:06  iter: 81  total_loss: 2.375  decode.loss_seg: 0  aux_0.loss: 0.1401  cnt.cnt_loss: 1.034  loss: 1.188  time: 0.3740  data_time: 0.0047  lr: 0.00090451  max_mem: 3207M
+[09/23 22:07:01] cvalgorithms INFO:  eta: 0:00:06  iter: 83  total_loss: 2.111  decode.loss_seg: 0  aux_0.loss: 0.1401  cnt.cnt_loss: 0.8989  loss: 1.056  time: 0.3742  data_time: 0.0047  lr: 0.00034549  max_mem: 3207M
+[09/23 22:07:02] cvalgorithms INFO:  eta: 0:00:05  iter: 85  total_loss: 2.154  decode.loss_seg: 0  aux_0.loss: 0.1352  cnt.cnt_loss: 0.9563  loss: 1.077  time: 0.3743  data_time: 0.0047  lr: 0.001  max_mem: 3207M
+[09/23 22:07:03] cvalgorithms INFO:  eta: 0:00:04  iter: 87  total_loss: 2.375  decode.loss_seg: 0  aux_0.loss: 0.1267  cnt.cnt_loss: 1.065  loss: 1.188  time: 0.3743  data_time: 0.0047  lr: 0.00065451  max_mem: 3207M
+[09/23 22:07:04] cvalgorithms INFO:  eta: 0:00:03  iter: 89  total_loss: 2.187  decode.loss_seg: 0  aux_0.loss: 0.1234  cnt.cnt_loss: 0.9868  loss: 1.094  time: 0.3747  data_time: 0.0047  lr: 9.5492e-05  max_mem: 3207M
+[09/23 22:07:05] cvalgorithms INFO:  eta: 0:00:03  iter: 91  total_loss: 2.154  decode.loss_seg: 0  aux_0.loss: 0.1157  cnt.cnt_loss: 0.9563  loss: 1.077  time: 0.3748  data_time: 0.0047  lr: 0.00090451  max_mem: 3207M
+[09/23 22:07:05] cvalgorithms INFO:  eta: 0:00:02  iter: 93  total_loss: 2.154  decode.loss_seg: 0  aux_0.loss: 0.1078  cnt.cnt_loss: 0.9563  loss: 1.077  time: 0.3750  data_time: 0.0047  lr: 0.00034549  max_mem: 3207M
+[09/23 22:07:06] cvalgorithms INFO:  eta: 0:00:01  iter: 95  total_loss: 2.018  decode.loss_seg: 0  aux_0.loss: 0.1028  cnt.cnt_loss: 0.8785  loss: 1.009  time: 0.3751  data_time: 0.0048  lr: 0.001  max_mem: 3207M
+[09/23 22:07:07] cvalgorithms INFO:  eta: 0:00:00  iter: 97  total_loss: 1.655  decode.loss_seg: 0  aux_0.loss: 0.09507  cnt.cnt_loss: 0.7442  loss: 0.8277  time: 0.3753  data_time: 0.0048  lr: 0.00065451  max_mem: 3207M
+[09/23 22:07:08] cvalgorithms INFO:  eta: 0:00:00  iter: 99  total_loss: 1.655  decode.loss_seg: 0  aux_0.loss: 0.09507  cnt.cnt_loss: 0.7442  loss: 0.8277  time: 0.3755  data_time: 0.0048  lr: 9.5492e-05  max_mem: 3207M
+[09/23 22:07:08] cvalgorithms INFO: Start inference on 216 batches
+[09/23 22:07:54] cvalgorithms INFO: Total inference time: 0:00:13.276958 (0.062924 s / iter per device, on 1 devices)
+[09/23 22:07:54] cvalgorithms INFO: Total inference pure compute time: 0:00:11 (0.055453 s / iter per device, on 1 devices)
+[09/23 22:07:54] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4966025142811409, 'acc': 0.9932050285622818, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/23 22:07:54] cvalgorithms INFO:  eta: 0:00:00  iter: 99  total_loss: 1.655  decode.loss_seg: 0  aux_0.loss: 0.09507  cnt.cnt_loss: 0.7442  loss: 0.8277  time: 0.3755  data_time: 0.0048  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:52:13] cvalgorithms INFO: SiameseEncoderDecoder(
+  (backbone): ConvNeXt(
+    (downsample_layers): ModuleList(
+      (0): Sequential(
+        (0): Conv2d(3, 96, kernel_size=(4, 4), stride=(4, 4))
+        (1): LayerNorm()
+      )
+      (1): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(96, 192, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (2): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(192, 384, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (3): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(384, 768, kernel_size=(2, 2), stride=(2, 2))
+      )
+    )
+    (stages): ModuleList(
+      (0): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (1): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (2): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (3): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (4): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (5): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (6): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (7): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (8): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (3): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+      )
+    )
+    (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  )
+  (decode_head): UPerHead(
+    (loss): CrossEntropyLoss()
+    (conv_seg): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+    (dropout): Dropout2d(p=0.1, inplace=False)
+    (psp_modules): PPM(
+      (ppm_blocks): ModuleList(
+        (0): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (1): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (2): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (3): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+    )
+    (bottleneck): ConvModule(
+      (conv): Conv2d(448, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+    (lateral_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(48, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(96, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_bottleneck): ConvModule(
+      (conv): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+  )
+  (auxiliary_head): ModuleList(
+    (0): FCNHead(
+      (loss): CrossEntropyLoss()
+      (conv_seg): Conv2d(64, 2, kernel_size=(1, 1), stride=(1, 1))
+      (dropout): Dropout2d(p=0.1, inplace=False)
+      (convs): Sequential(
+        (0): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+      (conv_cat): ConvModule(
+        (conv): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+  )
+  (constant_loss): BatchContrastiveLoss()
+  (sig): Sigmoid()
+  (sft): Softmax(dim=1)
+  (siamese_layer): ModuleList(
+    (0): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(96, 48, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(48, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(48, 48, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (1): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(96, 96, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (2): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(768, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(192, 192, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+)
+[09/24 10:52:25] cvalgorithms INFO: Starting training from iteration 0
+[09/24 10:52:28] cvalgorithms INFO:  iter: 1  total_loss: 372.4  decode.loss_seg: 0.001942  aux_0.loss: 0.6835  cnt.cnt_loss: 185.5  loss: 186.2  data_time: 0.0653  lr: 0.00090451  max_mem: 3207M
+[09/24 10:52:29] cvalgorithms INFO:  eta: 9:29:23  iter: 3  total_loss: 250.4  decode.loss_seg: 0  aux_0.loss: 0.6641  cnt.cnt_loss: 124.5  loss: 125.2  time: 0.3417  data_time: 0.0348  lr: 0.00034549  max_mem: 3207M
+[09/24 10:52:29] cvalgorithms INFO:  eta: 9:29:23  iter: 5  total_loss: 170.6  decode.loss_seg: 0  aux_0.loss: 0.6399  cnt.cnt_loss: 84.66  loss: 85.29  time: 0.3449  data_time: 0.0246  lr: 0.001  max_mem: 3207M
+[09/24 10:52:30] cvalgorithms INFO:  eta: 9:41:22  iter: 7  total_loss: 151.9  decode.loss_seg: 0  aux_0.loss: 0.6264  cnt.cnt_loss: 75.35  loss: 75.97  time: 0.3712  data_time: 0.0201  lr: 0.00065451  max_mem: 3207M
+[09/24 10:52:31] cvalgorithms INFO:  eta: 9:42:12  iter: 9  total_loss: 117.6  decode.loss_seg: 0  aux_0.loss: 0.625  cnt.cnt_loss: 58.23  loss: 58.82  time: 0.3659  data_time: 0.0170  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:52:32] cvalgorithms INFO:  eta: 9:42:00  iter: 11  total_loss: 117.6  decode.loss_seg: 0  aux_0.loss: 0.6152  cnt.cnt_loss: 58.23  loss: 58.82  time: 0.3625  data_time: 0.0150  lr: 0.00090451  max_mem: 3207M
+[09/24 10:52:32] cvalgorithms INFO:  eta: 9:40:47  iter: 13  total_loss: 81.59  decode.loss_seg: 0  aux_0.loss: 0.5917  cnt.cnt_loss: 40.21  loss: 40.79  time: 0.3602  data_time: 0.0136  lr: 0.00034549  max_mem: 3207M
+[09/24 10:52:33] cvalgorithms INFO:  eta: 9:37:15  iter: 15  total_loss: 69.28  decode.loss_seg: 0  aux_0.loss: 0.5765  cnt.cnt_loss: 34.08  loss: 34.64  time: 0.3578  data_time: 0.0125  lr: 0.001  max_mem: 3207M
+[09/24 10:52:34] cvalgorithms INFO:  eta: 9:37:15  iter: 17  total_loss: 65.37  decode.loss_seg: 0  aux_0.loss: 0.5739  cnt.cnt_loss: 32.15  loss: 32.69  time: 0.3563  data_time: 0.0116  lr: 0.00065451  max_mem: 3207M
+[09/24 10:52:35] cvalgorithms INFO: Start inference on 216 batches
+[09/24 10:52:58] cvalgorithms INFO: Total inference time: 0:00:11.720907 (0.055549 s / iter per device, on 1 devices)
+[09/24 10:52:58] cvalgorithms INFO: Total inference pure compute time: 0:00:10 (0.050956 s / iter per device, on 1 devices)
+[09/24 10:52:58] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4959724896642781, 'acc': 0.9919449793285562, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 10:52:58] cvalgorithms INFO:  eta: 9:37:14  iter: 19  total_loss: 63.63  decode.loss_seg: 0  aux_0.loss: 0.5621  cnt.cnt_loss: 31.3  loss: 31.81  time: 0.3554  data_time: 0.0109  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:52:59] cvalgorithms INFO:  eta: 9:37:13  iter: 21  total_loss: 43.91  decode.loss_seg: 0  aux_0.loss: 0.5446  cnt.cnt_loss: 21.51  loss: 21.95  time: 0.3545  data_time: 0.0048  lr: 0.00090451  max_mem: 3207M
+[09/24 10:53:00] cvalgorithms INFO:  eta: 9:38:08  iter: 23  total_loss: 39.05  decode.loss_seg: 0  aux_0.loss: 0.4931  cnt.cnt_loss: 19.01  loss: 19.53  time: 0.3544  data_time: 0.0048  lr: 0.00034549  max_mem: 3207M
+[09/24 10:53:00] cvalgorithms INFO:  eta: 9:39:32  iter: 25  total_loss: 34.97  decode.loss_seg: 0  aux_0.loss: 0.4852  cnt.cnt_loss: 16.94  loss: 17.49  time: 0.3539  data_time: 0.0049  lr: 0.001  max_mem: 3207M
+[09/24 10:53:01] cvalgorithms INFO:  eta: 9:39:37  iter: 27  total_loss: 34.07  decode.loss_seg: 0  aux_0.loss: 0.4711  cnt.cnt_loss: 16.6  loss: 17.03  time: 0.3535  data_time: 0.0047  lr: 0.00065451  max_mem: 3207M
+[09/24 10:53:02] cvalgorithms INFO:  eta: 9:40:35  iter: 29  total_loss: 28.38  decode.loss_seg: 0  aux_0.loss: 0.4491  cnt.cnt_loss: 13.8  loss: 14.19  time: 0.3540  data_time: 0.0046  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:53:03] cvalgorithms INFO:  eta: 9:40:41  iter: 31  total_loss: 21.41  decode.loss_seg: 0  aux_0.loss: 0.4443  cnt.cnt_loss: 10.18  loss: 10.71  time: 0.3539  data_time: 0.0046  lr: 0.00090451  max_mem: 3207M
+[09/24 10:53:03] cvalgorithms INFO:  eta: 9:41:04  iter: 33  total_loss: 17.27  decode.loss_seg: 0  aux_0.loss: 0.4204  cnt.cnt_loss: 8.272  loss: 8.636  time: 0.3548  data_time: 0.0045  lr: 0.00034549  max_mem: 3207M
+[09/24 10:53:04] cvalgorithms INFO:  eta: 9:42:27  iter: 35  total_loss: 16.54  decode.loss_seg: 0  aux_0.loss: 0.3874  cnt.cnt_loss: 7.857  loss: 8.269  time: 0.3553  data_time: 0.0046  lr: 0.001  max_mem: 3207M
+[09/24 10:53:05] cvalgorithms INFO:  eta: 9:44:32  iter: 37  total_loss: 13.24  decode.loss_seg: 0  aux_0.loss: 0.3798  cnt.cnt_loss: 6.266  loss: 6.62  time: 0.3558  data_time: 0.0046  lr: 0.00065451  max_mem: 3207M
+[09/24 10:53:06] cvalgorithms INFO: Start inference on 216 batches
+[09/24 10:53:31] cvalgorithms INFO: Total inference time: 0:00:12.799863 (0.060663 s / iter per device, on 1 devices)
+[09/24 10:53:31] cvalgorithms INFO: Total inference pure compute time: 0:00:11 (0.055206 s / iter per device, on 1 devices)
+[09/24 10:53:31] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.49814440054040615, 'acc': 0.9962888010808123, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 10:53:31] cvalgorithms INFO:  eta: 9:45:53  iter: 39  total_loss: 10.16  decode.loss_seg: 0  aux_0.loss: 0.3535  cnt.cnt_loss: 4.752  loss: 5.082  time: 0.3564  data_time: 0.0047  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:53:32] cvalgorithms INFO:  eta: 9:46:17  iter: 41  total_loss: 9.821  decode.loss_seg: 0  aux_0.loss: 0.3327  cnt.cnt_loss: 4.617  loss: 4.911  time: 0.3583  data_time: 0.0059  lr: 0.00090451  max_mem: 3207M
+[09/24 10:53:32] cvalgorithms INFO:  eta: 9:46:44  iter: 43  total_loss: 8.366  decode.loss_seg: 0  aux_0.loss: 0.3181  cnt.cnt_loss: 3.769  loss: 4.183  time: 0.3600  data_time: 0.0061  lr: 0.00034549  max_mem: 3207M
+[09/24 10:53:33] cvalgorithms INFO:  eta: 9:48:53  iter: 45  total_loss: 7.152  decode.loss_seg: 0  aux_0.loss: 0.312  cnt.cnt_loss: 3.24  loss: 3.576  time: 0.3605  data_time: 0.0062  lr: 0.001  max_mem: 3207M
+[09/24 10:53:34] cvalgorithms INFO:  eta: 9:51:23  iter: 47  total_loss: 5.971  decode.loss_seg: 0  aux_0.loss: 0.291  cnt.cnt_loss: 2.7  loss: 2.986  time: 0.3611  data_time: 0.0062  lr: 0.00065451  max_mem: 3207M
+[09/24 10:53:35] cvalgorithms INFO:  eta: 9:52:35  iter: 49  total_loss: 4.829  decode.loss_seg: 0  aux_0.loss: 0.2751  cnt.cnt_loss: 2.155  loss: 2.415  time: 0.3616  data_time: 0.0062  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:53:35] cvalgorithms INFO:  eta: 9:53:40  iter: 51  total_loss: 4.549  decode.loss_seg: 0  aux_0.loss: 0.2706  cnt.cnt_loss: 1.982  loss: 2.275  time: 0.3619  data_time: 0.0062  lr: 0.00090451  max_mem: 3207M
+[09/24 10:53:36] cvalgorithms INFO:  eta: 9:55:58  iter: 53  total_loss: 3.994  decode.loss_seg: 0  aux_0.loss: 0.2615  cnt.cnt_loss: 1.78  loss: 1.997  time: 0.3623  data_time: 0.0062  lr: 0.00034549  max_mem: 3207M
+[09/24 10:53:37] cvalgorithms INFO:  eta: 9:58:21  iter: 55  total_loss: 3.994  decode.loss_seg: 0  aux_0.loss: 0.2489  cnt.cnt_loss: 1.78  loss: 1.997  time: 0.3626  data_time: 0.0061  lr: 0.001  max_mem: 3207M
+[09/24 10:53:38] cvalgorithms INFO:  eta: 9:59:53  iter: 57  total_loss: 3.994  decode.loss_seg: 0  aux_0.loss: 0.2277  cnt.cnt_loss: 1.78  loss: 1.997  time: 0.3630  data_time: 0.0061  lr: 0.00065451  max_mem: 3207M
+[09/24 10:53:38] cvalgorithms INFO: Start inference on 216 batches
+[09/24 10:54:05] cvalgorithms INFO: Total inference time: 0:00:12.662219 (0.060011 s / iter per device, on 1 devices)
+[09/24 10:54:05] cvalgorithms INFO: Total inference pure compute time: 0:00:11 (0.055411 s / iter per device, on 1 devices)
+[09/24 10:54:05] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4985285161207157, 'acc': 0.9970570322414314, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 10:54:05] cvalgorithms INFO:  eta: 10:02:18  iter: 59  total_loss: 3.861  decode.loss_seg: 0  aux_0.loss: 0.2117  cnt.cnt_loss: 1.71  loss: 1.931  time: 0.3633  data_time: 0.0061  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:54:06] cvalgorithms INFO:  eta: 10:05:18  iter: 61  total_loss: 3.696  decode.loss_seg: 0  aux_0.loss: 0.2035  cnt.cnt_loss: 1.656  loss: 1.848  time: 0.3642  data_time: 0.0062  lr: 0.00090451  max_mem: 3207M
+[09/24 10:54:06] cvalgorithms INFO:  eta: 10:07:00  iter: 63  total_loss: 3.654  decode.loss_seg: 0  aux_0.loss: 0.1902  cnt.cnt_loss: 1.648  loss: 1.827  time: 0.3646  data_time: 0.0065  lr: 0.00034549  max_mem: 3207M
+[09/24 10:54:07] cvalgorithms INFO:  eta: 10:07:50  iter: 65  total_loss: 3.696  decode.loss_seg: 0  aux_0.loss: 0.1862  cnt.cnt_loss: 1.656  loss: 1.848  time: 0.3648  data_time: 0.0064  lr: 0.001  max_mem: 3207M
+[09/24 10:54:08] cvalgorithms INFO:  eta: 10:10:38  iter: 67  total_loss: 3.696  decode.loss_seg: 0  aux_0.loss: 0.1854  cnt.cnt_loss: 1.656  loss: 1.848  time: 0.3652  data_time: 0.0065  lr: 0.00065451  max_mem: 3207M
+[09/24 10:54:09] cvalgorithms INFO:  eta: 10:13:13  iter: 69  total_loss: 3.654  decode.loss_seg: 0  aux_0.loss: 0.1743  cnt.cnt_loss: 1.648  loss: 1.827  time: 0.3655  data_time: 0.0065  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:54:09] cvalgorithms INFO:  eta: 10:13:51  iter: 71  total_loss: 3.654  decode.loss_seg: 0  aux_0.loss: 0.1686  cnt.cnt_loss: 1.648  loss: 1.827  time: 0.3657  data_time: 0.0065  lr: 0.00090451  max_mem: 3207M
+[09/24 10:54:10] cvalgorithms INFO:  eta: 10:14:39  iter: 73  total_loss: 3.654  decode.loss_seg: 0  aux_0.loss: 0.164  cnt.cnt_loss: 1.648  loss: 1.827  time: 0.3660  data_time: 0.0065  lr: 0.00034549  max_mem: 3207M
+[09/24 10:54:11] cvalgorithms INFO:  eta: 10:14:39  iter: 75  total_loss: 3.578  decode.loss_seg: 0  aux_0.loss: 0.1617  cnt.cnt_loss: 1.611  loss: 1.789  time: 0.3661  data_time: 0.0065  lr: 0.001  max_mem: 3207M
+[09/24 10:54:12] cvalgorithms INFO:  eta: 10:15:09  iter: 77  total_loss: 3.578  decode.loss_seg: 0  aux_0.loss: 0.1515  cnt.cnt_loss: 1.611  loss: 1.789  time: 0.3663  data_time: 0.0065  lr: 0.00065451  max_mem: 3207M
+[09/24 10:54:12] cvalgorithms INFO: Start inference on 216 batches
+[09/24 10:54:39] cvalgorithms INFO: Total inference time: 0:00:12.846529 (0.060884 s / iter per device, on 1 devices)
+[09/24 10:54:39] cvalgorithms INFO: Total inference pure compute time: 0:00:11 (0.055576 s / iter per device, on 1 devices)
+[09/24 10:54:39] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4981187447307174, 'acc': 0.9962374894614348, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 10:54:39] cvalgorithms INFO:  eta: 10:15:31  iter: 79  total_loss: 3.256  decode.loss_seg: 0  aux_0.loss: 0.1424  cnt.cnt_loss: 1.477  loss: 1.628  time: 0.3665  data_time: 0.0065  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:54:39] cvalgorithms INFO:  eta: 10:16:14  iter: 81  total_loss: 3.168  decode.loss_seg: 0  aux_0.loss: 0.1404  cnt.cnt_loss: 1.455  loss: 1.584  time: 0.3668  data_time: 0.0052  lr: 0.00090451  max_mem: 3207M
+[09/24 10:54:40] cvalgorithms INFO:  eta: 10:16:38  iter: 83  total_loss: 2.759  decode.loss_seg: 0  aux_0.loss: 0.1377  cnt.cnt_loss: 1.231  loss: 1.38  time: 0.3670  data_time: 0.0048  lr: 0.00034549  max_mem: 3207M
+[09/24 10:54:41] cvalgorithms INFO:  eta: 10:17:06  iter: 85  total_loss: 2.085  decode.loss_seg: 0  aux_0.loss: 0.1297  cnt.cnt_loss: 0.8954  loss: 1.042  time: 0.3673  data_time: 0.0048  lr: 0.001  max_mem: 3207M
+[09/24 10:54:42] cvalgorithms INFO:  eta: 10:18:06  iter: 87  total_loss: 1.571  decode.loss_seg: 0  aux_0.loss: 0.1263  cnt.cnt_loss: 0.658  loss: 0.7854  time: 0.3675  data_time: 0.0049  lr: 0.00065451  max_mem: 3207M
+[09/24 10:54:42] cvalgorithms INFO:  eta: 10:18:44  iter: 89  total_loss: 1.092  decode.loss_seg: 0  aux_0.loss: 0.1175  cnt.cnt_loss: 0.4265  loss: 0.5459  time: 0.3677  data_time: 0.0049  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:54:43] cvalgorithms INFO:  eta: 10:19:17  iter: 91  total_loss: 1.061  decode.loss_seg: 0  aux_0.loss: 0.1087  cnt.cnt_loss: 0.4265  loss: 0.5307  time: 0.3679  data_time: 0.0049  lr: 0.00090451  max_mem: 3207M
+[09/24 10:54:44] cvalgorithms INFO:  eta: 10:19:43  iter: 93  total_loss: 0.876  decode.loss_seg: 0  aux_0.loss: 0.1057  cnt.cnt_loss: 0.339  loss: 0.438  time: 0.3681  data_time: 0.0049  lr: 0.00034549  max_mem: 3207M
+[09/24 10:54:45] cvalgorithms INFO:  eta: 10:19:56  iter: 95  total_loss: 0.876  decode.loss_seg: 0  aux_0.loss: 0.1041  cnt.cnt_loss: 0.339  loss: 0.438  time: 0.3684  data_time: 0.0049  lr: 0.001  max_mem: 3207M
+[09/24 10:54:46] cvalgorithms INFO:  eta: 10:20:08  iter: 97  total_loss: 0.876  decode.loss_seg: 0  aux_0.loss: 0.1018  cnt.cnt_loss: 0.339  loss: 0.438  time: 0.3686  data_time: 0.0050  lr: 0.00065451  max_mem: 3207M
+[09/24 10:54:46] cvalgorithms INFO: Start inference on 216 batches
+[09/24 10:55:14] cvalgorithms INFO: Total inference time: 0:00:13.222453 (0.062666 s / iter per device, on 1 devices)
+[09/24 10:55:14] cvalgorithms INFO: Total inference pure compute time: 0:00:11 (0.056635 s / iter per device, on 1 devices)
+[09/24 10:55:14] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4983709901096769, 'acc': 0.9967419802193538, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 10:55:14] cvalgorithms INFO:  eta: 10:20:07  iter: 99  total_loss: 0.876  decode.loss_seg: 0  aux_0.loss: 0.1005  cnt.cnt_loss: 0.339  loss: 0.438  time: 0.3687  data_time: 0.0050  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:55:14] cvalgorithms INFO:  eta: 10:20:12  iter: 101  total_loss: 0.876  decode.loss_seg: 0  aux_0.loss: 0.1005  cnt.cnt_loss: 0.339  loss: 0.438  time: 0.3693  data_time: 0.0052  lr: 0.00090451  max_mem: 3207M
+[09/24 10:55:15] cvalgorithms INFO:  eta: 10:20:44  iter: 103  total_loss: 1.123  decode.loss_seg: 0  aux_0.loss: 0.09454  cnt.cnt_loss: 0.4465  loss: 0.5614  time: 0.3701  data_time: 0.0054  lr: 0.00034549  max_mem: 3207M
+[09/24 10:55:16] cvalgorithms INFO:  eta: 10:21:42  iter: 105  total_loss: 1.123  decode.loss_seg: 0  aux_0.loss: 0.09454  cnt.cnt_loss: 0.4465  loss: 0.5614  time: 0.3706  data_time: 0.0055  lr: 0.001  max_mem: 3207M
+[09/24 10:55:17] cvalgorithms INFO:  eta: 10:22:17  iter: 107  total_loss: 1.194  decode.loss_seg: 0  aux_0.loss: 0.09454  cnt.cnt_loss: 0.5062  loss: 0.597  time: 0.3710  data_time: 0.0056  lr: 0.00065451  max_mem: 3207M
+[09/24 10:55:18] cvalgorithms INFO:  eta: 10:22:21  iter: 109  total_loss: 1.583  decode.loss_seg: 0  aux_0.loss: 0.1003  cnt.cnt_loss: 0.6974  loss: 0.7915  time: 0.3716  data_time: 0.0057  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:55:18] cvalgorithms INFO:  eta: 10:22:30  iter: 111  total_loss: 2.089  decode.loss_seg: 0  aux_0.loss: 0.08777  cnt.cnt_loss: 0.9391  loss: 1.044  time: 0.3723  data_time: 0.0058  lr: 0.00090451  max_mem: 3207M
+[09/24 10:55:19] cvalgorithms INFO:  eta: 10:22:42  iter: 113  total_loss: 2.296  decode.loss_seg: 0  aux_0.loss: 0.08441  cnt.cnt_loss: 1.06  loss: 1.148  time: 0.3729  data_time: 0.0060  lr: 0.00034549  max_mem: 3207M
+[09/24 10:55:20] cvalgorithms INFO:  eta: 10:22:51  iter: 115  total_loss: 1.583  decode.loss_seg: 0  aux_0.loss: 0.07921  cnt.cnt_loss: 0.6974  loss: 0.7915  time: 0.3737  data_time: 0.0063  lr: 0.001  max_mem: 3207M
+[09/24 10:55:21] cvalgorithms INFO:  eta: 10:23:11  iter: 117  total_loss: 2.087  decode.loss_seg: 0  aux_0.loss: 0.07867  cnt.cnt_loss: 0.9526  loss: 1.044  time: 0.3743  data_time: 0.0064  lr: 0.00065451  max_mem: 3207M
+[09/24 10:55:22] cvalgorithms INFO: Start inference on 216 batches
+[09/24 10:55:50] cvalgorithms INFO: Total inference time: 0:00:12.974698 (0.061491 s / iter per device, on 1 devices)
+[09/24 10:55:50] cvalgorithms INFO: Total inference pure compute time: 0:00:11 (0.055836 s / iter per device, on 1 devices)
+[09/24 10:55:50] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4970868748192123, 'acc': 0.9941737496384246, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 10:55:50] cvalgorithms INFO:  eta: 10:23:24  iter: 119  total_loss: 2.087  decode.loss_seg: 0  aux_0.loss: 0.07623  cnt.cnt_loss: 0.9526  loss: 1.044  time: 0.3747  data_time: 0.0066  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:55:51] cvalgorithms INFO:  eta: 10:23:28  iter: 121  total_loss: 1.772  decode.loss_seg: 0  aux_0.loss: 0.0721  cnt.cnt_loss: 0.8179  loss: 0.8862  time: 0.3748  data_time: 0.0064  lr: 0.00090451  max_mem: 3207M
+[09/24 10:55:52] cvalgorithms INFO:  eta: 10:23:35  iter: 123  total_loss: 1.772  decode.loss_seg: 0  aux_0.loss: 0.06867  cnt.cnt_loss: 0.8179  loss: 0.8862  time: 0.3749  data_time: 0.0062  lr: 0.00034549  max_mem: 3207M
+[09/24 10:55:52] cvalgorithms INFO:  eta: 10:23:48  iter: 125  total_loss: 2.404  decode.loss_seg: 0  aux_0.loss: 0.06658  cnt.cnt_loss: 1.129  loss: 1.202  time: 0.3750  data_time: 0.0061  lr: 0.001  max_mem: 3207M
+[09/24 10:55:53] cvalgorithms INFO:  eta: 10:24:02  iter: 127  total_loss: 2.404  decode.loss_seg: 0  aux_0.loss: 0.07092  cnt.cnt_loss: 1.129  loss: 1.202  time: 0.3751  data_time: 0.0061  lr: 0.00065451  max_mem: 3207M
+[09/24 10:55:54] cvalgorithms INFO:  eta: 10:24:11  iter: 129  total_loss: 2.012  decode.loss_seg: 0  aux_0.loss: 0.07092  cnt.cnt_loss: 0.9184  loss: 1.006  time: 0.3753  data_time: 0.0061  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:55:55] cvalgorithms INFO:  eta: 10:24:21  iter: 131  total_loss: 1.81  decode.loss_seg: 0  aux_0.loss: 0.07092  cnt.cnt_loss: 0.8107  loss: 0.9052  time: 0.3755  data_time: 0.0060  lr: 0.00090451  max_mem: 3207M
+[09/24 10:55:55] cvalgorithms INFO:  eta: 10:24:32  iter: 133  total_loss: 1.911  decode.loss_seg: 0  aux_0.loss: 0.07092  cnt.cnt_loss: 0.8856  loss: 0.9554  time: 0.3757  data_time: 0.0059  lr: 0.00034549  max_mem: 3207M
+[09/24 10:55:56] cvalgorithms INFO:  eta: 10:24:54  iter: 135  total_loss: 2.138  decode.loss_seg: 0  aux_0.loss: 0.0718  cnt.cnt_loss: 1.012  loss: 1.069  time: 0.3759  data_time: 0.0058  lr: 0.001  max_mem: 3207M
+[09/24 10:55:57] cvalgorithms INFO:  eta: 10:25:18  iter: 137  total_loss: 2.138  decode.loss_seg: 0  aux_0.loss: 0.0718  cnt.cnt_loss: 1.012  loss: 1.069  time: 0.3762  data_time: 0.0056  lr: 0.00065451  max_mem: 3207M
+[09/24 10:55:58] cvalgorithms INFO: Start inference on 216 batches
+[09/24 10:56:26] cvalgorithms INFO: Total inference time: 0:00:13.181065 (0.062470 s / iter per device, on 1 devices)
+[09/24 10:56:26] cvalgorithms INFO: Total inference pure compute time: 0:00:11 (0.055998 s / iter per device, on 1 devices)
+[09/24 10:56:26] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4981116180814142, 'acc': 0.9962232361628284, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 10:56:26] cvalgorithms INFO:  eta: 10:25:31  iter: 139  total_loss: 1.911  decode.loss_seg: 0  aux_0.loss: 0.0716  cnt.cnt_loss: 0.8856  loss: 0.9554  time: 0.3764  data_time: 0.0055  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:56:27] cvalgorithms INFO:  eta: 10:25:37  iter: 141  total_loss: 2.138  decode.loss_seg: 0  aux_0.loss: 0.0716  cnt.cnt_loss: 1.012  loss: 1.069  time: 0.3765  data_time: 0.0057  lr: 0.00090451  max_mem: 3207M
+[09/24 10:56:28] cvalgorithms INFO:  eta: 10:25:47  iter: 143  total_loss: 1.911  decode.loss_seg: 0  aux_0.loss: 0.0683  cnt.cnt_loss: 0.8856  loss: 0.9554  time: 0.3766  data_time: 0.0057  lr: 0.00034549  max_mem: 3207M
+[09/24 10:56:28] cvalgorithms INFO:  eta: 10:25:56  iter: 145  total_loss: 1.736  decode.loss_seg: 0  aux_0.loss: 0.06389  cnt.cnt_loss: 0.7744  loss: 0.8681  time: 0.3767  data_time: 0.0058  lr: 0.001  max_mem: 3207M
+[09/24 10:56:29] cvalgorithms INFO:  eta: 10:26:10  iter: 147  total_loss: 1.817  decode.loss_seg: 0  aux_0.loss: 0.05453  cnt.cnt_loss: 0.8212  loss: 0.9085  time: 0.3768  data_time: 0.0058  lr: 0.00065451  max_mem: 3207M
+[09/24 10:56:30] cvalgorithms INFO:  eta: 10:26:59  iter: 149  total_loss: 1.817  decode.loss_seg: 0  aux_0.loss: 0.05453  cnt.cnt_loss: 0.8212  loss: 0.9085  time: 0.3770  data_time: 0.0057  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:56:31] cvalgorithms INFO:  eta: 10:27:33  iter: 151  total_loss: 1.574  decode.loss_seg: 0  aux_0.loss: 0.05097  cnt.cnt_loss: 0.6971  loss: 0.7871  time: 0.3770  data_time: 0.0056  lr: 0.00090451  max_mem: 3207M
+[09/24 10:56:31] cvalgorithms INFO:  eta: 10:27:33  iter: 153  total_loss: 1.316  decode.loss_seg: 0  aux_0.loss: 0.05016  cnt.cnt_loss: 0.5897  loss: 0.6582  time: 0.3771  data_time: 0.0056  lr: 0.00034549  max_mem: 3207M
+[09/24 10:56:32] cvalgorithms INFO:  eta: 10:27:34  iter: 155  total_loss: 1.316  decode.loss_seg: 0  aux_0.loss: 0.05016  cnt.cnt_loss: 0.5897  loss: 0.6582  time: 0.3772  data_time: 0.0055  lr: 0.001  max_mem: 3207M
+[09/24 10:56:33] cvalgorithms INFO:  eta: 10:27:40  iter: 157  total_loss: 1.316  decode.loss_seg: 0  aux_0.loss: 0.05386  cnt.cnt_loss: 0.5897  loss: 0.6582  time: 0.3774  data_time: 0.0055  lr: 0.00065451  max_mem: 3207M
+[09/24 10:56:34] cvalgorithms INFO: Start inference on 216 batches
+[09/24 10:57:02] cvalgorithms INFO: Total inference time: 0:00:13.093209 (0.062053 s / iter per device, on 1 devices)
+[09/24 10:57:02] cvalgorithms INFO: Total inference pure compute time: 0:00:11 (0.056126 s / iter per device, on 1 devices)
+[09/24 10:57:02] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4985068874756943, 'acc': 0.9970137749513887, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 10:57:02] cvalgorithms INFO:  eta: 10:27:50  iter: 159  total_loss: 1.485  decode.loss_seg: 0  aux_0.loss: 0.04922  cnt.cnt_loss: 0.6614  loss: 0.7426  time: 0.3775  data_time: 0.0055  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:57:03] cvalgorithms INFO:  eta: 10:28:05  iter: 161  total_loss: 1.316  decode.loss_seg: 0  aux_0.loss: 0.04545  cnt.cnt_loss: 0.5897  loss: 0.6582  time: 0.3778  data_time: 0.0071  lr: 0.00090451  max_mem: 3207M
+[09/24 10:57:04] cvalgorithms INFO:  eta: 10:28:27  iter: 163  total_loss: 1.316  decode.loss_seg: 0  aux_0.loss: 0.04465  cnt.cnt_loss: 0.5897  loss: 0.6582  time: 0.3781  data_time: 0.0087  lr: 0.00034549  max_mem: 3207M
+[09/24 10:57:05] cvalgorithms INFO:  eta: 10:28:26  iter: 165  total_loss: 1.485  decode.loss_seg: 0  aux_0.loss: 0.04465  cnt.cnt_loss: 0.6614  loss: 0.7426  time: 0.3782  data_time: 0.0088  lr: 0.001  max_mem: 3207M
+[09/24 10:57:05] cvalgorithms INFO:  eta: 10:28:41  iter: 167  total_loss: 1.485  decode.loss_seg: 0  aux_0.loss: 0.04465  cnt.cnt_loss: 0.6614  loss: 0.7426  time: 0.3784  data_time: 0.0087  lr: 0.00065451  max_mem: 3207M
+[09/24 10:57:06] cvalgorithms INFO:  eta: 10:28:52  iter: 169  total_loss: 1.667  decode.loss_seg: 0  aux_0.loss: 0.0432  cnt.cnt_loss: 0.7616  loss: 0.8334  time: 0.3785  data_time: 0.0087  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:57:07] cvalgorithms INFO:  eta: 10:29:11  iter: 171  total_loss: 1.667  decode.loss_seg: 0  aux_0.loss: 0.0432  cnt.cnt_loss: 0.7616  loss: 0.8334  time: 0.3786  data_time: 0.0088  lr: 0.00090451  max_mem: 3207M
+[09/24 10:57:08] cvalgorithms INFO:  eta: 10:29:34  iter: 173  total_loss: 1.667  decode.loss_seg: 0  aux_0.loss: 0.04297  cnt.cnt_loss: 0.7616  loss: 0.8334  time: 0.3788  data_time: 0.0089  lr: 0.00034549  max_mem: 3207M
+[09/24 10:57:09] cvalgorithms INFO:  eta: 10:29:56  iter: 175  total_loss: 1.667  decode.loss_seg: 0  aux_0.loss: 0.04042  cnt.cnt_loss: 0.7616  loss: 0.8334  time: 0.3789  data_time: 0.0089  lr: 0.001  max_mem: 3207M
+[09/24 10:57:09] cvalgorithms INFO:  eta: 10:30:27  iter: 177  total_loss: 1.656  decode.loss_seg: 0  aux_0.loss: 0.04042  cnt.cnt_loss: 0.7715  loss: 0.828  time: 0.3793  data_time: 0.0089  lr: 0.00065451  max_mem: 3207M
+[09/24 10:57:10] cvalgorithms INFO: Start inference on 216 batches
+[09/24 10:57:39] cvalgorithms INFO: Total inference time: 0:00:13.187717 (0.062501 s / iter per device, on 1 devices)
+[09/24 10:57:39] cvalgorithms INFO: Total inference pure compute time: 0:00:11 (0.056241 s / iter per device, on 1 devices)
+[09/24 10:57:39] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4981747404396856, 'acc': 0.9963494808793713, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 10:57:39] cvalgorithms INFO:  eta: 10:31:18  iter: 179  total_loss: 1.344  decode.loss_seg: 0  aux_0.loss: 0.03907  cnt.cnt_loss: 0.604  loss: 0.6722  time: 0.3796  data_time: 0.0089  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:57:40] cvalgorithms INFO:  eta: 10:32:05  iter: 181  total_loss: 1.656  decode.loss_seg: 0  aux_0.loss: 0.04042  cnt.cnt_loss: 0.6927  loss: 0.828  time: 0.3798  data_time: 0.0072  lr: 0.00090451  max_mem: 3207M
+[09/24 10:57:41] cvalgorithms INFO:  eta: 10:32:32  iter: 183  total_loss: 1.656  decode.loss_seg: 0  aux_0.loss: 0.04193  cnt.cnt_loss: 0.6927  loss: 0.828  time: 0.3803  data_time: 0.0057  lr: 0.00034549  max_mem: 3207M
+[09/24 10:57:42] cvalgorithms INFO:  eta: 10:32:53  iter: 185  total_loss: 1.681  decode.loss_seg: 0  aux_0.loss: 0.04182  cnt.cnt_loss: 0.6927  loss: 0.8404  time: 0.3805  data_time: 0.0058  lr: 0.001  max_mem: 3207M
+[09/24 10:57:43] cvalgorithms INFO:  eta: 10:33:10  iter: 187  total_loss: 1.681  decode.loss_seg: 0  aux_0.loss: 0.03993  cnt.cnt_loss: 0.6927  loss: 0.8404  time: 0.3808  data_time: 0.0059  lr: 0.00065451  max_mem: 3207M
+[09/24 10:57:43] cvalgorithms INFO:  eta: 10:33:27  iter: 189  total_loss: 1.681  decode.loss_seg: 0  aux_0.loss: 0.04279  cnt.cnt_loss: 0.6927  loss: 0.8404  time: 0.3810  data_time: 0.0059  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:57:44] cvalgorithms INFO:  eta: 10:33:56  iter: 191  total_loss: 1.461  decode.loss_seg: 0  aux_0.loss: 0.03993  cnt.cnt_loss: 0.6561  loss: 0.7306  time: 0.3812  data_time: 0.0059  lr: 0.00090451  max_mem: 3207M
+[09/24 10:57:45] cvalgorithms INFO:  eta: 10:34:21  iter: 193  total_loss: 1.461  decode.loss_seg: 0  aux_0.loss: 0.03689  cnt.cnt_loss: 0.6561  loss: 0.7306  time: 0.3815  data_time: 0.0059  lr: 0.00034549  max_mem: 3207M
+[09/24 10:57:46] cvalgorithms INFO:  eta: 10:34:29  iter: 195  total_loss: 1.499  decode.loss_seg: 0  aux_0.loss: 0.03785  cnt.cnt_loss: 0.6834  loss: 0.7497  time: 0.3818  data_time: 0.0059  lr: 0.001  max_mem: 3207M
+[09/24 10:57:47] cvalgorithms INFO:  eta: 10:34:37  iter: 197  total_loss: 1.417  decode.loss_seg: 0  aux_0.loss: 0.03638  cnt.cnt_loss: 0.6561  loss: 0.7086  time: 0.3820  data_time: 0.0059  lr: 0.00065451  max_mem: 3207M
+[09/24 10:57:47] cvalgorithms INFO: Start inference on 216 batches
+[09/24 10:58:17] cvalgorithms INFO: Total inference time: 0:00:13.098273 (0.062077 s / iter per device, on 1 devices)
+[09/24 10:58:17] cvalgorithms INFO: Total inference pure compute time: 0:00:11 (0.056272 s / iter per device, on 1 devices)
+[09/24 10:58:17] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.49937008679361355, 'acc': 0.9987401735872271, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 10:58:17] cvalgorithms INFO:  eta: 10:35:05  iter: 199  total_loss: 1.417  decode.loss_seg: 0  aux_0.loss: 0.0354  cnt.cnt_loss: 0.6721  loss: 0.7086  time: 0.3822  data_time: 0.0059  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:58:18] cvalgorithms INFO:  eta: 10:35:52  iter: 201  total_loss: 1.417  decode.loss_seg: 0  aux_0.loss: 0.03528  cnt.cnt_loss: 0.6721  loss: 0.7086  time: 0.3823  data_time: 0.0059  lr: 0.00090451  max_mem: 3207M
+[09/24 10:58:18] cvalgorithms INFO:  eta: 10:36:26  iter: 203  total_loss: 1.583  decode.loss_seg: 0  aux_0.loss: 0.03499  cnt.cnt_loss: 0.7595  loss: 0.7913  time: 0.3824  data_time: 0.0057  lr: 0.00034549  max_mem: 3207M
+[09/24 10:58:19] cvalgorithms INFO:  eta: 10:36:44  iter: 205  total_loss: 1.583  decode.loss_seg: 0  aux_0.loss: 0.03343  cnt.cnt_loss: 0.7595  loss: 0.7913  time: 0.3827  data_time: 0.0057  lr: 0.001  max_mem: 3207M
+[09/24 10:58:20] cvalgorithms INFO:  eta: 10:37:00  iter: 207  total_loss: 1.583  decode.loss_seg: 0  aux_0.loss: 0.03141  cnt.cnt_loss: 0.7595  loss: 0.7913  time: 0.3829  data_time: 0.0056  lr: 0.00065451  max_mem: 3207M
+[09/24 10:58:21] cvalgorithms INFO:  eta: 10:37:04  iter: 209  total_loss: 1.583  decode.loss_seg: 0  aux_0.loss: 0.03034  cnt.cnt_loss: 0.7589  loss: 0.7913  time: 0.3833  data_time: 0.0056  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:58:22] cvalgorithms INFO:  eta: 10:37:20  iter: 211  total_loss: 1.583  decode.loss_seg: 0  aux_0.loss: 0.02917  cnt.cnt_loss: 0.7589  loss: 0.7913  time: 0.3835  data_time: 0.0057  lr: 0.00090451  max_mem: 3207M
+[09/24 10:58:23] cvalgorithms INFO:  eta: 10:37:53  iter: 213  total_loss: 1.717  decode.loss_seg: 0  aux_0.loss: 0.03169  cnt.cnt_loss: 0.8191  loss: 0.8587  time: 0.3837  data_time: 0.0057  lr: 0.00034549  max_mem: 3207M
+[09/24 10:58:23] cvalgorithms INFO:  eta: 10:38:13  iter: 215  total_loss: 1.552  decode.loss_seg: 0  aux_0.loss: 0.02999  cnt.cnt_loss: 0.7402  loss: 0.776  time: 0.3840  data_time: 0.0058  lr: 0.001  max_mem: 3207M
+[09/24 10:58:24] cvalgorithms INFO:  eta: 10:38:33  iter: 217  total_loss: 1.33  decode.loss_seg: 0  aux_0.loss: 0.02917  cnt.cnt_loss: 0.6343  loss: 0.6649  time: 0.3842  data_time: 0.0058  lr: 0.00065451  max_mem: 3207M
+[09/24 10:58:25] cvalgorithms INFO: Start inference on 216 batches
+[09/24 10:58:55] cvalgorithms INFO: Total inference time: 0:00:13.373536 (0.063382 s / iter per device, on 1 devices)
+[09/24 10:58:55] cvalgorithms INFO: Total inference pure compute time: 0:00:11 (0.056870 s / iter per device, on 1 devices)
+[09/24 10:58:55] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.49867467904916873, 'acc': 0.9973493580983375, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 10:58:55] cvalgorithms INFO:  eta: 10:38:58  iter: 219  total_loss: 1.33  decode.loss_seg: 0  aux_0.loss: 0.02959  cnt.cnt_loss: 0.5919  loss: 0.6649  time: 0.3844  data_time: 0.0058  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:58:56] cvalgorithms INFO:  eta: 10:39:09  iter: 221  total_loss: 1.196  decode.loss_seg: 0  aux_0.loss: 0.02848  cnt.cnt_loss: 0.5561  loss: 0.5981  time: 0.3845  data_time: 0.0058  lr: 0.00090451  max_mem: 3207M
+[09/24 10:58:57] cvalgorithms INFO:  eta: 10:39:14  iter: 223  total_loss: 1.33  decode.loss_seg: 0  aux_0.loss: 0.02848  cnt.cnt_loss: 0.5919  loss: 0.6649  time: 0.3847  data_time: 0.0059  lr: 0.00034549  max_mem: 3207M
+[09/24 10:58:58] cvalgorithms INFO:  eta: 10:39:35  iter: 225  total_loss: 1.196  decode.loss_seg: 0  aux_0.loss: 0.0283  cnt.cnt_loss: 0.5561  loss: 0.5981  time: 0.3850  data_time: 0.0059  lr: 0.001  max_mem: 3207M
+[09/24 10:58:58] cvalgorithms INFO:  eta: 10:39:58  iter: 227  total_loss: 1.196  decode.loss_seg: 0  aux_0.loss: 0.0283  cnt.cnt_loss: 0.5561  loss: 0.5981  time: 0.3851  data_time: 0.0059  lr: 0.00065451  max_mem: 3207M
+[09/24 10:58:59] cvalgorithms INFO:  eta: 10:40:17  iter: 229  total_loss: 1.196  decode.loss_seg: 0  aux_0.loss: 0.0283  cnt.cnt_loss: 0.5561  loss: 0.5981  time: 0.3853  data_time: 0.0059  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:59:00] cvalgorithms INFO:  eta: 10:40:35  iter: 231  total_loss: 1.07  decode.loss_seg: 0  aux_0.loss: 0.0283  cnt.cnt_loss: 0.5081  loss: 0.5349  time: 0.3855  data_time: 0.0059  lr: 0.00090451  max_mem: 3207M
+[09/24 10:59:01] cvalgorithms INFO:  eta: 10:40:45  iter: 233  total_loss: 1.07  decode.loss_seg: 0  aux_0.loss: 0.0283  cnt.cnt_loss: 0.5081  loss: 0.5349  time: 0.3857  data_time: 0.0058  lr: 0.00034549  max_mem: 3207M
+[09/24 10:59:02] cvalgorithms INFO:  eta: 10:41:08  iter: 235  total_loss: 1.847  decode.loss_seg: 0  aux_0.loss: 0.02925  cnt.cnt_loss: 0.7644  loss: 0.9234  time: 0.3860  data_time: 0.0059  lr: 0.001  max_mem: 3207M
+[09/24 10:59:03] cvalgorithms INFO:  eta: 10:41:32  iter: 237  total_loss: 2.267  decode.loss_seg: 0  aux_0.loss: 0.02925  cnt.cnt_loss: 1.029  loss: 1.134  time: 0.3878  data_time: 0.0060  lr: 0.00065451  max_mem: 3207M
+[09/24 10:59:04] cvalgorithms INFO: Start inference on 216 batches
+[09/24 10:59:35] cvalgorithms INFO: Total inference time: 0:00:13.522103 (0.064086 s / iter per device, on 1 devices)
+[09/24 10:59:35] cvalgorithms INFO: Total inference pure compute time: 0:00:12 (0.057528 s / iter per device, on 1 devices)
+[09/24 10:59:35] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4986690728241099, 'acc': 0.9973381456482198, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 10:59:35] cvalgorithms INFO:  eta: 10:42:00  iter: 239  total_loss: 2.267  decode.loss_seg: 0  aux_0.loss: 0.02854  cnt.cnt_loss: 1.029  loss: 1.134  time: 0.3882  data_time: 0.0060  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:59:35] cvalgorithms INFO:  eta: 10:42:31  iter: 241  total_loss: 1.94  decode.loss_seg: 0  aux_0.loss: 0.02854  cnt.cnt_loss: 0.8546  loss: 0.9701  time: 0.3883  data_time: 0.0060  lr: 0.00090451  max_mem: 3207M
+[09/24 10:59:36] cvalgorithms INFO:  eta: 10:42:50  iter: 243  total_loss: 1.43  decode.loss_seg: 0  aux_0.loss: 0.02687  cnt.cnt_loss: 0.6863  loss: 0.7151  time: 0.3886  data_time: 0.0060  lr: 0.00034549  max_mem: 3207M
+[09/24 10:59:37] cvalgorithms INFO:  eta: 10:43:19  iter: 245  total_loss: 1.57  decode.loss_seg: 0  aux_0.loss: 0.02651  cnt.cnt_loss: 0.7481  loss: 0.7851  time: 0.3889  data_time: 0.0060  lr: 0.001  max_mem: 3207M
+[09/24 10:59:38] cvalgorithms INFO:  eta: 10:43:55  iter: 247  total_loss: 1.573  decode.loss_seg: 0  aux_0.loss: 0.0266  cnt.cnt_loss: 0.7481  loss: 0.7865  time: 0.3891  data_time: 0.0061  lr: 0.00065451  max_mem: 3207M
+[09/24 10:59:39] cvalgorithms INFO:  eta: 10:44:17  iter: 249  total_loss: 1.626  decode.loss_seg: 0  aux_0.loss: 0.0266  cnt.cnt_loss: 0.7589  loss: 0.8132  time: 0.3893  data_time: 0.0062  lr: 9.5492e-05  max_mem: 3207M
+[09/24 10:59:40] cvalgorithms INFO:  eta: 10:44:27  iter: 251  total_loss: 1.847  decode.loss_seg: 0  aux_0.loss: 0.02689  cnt.cnt_loss: 0.8562  loss: 0.9236  time: 0.3895  data_time: 0.0062  lr: 0.00090451  max_mem: 3207M
+[09/24 10:59:40] cvalgorithms INFO:  eta: 10:44:44  iter: 253  total_loss: 1.626  decode.loss_seg: 0  aux_0.loss: 0.0266  cnt.cnt_loss: 0.7589  loss: 0.8132  time: 0.3898  data_time: 0.0063  lr: 0.00034549  max_mem: 3207M
+[09/24 10:59:41] cvalgorithms INFO:  eta: 10:45:05  iter: 255  total_loss: 1.626  decode.loss_seg: 0  aux_0.loss: 0.02651  cnt.cnt_loss: 0.7589  loss: 0.8132  time: 0.3903  data_time: 0.0062  lr: 0.001  max_mem: 3207M
+[09/24 10:59:42] cvalgorithms INFO:  eta: 10:45:16  iter: 257  total_loss: 1.761  decode.loss_seg: 0  aux_0.loss: 0.02651  cnt.cnt_loss: 0.8314  loss: 0.8805  time: 0.3907  data_time: 0.0062  lr: 0.00065451  max_mem: 3207M
+[09/24 10:59:43] cvalgorithms INFO: Start inference on 216 batches
+[09/24 11:00:14] cvalgorithms INFO: Total inference time: 0:00:13.551362 (0.064224 s / iter per device, on 1 devices)
+[09/24 11:00:14] cvalgorithms INFO: Total inference pure compute time: 0:00:12 (0.057900 s / iter per device, on 1 devices)
+[09/24 11:00:14] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4985658830484723, 'acc': 0.9971317660969446, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 11:00:14] cvalgorithms INFO:  eta: 10:45:32  iter: 259  total_loss: 1.94  decode.loss_seg: 0  aux_0.loss: 0.02834  cnt.cnt_loss: 0.9446  loss: 0.9702  time: 0.3910  data_time: 0.0063  lr: 9.5492e-05  max_mem: 3207M
+[09/24 11:00:15] cvalgorithms INFO:  eta: 10:45:43  iter: 261  total_loss: 2.313  decode.loss_seg: 0  aux_0.loss: 0.03075  cnt.cnt_loss: 1.131  loss: 1.156  time: 0.3913  data_time: 0.0063  lr: 0.00090451  max_mem: 3207M
+[09/24 11:00:16] cvalgorithms INFO:  eta: 10:46:07  iter: 263  total_loss: 2.313  decode.loss_seg: 0  aux_0.loss: 0.03127  cnt.cnt_loss: 1.131  loss: 1.156  time: 0.3914  data_time: 0.0062  lr: 0.00034549  max_mem: 3207M
+[09/24 11:00:17] cvalgorithms INFO:  eta: 10:46:06  iter: 265  total_loss: 2.582  decode.loss_seg: 0  aux_0.loss: 0.03127  cnt.cnt_loss: 1.258  loss: 1.291  time: 0.3915  data_time: 0.0063  lr: 0.001  max_mem: 3207M
+[09/24 11:00:17] cvalgorithms INFO:  eta: 10:46:36  iter: 267  total_loss: 3.28  decode.loss_seg: 0  aux_0.loss: 0.03354  cnt.cnt_loss: 1.496  loss: 1.64  time: 0.3920  data_time: 0.0063  lr: 0.00065451  max_mem: 3207M
+[09/24 11:00:18] cvalgorithms INFO:  eta: 10:47:46  iter: 269  total_loss: 3.388  decode.loss_seg: 0  aux_0.loss: 0.04216  cnt.cnt_loss: 1.603  loss: 1.694  time: 0.3923  data_time: 0.0062  lr: 9.5492e-05  max_mem: 3207M
+[09/24 11:00:19] cvalgorithms INFO:  eta: 10:49:08  iter: 271  total_loss: 3.486  decode.loss_seg: 0  aux_0.loss: 0.04216  cnt.cnt_loss: 1.635  loss: 1.743  time: 0.3928  data_time: 0.0062  lr: 0.00090451  max_mem: 3207M
+[09/24 11:00:20] cvalgorithms INFO:  eta: 10:50:07  iter: 273  total_loss: 3.322  decode.loss_seg: 0  aux_0.loss: 0.0376  cnt.cnt_loss: 1.635  loss: 1.661  time: 0.3932  data_time: 0.0062  lr: 0.00034549  max_mem: 3207M
+[09/24 11:00:21] cvalgorithms INFO:  eta: 10:50:50  iter: 275  total_loss: 2.948  decode.loss_seg: 0  aux_0.loss: 0.04216  cnt.cnt_loss: 1.44  loss: 1.474  time: 0.3939  data_time: 0.0061  lr: 0.001  max_mem: 3207M
+[09/24 11:00:22] cvalgorithms INFO:  eta: 10:50:58  iter: 277  total_loss: 3.272  decode.loss_seg: 0  aux_0.loss: 0.04216  cnt.cnt_loss: 1.587  loss: 1.636  time: 0.3943  data_time: 0.0062  lr: 0.00065451  max_mem: 3207M
+[09/24 11:00:23] cvalgorithms INFO: Start inference on 216 batches
+[09/24 11:00:54] cvalgorithms INFO: Total inference time: 0:00:13.567204 (0.064300 s / iter per device, on 1 devices)
+[09/24 11:00:54] cvalgorithms INFO: Total inference pure compute time: 0:00:12 (0.057969 s / iter per device, on 1 devices)
+[09/24 11:00:54] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.49765547013021677, 'acc': 0.9953109402604335, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 11:00:54] cvalgorithms INFO:  eta: 10:51:05  iter: 279  total_loss: 3.056  decode.loss_seg: 0  aux_0.loss: 0.03549  cnt.cnt_loss: 1.5  loss: 1.528  time: 0.3947  data_time: 0.0062  lr: 9.5492e-05  max_mem: 3207M
+[09/24 11:00:55] cvalgorithms INFO:  eta: 10:51:15  iter: 281  total_loss: 2.509  decode.loss_seg: 0  aux_0.loss: 0.03117  cnt.cnt_loss: 1.225  loss: 1.254  time: 0.3949  data_time: 0.0062  lr: 0.00090451  max_mem: 3207M
+[09/24 11:00:56] cvalgorithms INFO:  eta: 10:51:42  iter: 283  total_loss: 3.056  decode.loss_seg: 0  aux_0.loss: 0.03132  cnt.cnt_loss: 1.5  loss: 1.528  time: 0.3952  data_time: 0.0061  lr: 0.00034549  max_mem: 3207M
+[09/24 11:00:56] cvalgorithms INFO:  eta: 10:52:01  iter: 285  total_loss: 3.114  decode.loss_seg: 0  aux_0.loss: 0.03132  cnt.cnt_loss: 1.508  loss: 1.557  time: 0.3953  data_time: 0.0061  lr: 0.001  max_mem: 3207M
+[09/24 11:00:57] cvalgorithms INFO:  eta: 10:52:20  iter: 287  total_loss: 2.438  decode.loss_seg: 0  aux_0.loss: 0.02869  cnt.cnt_loss: 1.19  loss: 1.219  time: 0.3956  data_time: 0.0061  lr: 0.00065451  max_mem: 3207M
+[09/24 11:00:58] cvalgorithms INFO:  eta: 10:52:44  iter: 289  total_loss: 1.953  decode.loss_seg: 0  aux_0.loss: 0.02741  cnt.cnt_loss: 0.916  loss: 0.9763  time: 0.3964  data_time: 0.0061  lr: 9.5492e-05  max_mem: 3207M
+[09/24 11:00:59] cvalgorithms INFO:  eta: 10:52:51  iter: 291  total_loss: 1.751  decode.loss_seg: 0  aux_0.loss: 0.02679  cnt.cnt_loss: 0.8196  loss: 0.8757  time: 0.3968  data_time: 0.0061  lr: 0.00090451  max_mem: 3207M
+[09/24 11:01:00] cvalgorithms INFO:  eta: 10:53:00  iter: 293  total_loss: 1.751  decode.loss_seg: 0  aux_0.loss: 0.02679  cnt.cnt_loss: 0.8196  loss: 0.8757  time: 0.3971  data_time: 0.0060  lr: 0.00034549  max_mem: 3207M
+[09/24 11:01:01] cvalgorithms INFO:  eta: 10:53:16  iter: 295  total_loss: 1.751  decode.loss_seg: 0  aux_0.loss: 0.02581  cnt.cnt_loss: 0.8196  loss: 0.8757  time: 0.3973  data_time: 0.0061  lr: 0.001  max_mem: 3207M
+[09/24 11:01:02] cvalgorithms INFO:  eta: 10:54:02  iter: 297  total_loss: 1.751  decode.loss_seg: 0  aux_0.loss: 0.02581  cnt.cnt_loss: 0.8196  loss: 0.8757  time: 0.3981  data_time: 0.0060  lr: 0.00065451  max_mem: 3207M
+[09/24 11:01:03] cvalgorithms INFO: Start inference on 216 batches
+[09/24 11:01:34] cvalgorithms INFO: Total inference time: 0:00:13.684572 (0.064856 s / iter per device, on 1 devices)
+[09/24 11:01:34] cvalgorithms INFO: Total inference pure compute time: 0:00:12 (0.058340 s / iter per device, on 1 devices)
+[09/24 11:01:34] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.49751515339063945, 'acc': 0.9950303067812789, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 11:01:34] cvalgorithms INFO:  eta: 10:54:45  iter: 299  total_loss: 1.751  decode.loss_seg: 0  aux_0.loss: 0.02581  cnt.cnt_loss: 0.8196  loss: 0.8757  time: 0.3988  data_time: 0.0059  lr: 9.5492e-05  max_mem: 3207M
+[09/24 11:01:35] cvalgorithms INFO:  eta: 10:55:23  iter: 301  total_loss: 1.966  decode.loss_seg: 0  aux_0.loss: 0.02581  cnt.cnt_loss: 0.8924  loss: 0.9831  time: 0.3992  data_time: 0.0059  lr: 0.00090451  max_mem: 3207M
+[09/24 11:01:36] cvalgorithms INFO:  eta: 10:56:00  iter: 303  total_loss: 1.527  decode.loss_seg: 0  aux_0.loss: 0.02177  cnt.cnt_loss: 0.7066  loss: 0.7634  time: 0.3995  data_time: 0.0060  lr: 0.00034549  max_mem: 3207M
+[09/24 11:01:37] cvalgorithms INFO:  eta: 10:56:06  iter: 305  total_loss: 1.873  decode.loss_seg: 0  aux_0.loss: 0.01999  cnt.cnt_loss: 0.8828  loss: 0.9365  time: 0.3999  data_time: 0.0060  lr: 0.001  max_mem: 3207M
+[09/24 11:01:38] cvalgorithms INFO:  eta: 10:56:09  iter: 307  total_loss: 1.873  decode.loss_seg: 0  aux_0.loss: 0.01999  cnt.cnt_loss: 0.8828  loss: 0.9365  time: 0.3999  data_time: 0.0060  lr: 0.00065451  max_mem: 3207M
+[09/24 11:01:39] cvalgorithms INFO:  eta: 10:56:13  iter: 309  total_loss: 1.873  decode.loss_seg: 0  aux_0.loss: 0.01999  cnt.cnt_loss: 0.8828  loss: 0.9365  time: 0.4003  data_time: 0.0060  lr: 9.5492e-05  max_mem: 3207M
+[09/24 11:01:40] cvalgorithms INFO:  eta: 10:56:16  iter: 311  total_loss: 2.008  decode.loss_seg: 0  aux_0.loss: 0.02583  cnt.cnt_loss: 0.9488  loss: 1.004  time: 0.4007  data_time: 0.0060  lr: 0.00090451  max_mem: 3207M
+[09/24 11:01:41] cvalgorithms INFO:  eta: 10:56:25  iter: 313  total_loss: 2.008  decode.loss_seg: 0  aux_0.loss: 0.02583  cnt.cnt_loss: 0.9488  loss: 1.004  time: 0.4009  data_time: 0.0061  lr: 0.00034549  max_mem: 3207M
+[09/24 11:01:42] cvalgorithms INFO:  eta: 10:56:48  iter: 315  total_loss: 2.008  decode.loss_seg: 0  aux_0.loss: 0.03762  cnt.cnt_loss: 0.9488  loss: 1.004  time: 0.4013  data_time: 0.0060  lr: 0.001  max_mem: 3207M
+[09/24 11:01:43] cvalgorithms INFO:  eta: 10:57:23  iter: 317  total_loss: 2.031  decode.loss_seg: 0  aux_0.loss: 0.02981  cnt.cnt_loss: 0.9969  loss: 1.015  time: 0.4017  data_time: 0.0061  lr: 0.00065451  max_mem: 3207M
+[09/24 11:01:43] cvalgorithms INFO: Start inference on 216 batches
+[09/24 11:02:15] cvalgorithms INFO: Total inference time: 0:00:13.731556 (0.065078 s / iter per device, on 1 devices)
+[09/24 11:02:15] cvalgorithms INFO: Total inference pure compute time: 0:00:12 (0.058996 s / iter per device, on 1 devices)
+[09/24 11:02:15] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4982172357963554, 'acc': 0.9964344715927108, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 11:02:15] cvalgorithms INFO:  eta: 10:58:00  iter: 319  total_loss: 2.031  decode.loss_seg: 0  aux_0.loss: 0.02981  cnt.cnt_loss: 0.9593  loss: 1.015  time: 0.4020  data_time: 0.0061  lr: 9.5492e-05  max_mem: 3207M
+[09/24 11:02:16] cvalgorithms INFO:  eta: 10:58:45  iter: 321  total_loss: 2.816  decode.loss_seg: 0  aux_0.loss: 0.04582  cnt.cnt_loss: 1.142  loss: 1.408  time: 0.4021  data_time: 0.0062  lr: 0.00090451  max_mem: 3207M
+[09/24 11:02:17] cvalgorithms INFO:  eta: 10:59:20  iter: 323  total_loss: 2.458  decode.loss_seg: 0  aux_0.loss: 0.04668  cnt.cnt_loss: 0.9713  loss: 1.229  time: 0.4023  data_time: 0.0063  lr: 0.00034549  max_mem: 3207M
+[09/24 11:02:18] cvalgorithms INFO:  eta: 10:59:29  iter: 325  total_loss: 2.19  decode.loss_seg: 0  aux_0.loss: 0.04668  cnt.cnt_loss: 0.8811  loss: 1.095  time: 0.4026  data_time: 0.0063  lr: 0.001  max_mem: 3207M
+[09/24 11:02:19] cvalgorithms INFO:  eta: 10:59:45  iter: 327  total_loss: 2.683  decode.loss_seg: 0  aux_0.loss: 0.05053  cnt.cnt_loss: 0.9713  loss: 1.341  time: 0.4030  data_time: 0.0063  lr: 0.00065451  max_mem: 3207M
+[09/24 11:02:19] cvalgorithms INFO:  eta: 11:00:03  iter: 329  total_loss: 2.19  decode.loss_seg: 0  aux_0.loss: 0.04172  cnt.cnt_loss: 0.8811  loss: 1.095  time: 0.4034  data_time: 0.0063  lr: 9.5492e-05  max_mem: 3207M
+[09/24 11:02:20] cvalgorithms INFO:  eta: 11:00:13  iter: 331  total_loss: 1.986  decode.loss_seg: 0  aux_0.loss: 0.03919  cnt.cnt_loss: 0.8164  loss: 0.9929  time: 0.4037  data_time: 0.0064  lr: 0.00090451  max_mem: 3207M
+[09/24 11:02:21] cvalgorithms INFO:  eta: 11:00:46  iter: 333  total_loss: 1.618  decode.loss_seg: 0  aux_0.loss: 0.03753  cnt.cnt_loss: 0.7846  loss: 0.8088  time: 0.4040  data_time: 0.0064  lr: 0.00034549  max_mem: 3207M
+[09/24 11:02:22] cvalgorithms INFO:  eta: 11:01:15  iter: 335  total_loss: 1.564  decode.loss_seg: 0  aux_0.loss: 0.03587  cnt.cnt_loss: 0.7471  loss: 0.782  time: 0.4044  data_time: 0.0064  lr: 0.001  max_mem: 3207M
+[09/24 11:02:23] cvalgorithms INFO:  eta: 11:01:21  iter: 337  total_loss: 0.648  decode.loss_seg: 0  aux_0.loss: 0.03158  cnt.cnt_loss: 0.2934  loss: 0.324  time: 0.4048  data_time: 0.0064  lr: 0.00065451  max_mem: 3207M
+[09/24 11:02:24] cvalgorithms INFO: Start inference on 216 batches
+[09/24 11:02:56] cvalgorithms INFO: Total inference time: 0:00:14.001181 (0.066356 s / iter per device, on 1 devices)
+[09/24 11:02:56] cvalgorithms INFO: Total inference pure compute time: 0:00:12 (0.059296 s / iter per device, on 1 devices)
+[09/24 11:02:56] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4990149318271683, 'acc': 0.9980298636543365, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 11:02:56] cvalgorithms INFO:  eta: 11:01:29  iter: 339  total_loss: 0.575  decode.loss_seg: 0  aux_0.loss: 0.03158  cnt.cnt_loss: 0.2633  loss: 0.2875  time: 0.4050  data_time: 0.0065  lr: 9.5492e-05  max_mem: 3207M
+[09/24 11:02:57] cvalgorithms INFO:  eta: 11:01:44  iter: 341  total_loss: 0.5483  decode.loss_seg: 0  aux_0.loss: 0.02985  cnt.cnt_loss: 0.254  loss: 0.2742  time: 0.4051  data_time: 0.0064  lr: 0.00090451  max_mem: 3207M
+[09/24 11:02:58] cvalgorithms INFO:  eta: 11:02:32  iter: 343  total_loss: 0.5221  decode.loss_seg: 0  aux_0.loss: 0.0282  cnt.cnt_loss: 0.2476  loss: 0.261  time: 0.4051  data_time: 0.0064  lr: 0.00034549  max_mem: 3207M
+[09/24 11:02:59] cvalgorithms INFO:  eta: 11:03:48  iter: 345  total_loss: 0.575  decode.loss_seg: 0  aux_0.loss: 0.02768  cnt.cnt_loss: 0.2633  loss: 0.2875  time: 0.4053  data_time: 0.0063  lr: 0.001  max_mem: 3207M
+[09/24 11:02:59] cvalgorithms INFO:  eta: 11:04:27  iter: 347  total_loss: 0.575  decode.loss_seg: 0  aux_0.loss: 0.02485  cnt.cnt_loss: 0.2633  loss: 0.2875  time: 0.4056  data_time: 0.0063  lr: 0.00065451  max_mem: 3207M
+[09/24 11:03:00] cvalgorithms INFO:  eta: 11:04:34  iter: 349  total_loss: 0.575  decode.loss_seg: 0  aux_0.loss: 0.02279  cnt.cnt_loss: 0.2633  loss: 0.2875  time: 0.4060  data_time: 0.0064  lr: 9.5492e-05  max_mem: 3207M
+[09/24 11:03:01] cvalgorithms INFO:  eta: 11:04:39  iter: 351  total_loss: 0.6844  decode.loss_seg: 0  aux_0.loss: 0.01819  cnt.cnt_loss: 0.3244  loss: 0.3422  time: 0.4064  data_time: 0.0063  lr: 0.00090451  max_mem: 3207M
+[09/24 11:03:02] cvalgorithms INFO:  eta: 11:05:08  iter: 353  total_loss: 0.8731  decode.loss_seg: 0  aux_0.loss: 0.01752  cnt.cnt_loss: 0.4236  loss: 0.4365  time: 0.4068  data_time: 0.0063  lr: 0.00034549  max_mem: 3207M
+[09/24 11:03:03] cvalgorithms INFO:  eta: 11:05:36  iter: 355  total_loss: 1.479  decode.loss_seg: 0  aux_0.loss: 0.01613  cnt.cnt_loss: 0.6366  loss: 0.7395  time: 0.4074  data_time: 0.0063  lr: 0.001  max_mem: 3207M
+[09/24 11:03:04] cvalgorithms INFO:  eta: 11:05:41  iter: 357  total_loss: 2.151  decode.loss_seg: 0  aux_0.loss: 0.01915  cnt.cnt_loss: 0.9119  loss: 1.076  time: 0.4077  data_time: 0.0062  lr: 0.00065451  max_mem: 3207M
+[09/24 11:03:05] cvalgorithms INFO: Start inference on 216 batches
+[09/24 11:03:37] cvalgorithms INFO: Total inference time: 0:00:14.207095 (0.067332 s / iter per device, on 1 devices)
+[09/24 11:03:37] cvalgorithms INFO: Total inference pure compute time: 0:00:12 (0.060676 s / iter per device, on 1 devices)
+[09/24 11:03:37] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.4977982117506051, 'acc': 0.9955964235012102, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 11:03:37] cvalgorithms INFO:  eta: 11:05:52  iter: 359  total_loss: 2.151  decode.loss_seg: 0  aux_0.loss: 0.01838  cnt.cnt_loss: 0.9119  loss: 1.076  time: 0.4083  data_time: 0.0062  lr: 9.5492e-05  max_mem: 3207M
+[09/24 11:03:38] cvalgorithms INFO:  eta: 11:06:34  iter: 361  total_loss: 1.524  decode.loss_seg: 0  aux_0.loss: 0.01495  cnt.cnt_loss: 0.6589  loss: 0.7621  time: 0.4086  data_time: 0.0062  lr: 0.00090451  max_mem: 3207M
+[09/24 11:03:39] cvalgorithms INFO:  eta: 11:07:11  iter: 363  total_loss: 1.396  decode.loss_seg: 0  aux_0.loss: 0.0159  cnt.cnt_loss: 0.6589  loss: 0.6981  time: 0.4089  data_time: 0.0061  lr: 0.00034549  max_mem: 3207M
+[09/24 11:03:40] cvalgorithms INFO:  eta: 11:07:20  iter: 365  total_loss: 1.02  decode.loss_seg: 0  aux_0.loss: 0.01531  cnt.cnt_loss: 0.4966  loss: 0.51  time: 0.4092  data_time: 0.0062  lr: 0.001  max_mem: 3207M
+[09/24 11:03:41] cvalgorithms INFO:  eta: 11:07:30  iter: 367  total_loss: 0.8731  decode.loss_seg: 0  aux_0.loss: 0.01492  cnt.cnt_loss: 0.4236  loss: 0.4365  time: 0.4096  data_time: 0.0062  lr: 0.00065451  max_mem: 3207M
+[09/24 11:03:42] cvalgorithms INFO:  eta: 11:07:41  iter: 369  total_loss: 1.02  decode.loss_seg: 0  aux_0.loss: 0.01536  cnt.cnt_loss: 0.4966  loss: 0.51  time: 0.4099  data_time: 0.0062  lr: 9.5492e-05  max_mem: 3207M
+[09/24 11:03:43] cvalgorithms INFO:  eta: 11:08:08  iter: 371  total_loss: 1.276  decode.loss_seg: 0  aux_0.loss: 0.01592  cnt.cnt_loss: 0.5759  loss: 0.6382  time: 0.4102  data_time: 0.0062  lr: 0.00090451  max_mem: 3207M
+[09/24 11:03:44] cvalgorithms INFO:  eta: 11:08:28  iter: 373  total_loss: 1.081  decode.loss_seg: 0  aux_0.loss: 0.01592  cnt.cnt_loss: 0.5261  loss: 0.5406  time: 0.4105  data_time: 0.0062  lr: 0.00034549  max_mem: 3207M
+[09/24 11:03:45] cvalgorithms INFO:  eta: 11:09:03  iter: 375  total_loss: 1.081  decode.loss_seg: 0  aux_0.loss: 0.01592  cnt.cnt_loss: 0.5261  loss: 0.5406  time: 0.4107  data_time: 0.0063  lr: 0.001  max_mem: 3207M
+[09/24 11:03:46] cvalgorithms INFO:  eta: 11:09:42  iter: 377  total_loss: 1.276  decode.loss_seg: 0  aux_0.loss: 0.01721  cnt.cnt_loss: 0.5759  loss: 0.6382  time: 0.4113  data_time: 0.0063  lr: 0.00065451  max_mem: 3207M
+[09/24 11:03:47] cvalgorithms INFO: Start inference on 216 batches
+[09/24 11:04:19] cvalgorithms INFO: Total inference time: 0:00:14.261154 (0.067588 s / iter per device, on 1 devices)
+[09/24 11:04:19] cvalgorithms INFO: Total inference pure compute time: 0:00:12 (0.060923 s / iter per device, on 1 devices)
+[09/24 11:04:19] cvalgorithms INFO: OrderedDict([('levir', {'miou': 0.49741860719055625, 'acc': 0.9948372143811125, 'precision': 0.0, 'recall': 0.0, 'f1_score': 0.0})])
+[09/24 11:04:19] cvalgorithms INFO:  eta: 11:09:53  iter: 379  total_loss: 1.276  decode.loss_seg: 0  aux_0.loss: 0.01721  cnt.cnt_loss: 0.5759  loss: 0.6382  time: 0.4117  data_time: 0.0063  lr: 9.5492e-05  max_mem: 3207M
+[09/24 11:04:20] cvalgorithms INFO:  eta: 11:10:03  iter: 381  total_loss: 1.57  decode.loss_seg: 0  aux_0.loss: 0.01913  cnt.cnt_loss: 0.6503  loss: 0.7849  time: 0.4118  data_time: 0.0062  lr: 0.00090451  max_mem: 3207M
+[09/24 11:04:21] cvalgorithms INFO:  eta: 11:10:07  iter: 383  total_loss: 1.57  decode.loss_seg: 0  aux_0.loss: 0.02066  cnt.cnt_loss: 0.6503  loss: 0.7849  time: 0.4120  data_time: 0.0062  lr: 0.00034549  max_mem: 3207M
+[09/24 11:04:22] cvalgorithms INFO:  eta: 11:10:11  iter: 385  total_loss: 1.513  decode.loss_seg: 0  aux_0.loss: 0.02437  cnt.cnt_loss: 0.6503  loss: 0.7563  time: 0.4123  data_time: 0.0063  lr: 0.001  max_mem: 3207M
+[09/24 11:04:23] cvalgorithms INFO:  eta: 11:10:26  iter: 387  total_loss: 1.895  decode.loss_seg: 0  aux_0.loss: 0.03028  cnt.cnt_loss: 0.7442  loss: 0.9477  time: 0.4130  data_time: 0.0063  lr: 0.00065451  max_mem: 3207M
+[09/24 11:04:24] cvalgorithms INFO:  eta: 11:10:43  iter: 389  total_loss: 2.221  decode.loss_seg: 0  aux_0.loss: 0.03153  cnt.cnt_loss: 0.8973  loss: 1.11  time: 0.4134  data_time: 0.0068  lr: 9.5492e-05  max_mem: 3207M
+[09/24 11:04:25] cvalgorithms INFO:  eta: 11:11:09  iter: 391  total_loss: 2.363  decode.loss_seg: 0  aux_0.loss: 0.04118  cnt.cnt_loss: 1.081  loss: 1.181  time: 0.4138  data_time: 0.0068  lr: 0.00090451  max_mem: 3207M
+[09/24 11:04:26] cvalgorithms INFO:  eta: 11:11:31  iter: 393  total_loss: 2.221  decode.loss_seg: 0  aux_0.loss: 0.04118  cnt.cnt_loss: 0.8769  loss: 1.11  time: 0.4142  data_time: 0.0068  lr: 0.00034549  max_mem: 3207M
+[09/24 11:04:27] cvalgorithms INFO:  eta: 11:11:48  iter: 395  total_loss: 1.838  decode.loss_seg: 0  aux_0.loss: 0.03192  cnt.cnt_loss: 0.705  loss: 0.9192  time: 0.4145  data_time: 0.0068  lr: 0.001  max_mem: 3207M
+[09/24 11:04:28] cvalgorithms INFO:  eta: 11:12:16  iter: 397  total_loss: 1.373  decode.loss_seg: 0  aux_0.loss: 0.0347  cnt.cnt_loss: 0.6018  loss: 0.6865  time: 0.4149  data_time: 0.0068  lr: 0.00065451  max_mem: 3207M
+[09/24 11:04:29] cvalgorithms INFO: Start inference on 216 batches
+[09/26 15:44:05] cvalgorithms INFO: SiameseEncoderDecoder(
+  (backbone): ConvNeXt(
+    (downsample_layers): ModuleList(
+      (0): Sequential(
+        (0): Conv2d(3, 96, kernel_size=(4, 4), stride=(4, 4))
+        (1): LayerNorm()
+      )
+      (1): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(96, 192, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (2): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(192, 384, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (3): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(384, 768, kernel_size=(2, 2), stride=(2, 2))
+      )
+    )
+    (stages): ModuleList(
+      (0): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (1): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (2): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (3): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (4): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (5): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (6): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (7): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (8): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (3): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+      )
+    )
+    (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  )
+  (decode_head): UPerHead(
+    (loss): CrossEntropyLoss()
+    (conv_seg): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+    (dropout): Dropout2d(p=0.1, inplace=False)
+    (psp_modules): PPM(
+      (ppm_blocks): ModuleList(
+        (0): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (1): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (2): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (3): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+    )
+    (bottleneck): ConvModule(
+      (conv): Conv2d(448, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+    (lateral_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(48, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(96, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_bottleneck): ConvModule(
+      (conv): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+  )
+  (auxiliary_head): ModuleList(
+    (0): FCNHead(
+      (loss): CrossEntropyLoss()
+      (conv_seg): Conv2d(64, 2, kernel_size=(1, 1), stride=(1, 1))
+      (dropout): Dropout2d(p=0.1, inplace=False)
+      (convs): Sequential(
+        (0): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+      (conv_cat): ConvModule(
+        (conv): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+  )
+  (constant_loss): BatchContrastiveLoss()
+  (sig): Sigmoid()
+  (sft): Softmax(dim=1)
+  (siamese_layer): ModuleList(
+    (0): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(96, 48, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(48, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(48, 48, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (1): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(96, 96, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (2): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(768, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(192, 192, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+)
+[09/26 15:44:33] cvalgorithms INFO: Starting training from iteration 0
+[09/26 15:44:39] cvalgorithms INFO:  iter: 1  total_loss: 244.6  decode.loss_seg: 0  aux_0.loss: 0.6812  cnt.cnt_loss: 121.6  loss: 122.3  data_time: 0.0539  lr: 0.00090451  max_mem: 3207M
+[09/26 15:44:39] cvalgorithms INFO:  eta: 9:37:35  iter: 3  total_loss: 108.5  decode.loss_seg: 0  aux_0.loss: 0.6613  cnt.cnt_loss: 53.59  loss: 54.25  time: 0.3466  data_time: 0.0290  lr: 0.00034549  max_mem: 3207M
+[09/26 15:44:40] cvalgorithms INFO:  eta: 9:37:34  iter: 5  total_loss: 108.5  decode.loss_seg: 0  aux_0.loss: 0.6462  cnt.cnt_loss: 53.59  loss: 54.25  time: 0.3489  data_time: 0.0208  lr: 0.001  max_mem: 3207M
+[09/26 15:44:41] cvalgorithms INFO:  eta: 9:38:46  iter: 7  total_loss: 108.5  decode.loss_seg: 0  aux_0.loss: 0.633  cnt.cnt_loss: 53.59  loss: 54.25  time: 0.3488  data_time: 0.0166  lr: 0.00065451  max_mem: 3207M
+[09/26 15:44:41] cvalgorithms INFO:  eta: 9:38:17  iter: 9  total_loss: 100.5  decode.loss_seg: 0  aux_0.loss: 0.6237  cnt.cnt_loss: 49.63  loss: 50.27  time: 0.3482  data_time: 0.0141  lr: 9.5492e-05  max_mem: 3207M
+[09/26 15:44:42] cvalgorithms INFO:  eta: 9:38:18  iter: 11  total_loss: 92.02  decode.loss_seg: 0  aux_0.loss: 0.6108  cnt.cnt_loss: 45.42  loss: 46.01  time: 0.3480  data_time: 0.0125  lr: 0.00090451  max_mem: 3207M
+[09/26 15:44:43] cvalgorithms INFO:  eta: 9:38:45  iter: 13  total_loss: 86.06  decode.loss_seg: 0  aux_0.loss: 0.5911  cnt.cnt_loss: 42.49  loss: 43.03  time: 0.3480  data_time: 0.0113  lr: 0.00034549  max_mem: 3207M
+[09/26 15:44:43] cvalgorithms INFO:  eta: 9:39:24  iter: 15  total_loss: 87.42  decode.loss_seg: 0  aux_0.loss: 0.5788  cnt.cnt_loss: 43.19  loss: 43.71  time: 0.3482  data_time: 0.0105  lr: 0.001  max_mem: 3207M
+[09/26 15:44:44] cvalgorithms INFO:  eta: 9:39:53  iter: 17  total_loss: 84.43  decode.loss_seg: 0  aux_0.loss: 0.5671  cnt.cnt_loss: 41.71  loss: 42.22  time: 0.3490  data_time: 0.0099  lr: 0.00065451  max_mem: 3207M
+[09/26 15:44:45] cvalgorithms INFO: Start inference on 216 batches
+[09/26 15:45:25] cvalgorithms INFO: Total inference time: 0:00:11.866941 (0.056241 s / iter per device, on 1 devices)
+[09/26 15:45:25] cvalgorithms INFO: Total inference pure compute time: 0:00:10 (0.050570 s / iter per device, on 1 devices)
+[09/26 21:01:38] cvalgorithms INFO: SiameseEncoderDecoder(
+  (backbone): ConvNeXt(
+    (downsample_layers): ModuleList(
+      (0): Sequential(
+        (0): Conv2d(3, 96, kernel_size=(4, 4), stride=(4, 4))
+        (1): LayerNorm()
+      )
+      (1): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(96, 192, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (2): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(192, 384, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (3): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(384, 768, kernel_size=(2, 2), stride=(2, 2))
+      )
+    )
+    (stages): ModuleList(
+      (0): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (1): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (2): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (3): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (4): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (5): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (6): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (7): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (8): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (3): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+      )
+    )
+    (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  )
+  (decode_head): UPerHead(
+    (loss): CrossEntropyLoss()
+    (conv_seg): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+    (dropout): Dropout2d(p=0.1, inplace=False)
+    (psp_modules): PPM(
+      (ppm_blocks): ModuleList(
+        (0): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (1): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (2): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (3): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+    )
+    (bottleneck): ConvModule(
+      (conv): Conv2d(448, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+    (lateral_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(48, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(96, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_bottleneck): ConvModule(
+      (conv): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+  )
+  (auxiliary_head): ModuleList(
+    (0): FCNHead(
+      (loss): CrossEntropyLoss()
+      (conv_seg): Conv2d(64, 2, kernel_size=(1, 1), stride=(1, 1))
+      (dropout): Dropout2d(p=0.1, inplace=False)
+      (convs): Sequential(
+        (0): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+      (conv_cat): ConvModule(
+        (conv): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+  )
+  (constant_loss): BatchContrastiveLoss()
+  (sig): Sigmoid()
+  (sft): Softmax(dim=1)
+  (siamese_layer): ModuleList(
+    (0): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(96, 48, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(48, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(48, 48, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (1): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(96, 96, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (2): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(768, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(192, 192, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+)
+[09/26 21:02:07] cvalgorithms INFO: Starting training from iteration 0
+[09/26 21:02:10] cvalgorithms INFO:  iter: 1  total_loss: 63.55  decode.loss_seg: -0.0001423  aux_0.loss: 0.6836  cnt.cnt_loss: 31.09  loss: 31.77  data_time: 0.0546  lr: 0.00090451  max_mem: 3207M
+[09/26 21:02:11] cvalgorithms INFO:  eta: 9:38:13  iter: 3  total_loss: 63.55  decode.loss_seg: -6.079e-10  aux_0.loss: 0.6682  cnt.cnt_loss: 31.09  loss: 31.77  time: 0.3470  data_time: 0.0296  lr: 0.00034549  max_mem: 3207M
+[09/26 21:02:12] cvalgorithms INFO:  eta: 9:38:13  iter: 5  total_loss: 64.28  decode.loss_seg: 0  aux_0.loss: 0.6461  cnt.cnt_loss: 31.48  loss: 32.14  time: 0.3487  data_time: 0.0212  lr: 0.001  max_mem: 3207M
+[09/26 21:02:12] cvalgorithms INFO:  eta: 9:38:12  iter: 7  total_loss: 54.65  decode.loss_seg: 0  aux_0.loss: 0.6251  cnt.cnt_loss: 26.68  loss: 27.32  time: 0.3482  data_time: 0.0169  lr: 0.00065451  max_mem: 3207M
+[09/26 21:02:13] cvalgorithms INFO:  eta: 9:39:30  iter: 9  total_loss: 64.28  decode.loss_seg: 0  aux_0.loss: 0.6205  cnt.cnt_loss: 31.48  loss: 32.14  time: 0.3488  data_time: 0.0144  lr: 9.5492e-05  max_mem: 3207M
+[09/26 21:02:14] cvalgorithms INFO:  eta: 9:40:50  iter: 11  total_loss: 68.83  decode.loss_seg: 0  aux_0.loss: 0.6102  cnt.cnt_loss: 33.8  loss: 34.41  time: 0.3490  data_time: 0.0128  lr: 0.00090451  max_mem: 3207M
+[09/26 21:02:14] cvalgorithms INFO:  eta: 9:40:55  iter: 13  total_loss: 68.83  decode.loss_seg: 0  aux_0.loss: 0.5904  cnt.cnt_loss: 33.8  loss: 34.41  time: 0.3494  data_time: 0.0116  lr: 0.00034549  max_mem: 3207M
+[09/26 21:02:15] cvalgorithms INFO:  eta: 9:41:02  iter: 15  total_loss: 61.63  decode.loss_seg: 0  aux_0.loss: 0.5797  cnt.cnt_loss: 30.3  loss: 30.82  time: 0.3494  data_time: 0.0107  lr: 0.001  max_mem: 3207M
+[09/26 21:02:16] cvalgorithms INFO:  eta: 9:41:21  iter: 17  total_loss: 57.09  decode.loss_seg: 0  aux_0.loss: 0.5676  cnt.cnt_loss: 27.98  loss: 28.54  time: 0.3494  data_time: 0.0100  lr: 0.00065451  max_mem: 3207M
+[09/26 21:02:16] cvalgorithms INFO: Start inference on 216 batches
+[11/03 14:24:31] cvalgorithms INFO: SiameseEncoderDecoder(
+  (backbone): ConvNeXt(
+    (downsample_layers): ModuleList(
+      (0): Sequential(
+        (0): Conv2d(3, 96, kernel_size=(4, 4), stride=(4, 4))
+        (1): LayerNorm()
+      )
+      (1): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(96, 192, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (2): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(192, 384, kernel_size=(2, 2), stride=(2, 2))
+      )
+      (3): Sequential(
+        (0): LayerNorm()
+        (1): Conv2d(384, 768, kernel_size=(2, 2), stride=(2, 2))
+      )
+    )
+    (stages): ModuleList(
+      (0): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(96, 96, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=96)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=96, out_features=384, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=384, out_features=96, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (1): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(192, 192, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=192)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=192, out_features=768, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=768, out_features=192, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (2): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (3): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (4): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (5): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (6): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (7): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+        (8): Block(
+          (dwconv): Conv2d(384, 384, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=384)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=384, out_features=1536, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=1536, out_features=384, bias=True)
+          (drop_path): Identity()
+        )
+      )
+      (3): Sequential(
+        (0): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (1): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+        (2): Block(
+          (dwconv): Conv2d(768, 768, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3), groups=768)
+          (norm): LayerNorm()
+          (pwconv1): Linear(in_features=768, out_features=3072, bias=True)
+          (act): GELU()
+          (pwconv2): Linear(in_features=3072, out_features=768, bias=True)
+          (drop_path): Identity()
+        )
+      )
+    )
+    (norm): LayerNorm((768,), eps=1e-06, elementwise_affine=True)
+  )
+  (decode_head): UPerHead(
+    (loss): CrossEntropyLoss()
+    (conv_seg): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+    (dropout): Dropout2d(p=0.1, inplace=False)
+    (psp_modules): PPM(
+      (ppm_blocks): ModuleList(
+        (0): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (1): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (2): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+        (3): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+    )
+    (bottleneck): ConvModule(
+      (conv): Conv2d(448, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+    (lateral_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(48, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(96, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_convs): ModuleList(
+      (0): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+      (1): ConvModule(
+        (conv): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (fpn_bottleneck): ConvModule(
+      (conv): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (activate): ReLU(inplace=True)
+    )
+  )
+  (auxiliary_head): ModuleList(
+    (0): FCNHead(
+      (loss): CrossEntropyLoss()
+      (conv_seg): Conv2d(64, 2, kernel_size=(1, 1), stride=(1, 1))
+      (dropout): Dropout2d(p=0.1, inplace=False)
+      (convs): Sequential(
+        (0): ConvModule(
+          (conv): Conv2d(192, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (activate): ReLU(inplace=True)
+        )
+      )
+      (conv_cat): ConvModule(
+        (conv): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+  )
+  (constant_loss): BatchContrastiveLoss()
+  (sig): Sigmoid()
+  (sft): Softmax(dim=1)
+  (siamese_layer): ModuleList(
+    (0): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(96, 48, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(48, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(48, 48, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (1): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(192, 96, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(96, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(96, 96, kernel_size=(1, 1), stride=(1, 1))
+    )
+    (2): PixelSub(
+      (conv_modules): Sequential(
+        (0): BasicConv2d(
+          (conv): Conv2d(768, 384, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(384, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+        (1): BasicConv2d(
+          (conv): Conv2d(384, 192, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn): BatchNorm2d(192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (final_conv): Conv2d(192, 192, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+)
+[11/03 14:25:02] cvalgorithms INFO: Starting training from iteration 0

@@ -65,7 +65,7 @@ class TrainerContainer(BaseRunner):
         self.optimizer = build_optimizer(cfg, self.model)
         self.scheduler = self._initialize('lr_scheduler', torch.optim.lr_scheduler, self.optimizer)
         self.start_iter = 0
-        self.max_iter = cfg.total_epochs
+        self.max_iter = cfg.total_iter
         self.log_iter = cfg.log_iter
         self._trainer = TrainerBase(self.model, self.train_dataloader, self.optimizer)
         self.save_val_pred = cfg.save_val_pred
