@@ -1,0 +1,1 @@
+from .chgdetectors import SiamEncoderDecoder
