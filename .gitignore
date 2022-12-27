@@ -5,3 +5,7 @@ __pycache__
 venv/*
 data/*
 .pyc
+./deepcv.egg-info
+./trainer.trainer
+./.neptune
+./venv
